@@ -19,11 +19,9 @@
       --accent:#c7e59a;
       --accent-2:#7ea65a;
       --accent-3:#eef8dd;
-      --gold:#dbc27c;
       --danger:#d97b7b;
       --shadow:0 18px 50px rgba(0,0,0,.32);
       --radius:24px;
-      --radius-sm:16px;
       --max:1320px;
     }
 
@@ -80,8 +78,7 @@
       transform:translate(-50%,-50%);
       pointer-events:none;
       border-radius:50%;
-      background:
-        conic-gradient(from 0deg, rgba(199,229,154,.14), transparent 16%, transparent 100%);
+      background:conic-gradient(from 0deg, rgba(199,229,154,.14), transparent 16%, transparent 100%);
       animation:radar 12s linear infinite;
       filter:blur(1px);
       opacity:.22;
@@ -108,344 +105,138 @@
     }
 
     .topbar{
-  position:sticky;
-  top:0;
-  z-index:1000;
-  backdrop-filter:blur(10px);
-  background:rgba(12,17,12,.88);
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.topbar-inner{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:16px;
-  min-height:78px;
-  padding:10px 0;
-  position:relative;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  text-decoration:none;
-  color:var(--text);
-  min-width:0;
-}
-
-.brand-mark{
-  width:58px;
-  height:58px;
-  border-radius:18px;
-  position:relative;
-  display:grid;
-  place-items:center;
-  font-weight:900;
-  letter-spacing:.08em;
-  color:#11170f;
-  background:linear-gradient(135deg, var(--accent), var(--accent-2));
-  box-shadow:
-    0 8px 24px rgba(199,229,154,.18),
-    inset 0 1px 0 rgba(255,255,255,.32);
-  flex-shrink:0;
-}
-
-.brand-mark::before{
-  content:"";
-  position:absolute;
-  inset:6px;
-  border:1px solid rgba(255,255,255,.22);
-  border-radius:14px;
-}
-
-.brand-text{
-  min-width:0;
-}
-
-.brand-text strong{
-  display:block;
-  font-size:1rem;
-  text-transform:uppercase;
-  letter-spacing:.10em;
-  line-height:1.2;
-}
-
-.brand-text span{
-  color:var(--muted);
-  font-size:.92rem;
-  line-height:1.3;
-  display:block;
-}
-
-.menu-toggle{
-  display:none;
-  width:52px;
-  height:52px;
-  border:none;
-  border-radius:14px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.12);
-  cursor:pointer;
-  padding:0;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  gap:6px;
-  transition:.25s ease;
-}
-
-.menu-toggle:hover{
-  background:rgba(199,229,154,.12);
-  border-color:rgba(231,245,205,.24);
-}
-@media (max-width: 980px){
-  .hero-grid,
-  .grid-2,
-  .grid-3,
-  .grid-4,
-  .recruit-grid,
-  .rule-grid,
-  .progress-grid,
-  .discord-grid{
-    grid-template-columns:1fr !important;
-  }
-
-  .hero-stats{
-    grid-template-columns:1fr !important;
-  }
-
-  .quick-nav{
-    display:none;
-  }
-}
-
-@media (max-width: 768px){
-  .topbar-inner{
-    min-height:74px;
-  }
-
-  .menu-toggle{
-    display:flex;
-  }
-
-  .nav{
-    display:none;
-    position:absolute;
-    top:calc(100% + 10px);
-    left:0;
-    right:0;
-    flex-direction:column;
-    align-items:stretch;
-    gap:10px;
-    padding:14px;
-    background:rgba(10,15,10,.98);
-    border:1px solid rgba(255,255,255,.10);
-    border-radius:20px;
-    box-shadow:var(--shadow);
-  }
-
-  .nav.open{
-    display:flex;
-  }
-
-  .nav a{
-    width:100%;
-    border-radius:14px;
-    text-align:left;
-    padding:14px 16px;
-  }
-
-  .brand-mark{
-    width:50px;
-    height:50px;
-    border-radius:16px;
-  }
-
-  .brand-text strong{
-    font-size:.92rem;
-  }
-
-  .brand-text span{
-    font-size:.78rem;
-  }
-
-  .hero{
-    padding:48px 0 20px;
-  }
-
-  .hero-main,
-  .hero-side,
-  .card,
-  .discord-banner,
-  .staff-card,
-  .step-box{
-    padding:18px;
-  }
-
-  h1{
-    font-size:2rem;
-    line-height:1.05;
-  }
-
-  h2{
-    font-size:1.5rem;
-  }
-
-  h3{
-    font-size:1.1rem;
-  }
-
-  .lead{
-    font-size:.98rem;
-    line-height:1.65;
-  }
-
-  .hero-actions{
-    flex-direction:column;
-    align-items:stretch;
-  }
-
-  .btn{
-    width:100%;
-    text-align:center;
-  }
-
-  .timeline-item,
-  .freq-item,
-  .check{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  .rank{
-    min-width:auto;
-    width:auto;
-  }
-
-  .section-head{
-    align-items:flex-start;
-    margin-bottom:14px;
-  }
-
-  section{
-    padding:18px 0;
-  }
-
-  .container{
-    width:min(calc(100% - 20px), var(--max));
-  }
-}
-
-@media (max-width: 480px){
-  .brand-text span{
-    display:none;
-  }
-
-  h1{
-    font-size:1.8rem;
-  }
-
-  .hero-main,
-  .hero-side,
-  .card{
-    padding:16px;
-  }
-
-  .nav{
-    padding:12px;
-  }
-
-  .nav a{
-    font-size:.95rem;
-    padding:13px 14px;
-  }
-}
-
-.menu-toggle span{
-  display:block;
-  width:22px;
-  height:2px;
-  background:var(--accent-3);
-  border-radius:999px;
-  transition:.25s ease;
-}
-
-.menu-toggle.active span:nth-child(1){
-  transform:translateY(8px) rotate(45deg);
-}
-
-.menu-toggle.active span:nth-child(2){
-  opacity:0;
-}
-
-.menu-toggle.active span:nth-child(3){
-  transform:translateY(-8px) rotate(-45deg);
-}
-
-.nav{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  align-items:center;
-}
-
-.nav a{
-  text-decoration:none;
-  color:var(--text);
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.10);
-  padding:12px 16px;
-  border-radius:999px;
-  transition:.25s ease;
-  font-size:.95rem;
-}
-
-.nav a:hover{
-  background:rgba(199,229,154,.15);
-  border-color:rgba(231,245,205,.28);
-  transform:translateY(-1px);
-}
-
-    .dropdown{position:relative}
-    .dropbtn{cursor:pointer}
-
-    .dropdown-menu{
-      display:none;
-      position:absolute;
-      top:calc(100% + 10px);
-      right:0;
-      width:330px;
-      padding:10px;
-      border-radius:18px;
-      background:rgba(16,24,16,.98);
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow:var(--shadow);
+      position:sticky;
+      top:0;
+      z-index:1000;
+      backdrop-filter:blur(10px);
+      background:rgba(12,17,12,.88);
+      border-bottom:1px solid rgba(255,255,255,.08);
     }
 
-    .dropdown.open .dropdown-menu{
-      display:block;
+    .topbar-inner{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      min-height:78px;
+      padding:10px 0;
+      position:relative;
     }
 
-    .dropdown-menu a{
-      display:block;
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
       text-decoration:none;
       color:var(--text);
-      padding:12px 14px;
+      min-width:0;
+    }
+
+    .brand-mark{
+      width:58px;
+      height:58px;
+      border-radius:18px;
+      position:relative;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      letter-spacing:.08em;
+      color:#11170f;
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow:
+        0 8px 24px rgba(199,229,154,.18),
+        inset 0 1px 0 rgba(255,255,255,.32);
+      flex-shrink:0;
+    }
+
+    .brand-mark::before{
+      content:"";
+      position:absolute;
+      inset:6px;
+      border:1px solid rgba(255,255,255,.22);
       border-radius:14px;
-      margin:4px 0;
     }
 
-    .dropdown-menu a:hover{
-      background:rgba(199,229,154,.12);
-    }
-
-    .dropdown-menu small{
+    .brand-text strong{
       display:block;
+      font-size:1rem;
+      text-transform:uppercase;
+      letter-spacing:.10em;
+      line-height:1.2;
+    }
+
+    .brand-text span{
       color:var(--muted);
-      margin-top:4px;
-      font-size:.78rem;
+      font-size:.92rem;
+      line-height:1.3;
+      display:block;
+    }
+
+    .menu-toggle{
+      display:none;
+      width:56px;
+      height:56px;
+      border:none;
+      border-radius:18px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      cursor:pointer;
+      padding:0;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      gap:6px;
+      transition:.25s ease;
+    }
+
+    .menu-toggle:hover{
+      background:rgba(199,229,154,.12);
+      border-color:rgba(231,245,205,.24);
+    }
+
+    .menu-toggle span{
+      display:block;
+      width:24px;
+      height:2px;
+      background:var(--accent-3);
+      border-radius:999px;
+      transition:.25s ease;
+    }
+
+    .menu-toggle.active span:nth-child(1){
+      transform:translateY(8px) rotate(45deg);
+    }
+
+    .menu-toggle.active span:nth-child(2){
+      opacity:0;
+    }
+
+    .menu-toggle.active span:nth-child(3){
+      transform:translateY(-8px) rotate(-45deg);
+    }
+
+    .main-nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .main-nav a{
+      text-decoration:none;
+      color:var(--text);
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      padding:12px 16px;
+      border-radius:999px;
+      transition:.25s ease;
+      font-size:.95rem;
+    }
+
+    .main-nav a:hover{
+      background:rgba(199,229,154,.15);
+      border-color:rgba(231,245,205,.28);
+      transform:translateY(-1px);
     }
 
     .quick-nav{
@@ -493,7 +284,9 @@
     }
 
     .panel,
-    .card{
+    .card,
+    .staff-card,
+    .step-box{
       position:relative;
       overflow:hidden;
       background:var(--panel);
@@ -503,7 +296,9 @@
     }
 
     .panel::before,
-    .card::before{
+    .card::before,
+    .staff-card::before,
+    .step-box::before{
       content:"";
       position:absolute;
       inset:0;
@@ -528,11 +323,14 @@
       border-radius:50%;
       background:radial-gradient(circle, rgba(199,229,154,.18), transparent 65%);
     }
-	
-	.timeline-item p{
-		margin: 6px 0 0;
-	}
-	
+
+    .hero-side{
+      padding:24px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
     .eyebrow{
       display:inline-flex;
       align-items:center;
@@ -607,26 +405,6 @@
       border-color:var(--line-strong);
     }
 
-    .hero-note{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      margin-top:18px;
-      padding:10px 14px;
-      border-radius:12px;
-      background:rgba(217,123,123,.10);
-      border:1px solid rgba(217,123,123,.24);
-      color:#ffe2e2;
-      font-size:.92rem;
-    }
-
-    .hero-side{
-      padding:24px;
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-    }
-
     .info-box{
       background:var(--panel-2);
       border:1px solid rgba(255,255,255,.08);
@@ -696,15 +474,15 @@
       margin:0;
     }
 
-    .grid-3{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:20px;
-    }
-
     .grid-2{
       display:grid;
       grid-template-columns:repeat(2,1fr);
+      gap:20px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
       gap:20px;
     }
 
@@ -722,7 +500,9 @@
         var(--panel);
     }
 
-    .card:hover{
+    .card:hover,
+    .staff-card:hover,
+    .step-box:hover{
       transform:translateY(-4px);
       border-color:var(--line-strong);
       box-shadow:0 26px 50px rgba(0,0,0,.42);
@@ -746,6 +526,10 @@
     .rule-block p{
       color:var(--muted);
       line-height:1.68;
+    }
+
+    .timeline-item p{
+      margin:6px 0 0;
     }
 
     .list{
@@ -779,49 +563,9 @@
 
     .discord-grid{
       display:grid;
-      grid-template-columns:1fr 330px;
+      grid-template-columns:1fr;
       gap:20px;
       align-items:stretch;
-    }
-
-    .discord-widget{
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:20px;
-      padding:18px;
-      position:relative;
-      z-index:1;
-    }
-
-    .widget-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:16px;
-      gap:10px;
-    }
-
-    .widget-dot{
-      width:10px;
-      height:10px;
-      border-radius:50%;
-      background:#7be495;
-      animation:pulseGlow 2.2s infinite;
-    }
-
-    .channel{
-      padding:12px 14px;
-      border-radius:14px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.06);
-      margin-bottom:10px;
-      color:var(--muted);
-    }
-
-    .channel strong{
-      color:var(--accent-3);
-      display:block;
-      margin-bottom:4px;
     }
 
     .tag-wrap{
@@ -838,6 +582,42 @@
       border:1px solid rgba(255,255,255,.08);
       color:var(--accent-3);
       font-size:.92rem;
+    }
+
+    .rule-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:20px;
+    }
+
+    .rule-block{
+      padding:18px;
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .rule-block h4{
+      margin-bottom:10px;
+      font-size:1.05rem;
+    }
+
+    .staff-card{
+      padding:22px;
+      border-radius:20px;
+      background:var(--panel-3);
+      transition:.25s ease;
+    }
+
+    .staff-role{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(199,229,154,.10);
+      border:1px solid rgba(199,229,154,.18);
+      color:var(--accent-3);
+      font-size:.85rem;
+      margin-bottom:12px;
     }
 
     .timeline{
@@ -869,13 +649,36 @@
     .rank{
       min-width:116px;
       text-align:center;
-      padding:12px 12px;
+      padding:12px;
       border-radius:14px;
       background:linear-gradient(135deg, rgba(199,229,154,.18), rgba(126,166,90,.18));
       color:var(--accent-3);
       font-weight:700;
       border:1px solid rgba(231,245,205,.16);
       flex-shrink:0;
+    }
+
+    .progress-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:20px;
+    }
+
+    .step-box{
+      padding:22px;
+      transition:.25s ease;
+    }
+
+    .step-number{
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
+      color:#10150f;
+      font-weight:900;
+      margin-bottom:14px;
     }
 
     .recruit-grid{
@@ -913,24 +716,6 @@
       flex-shrink:0;
     }
 
-    .rule-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:20px;
-    }
-
-    .rule-block{
-      padding:18px;
-      border-radius:18px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-    }
-
-    .rule-block h4{
-      margin-bottom:10px;
-      font-size:1.05rem;
-    }
-
     .note-box{
       margin-top:18px;
       padding:16px 18px;
@@ -939,72 +724,6 @@
       border:1px solid rgba(199,229,154,.18);
       color:var(--accent-3);
       line-height:1.7;
-    }
-
-    .freq-list{
-      display:grid;
-      gap:12px;
-      margin-top:12px;
-    }
-
-    .freq-item{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:center;
-      padding:12px 14px;
-      border-radius:14px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.06);
-      color:var(--muted);
-    }
-
-    .freq-item strong{
-      color:var(--accent-3);
-    }
-
-    .staff-card{
-      padding:22px;
-      border-radius:20px;
-      background:var(--panel-3);
-      border:1px solid rgba(255,255,255,.08);
-      box-shadow:var(--shadow);
-    }
-
-    .staff-role{
-      display:inline-block;
-      padding:8px 12px;
-      border-radius:999px;
-      background:rgba(199,229,154,.10);
-      border:1px solid rgba(199,229,154,.18);
-      color:var(--accent-3);
-      font-size:.85rem;
-      margin-bottom:12px;
-    }
-
-    .progress-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:20px;
-    }
-
-    .step-box{
-      padding:22px;
-      border-radius:20px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-    }
-
-    .step-number{
-      width:42px;
-      height:42px;
-      display:grid;
-      place-items:center;
-      border-radius:50%;
-      background:linear-gradient(135deg, var(--accent), var(--accent-2));
-      color:#10150f;
-      font-weight:900;
-      margin-bottom:14px;
     }
 
     .footer{
@@ -1028,13 +747,12 @@
 
     @media (max-width:980px){
       .hero-grid,
-      .grid-3,
       .grid-2,
+      .grid-3,
       .grid-4,
-      .discord-grid,
-      .recruit-grid,
       .rule-grid,
-      .progress-grid{
+      .progress-grid,
+      .recruit-grid{
         grid-template-columns:1fr;
       }
 
@@ -1043,41 +761,138 @@
       }
     }
 
-    @media (max-width:640px){
+    @media (max-width:768px){
+      .menu-toggle{
+        display:flex;
+      }
+
+      .main-nav{
+        display:none;
+        position:absolute;
+        top:calc(100% + 10px);
+        left:0;
+        right:0;
+        flex-direction:column;
+        align-items:stretch;
+        gap:10px;
+        padding:14px;
+        background:rgba(8,12,8,.97);
+        border:1px solid rgba(255,255,255,.10);
+        border-radius:22px;
+        box-shadow:var(--shadow);
+      }
+
+      .main-nav.open{
+        display:flex;
+      }
+
+      .main-nav a{
+        width:100%;
+        text-align:left;
+        border-radius:18px;
+        padding:16px 18px;
+      }
+
+      .brand-text span{
+        display:none;
+      }
+
+      .brand-text strong{
+        font-size:.92rem;
+      }
+
+      .hero{
+        padding:48px 0 20px;
+      }
+
       .hero-main,
       .hero-side,
       .card,
       .discord-banner,
-      .staff-card{
-        padding:20px;
-      }
-
-      .topbar-inner{
-        justify-content:center;
-      }
-
-      .nav{
-        justify-content:center;
-      }
-
-      .dropdown-menu{
-        right:auto;
-        left:0;
-        width:min(300px, 85vw);
+      .staff-card,
+      .step-box{
+        padding:18px;
       }
 
       h1{
-        font-size:2.4rem;
+        font-size:2rem;
+        line-height:1.05;
       }
 
-      .freq-item,
-      .timeline-item{
+      h2{
+        font-size:1.5rem;
+      }
+
+      h3{
+        font-size:1.1rem;
+      }
+
+      .lead{
+        font-size:.98rem;
+        line-height:1.65;
+      }
+
+      .hero-actions{
+        flex-direction:column;
+        align-items:stretch;
+      }
+
+      .btn{
+        width:100%;
+        text-align:center;
+      }
+
+      .timeline-item,
+      .check{
         flex-direction:column;
         align-items:flex-start;
       }
 
       .rank{
         min-width:auto;
+        width:auto;
+      }
+
+      .section-head{
+        align-items:flex-start;
+        margin-bottom:14px;
+      }
+
+      section{
+        padding:18px 0;
+      }
+
+      .container{
+        width:min(calc(100% - 20px), var(--max));
+      }
+    }
+
+    @media (max-width:480px){
+      h1{
+        font-size:1.8rem;
+      }
+
+      .hero-main,
+      .hero-side,
+      .card,
+      .staff-card,
+      .step-box{
+        padding:16px;
+      }
+
+      .main-nav{
+        padding:12px;
+      }
+
+      .main-nav a{
+        font-size:.95rem;
+        padding:13px 14px;
+      }
+
+      .brand-mark{
+        width:50px;
+        height:50px;
+        border-radius:16px;
       }
     }
   </style>
@@ -1096,34 +911,34 @@
   </div>
 
   <header class="topbar">
-  <div class="container topbar-inner">
-    <a href="#accueil" class="brand">
-      <div class="brand-mark">CH</div>
-      <div class="brand-text">
-        <strong>Commando Hubert</strong>
-        <span>Serveur MilSim • RP tactique • Forces spéciales</span>
-      </div>
-    </a>
+    <div class="container topbar-inner">
+      <a href="#accueil" class="brand">
+        <div class="brand-mark">CH</div>
+        <div class="brand-text">
+          <strong>Commando Hubert</strong>
+          <span>Serveur MilSim • RP tactique • Forces spéciales</span>
+        </div>
+      </a>
 
-    <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-    <nav class="nav" id="mobileMenu">
-      <a href="#accueil">Accueil</a>
-      <a href="#discord">Discord</a>
-      <a href="#rp">Règlement RP</a>
-      <a href="#etat-major">État-Major</a>
-      <a href="#grades">Grades</a>
-      <a href="#progression">Progression</a>
-      <a href="#formations">Formations</a>
-      <a href="#poles">Pôles</a>
-      <a href="#recrutement">Recrutement</a>
-    </nav>
-  </div>
-</header>
+      <nav class="main-nav" id="mobileMenu">
+        <a href="#accueil">Accueil</a>
+        <a href="#discord">Discord</a>
+        <a href="#rp">Règlement RP</a>
+        <a href="#etat-major">État-Major</a>
+        <a href="#grades">Grades</a>
+        <a href="#progression">Progression</a>
+        <a href="#formations">Formations</a>
+        <a href="#poles">Pôles</a>
+        <a href="#recrutement">Recrutement</a>
+      </nav>
+    </div>
+  </header>
 
   <main>
     <section class="hero" id="accueil">
@@ -1195,12 +1010,11 @@
               <h2>Discord opérationnel</h2>
               <p class="lead" style="max-width:none;">
                 Le Discord est le centre de commandement du serveur : annonces, organisation des opérations,
-                recrutement, validations de formations, suivi des membres, coordination des escouades et communication avec l’état-major.
+                recrutement, validations de formations, suivi des membres et communication avec l’état-major.
               </p>
 
               <div class="hero-actions">
                 <a href="https://discord.gg/4szYdWtHMH" target="_blank" class="btn btn-primary">Accéder au Discord</a>
-                <a href="#contact" class="btn btn-secondary">Contacter le staff</a>
               </div>
 
               <div class="tag-wrap">
@@ -1211,39 +1025,6 @@
                 <span class="tag">Organisation mission</span>
               </div>
             </div>
-<!--
-            <div class="discord-widget">
-              <div class="widget-head">
-                <strong>État du QG vocal</strong>
-                <div class="widget-dot"></div>
-              </div>
-
-              <div class="channel">
-                <strong># annonces-officielles</strong>
-                Informations importantes du serveur et calendrier des opérations.
-              </div>
-
-              <div class="channel">
-                <strong># recrutement</strong>
-                Arrivée des nouvelles recrues et suivi des candidatures.
-              </div>
-
-              <div class="channel">
-                <strong># formations</strong>
-                Programmes, validations et échanges avec les formateurs.
-              </div>
-
-              <div class="channel">
-                <strong>🎙 Briefing Opération</strong>
-                Préparation, départ mission et directives générales.
-              </div>
-
-              <div class="channel">
-                <strong>🎙 Commandement</strong>
-                Coordination des chefs de groupe, de section et de l’état-major.
-              </div>
-            </div>
-			-->
           </div>
         </div>
       </div>
@@ -1265,73 +1046,42 @@
           <div class="rule-grid">
             <div class="rule-block">
               <h4>Respect & Comportement</h4>
-              <p>
-                Respect entre joueurs obligatoire.<br>
-                Aucune insulte, toxicité ou propos discriminatoires
-                (racisme, sexisme, etc.) ne seront tolérés.
-              </p>
+              <p>Respect entre joueurs obligatoire.<br>Aucune insulte, toxicité ou propos discriminatoires (racisme, sexisme, etc.) ne seront tolérés.</p>
             </div>
 
             <div class="rule-block">
               <h4>Immersion RP</h4>
-              <p>
-                Jouez votre personnage.<br>
-                Pas de troll, pas de comportements absurdes.<br>
-                Utilisez un langage militaire crédible.<br>
-                Les discussions hors RP se font dans les espaces prévus.
-              </p>
+              <p>Jouez votre personnage.<br>Pas de troll, pas de comportements absurdes.<br>Utilisez un langage militaire crédible.<br>Les discussions hors RP se font dans les espaces prévus.</p>
             </div>
 
             <div class="rule-block">
               <h4>Communication Radio</h4>
-              <p>
-                Utilisez un langage clair et structuré.<br>
-                Exemple : « Alpha de Médic, deux blessés en Echo, soins en cours, terminé. »<br>
-                Pas de spam vocal, pas de blabla inutile en mission.
-              </p>
+              <p>Utilisez un langage clair et structuré.<br>Exemple : « Alpha de Médic, deux blessés en Echo, soins en cours, terminé. »<br>Pas de spam vocal, pas de blabla inutile en mission.</p>
             </div>
 
             <div class="rule-block">
               <h4>Hiérarchie & Ordres</h4>
-              <p>
-                Respect des grades et des chefs d’escouade.<br>
-                Obéissance obligatoire en mission.<br>
-                Pas d’initiatives solitaires sans ordre.
-              </p>
+              <p>Respect des grades et des chefs d’escouade.<br>Obéissance obligatoire en mission.<br>Pas d’initiatives solitaires sans ordre.</p>
             </div>
 
             <div class="rule-block">
               <h4>Conduite en opération</h4>
-              <p>
-                Pas de freekill, pas de TK.<br>
-                Les véhicules sont réservés aux rôles prévus.<br>
-                Le RP doit primer sur la performance pure.
-              </p>
+              <p>Pas de freekill, pas de TK.<br>Les véhicules sont réservés aux rôles prévus.<br>Le RP doit primer sur la performance pure.</p>
             </div>
 
             <div class="rule-block">
               <h4>Blessures & Médic RP</h4>
-              <p>
-                Toute blessure doit être jouée RP.<br>
-                Soins RP par médic uniquement.<br>
-                Pas de résurrection instantanée.<br>
-                Une mort RP peut être imposée par l’encadrement.
-              </p>
+              <p>Toute blessure doit être jouée RP.<br>Soins RP par médic uniquement.<br>Pas de résurrection instantanée.<br>Une mort RP peut être imposée par l’encadrement.</p>
             </div>
 
             <div class="rule-block">
               <h4>Méta & Power Gaming</h4>
-              <p>
-                Interdits : méta-gaming et power-gaming.<br>
-                Jouez honnêtement et de manière immersive.
-              </p>
+              <p>Interdits : méta-gaming et power-gaming.<br>Jouez honnêtement et de manière immersive.</p>
             </div>
 
             <div class="rule-block">
               <h4>Sanctions</h4>
-              <p>
-                En cas de non-respect : avertissement, kick ou ban selon la gravité.
-              </p>
+              <p>En cas de non-respect : avertissement, kick ou ban selon la gravité.</p>
             </div>
           </div>
 
@@ -1379,193 +1129,191 @@
       </div>
     </section>
 
-   <section id="grades">
-  <div class="container">
-    <div class="section-head">
-      <div>
-        <h2>Grades</h2>
-        <p>Hiérarchie, responsabilités, obtention des grades et formations associées.</p>
+    <section id="grades">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Grades</h2>
+            <p>Hiérarchie, responsabilités, obtention des grades et formations associées.</p>
+          </div>
+        </div>
+
+        <article class="card">
+          <div class="timeline">
+            <div class="timeline-category">🟥 Officiers Généraux</div>
+
+            <div class="timeline-item">
+              <div class="rank">(A)</div>
+              <div>
+                <h3>Amiral</h3>
+                <p><strong>Rôles / Responsabilités :</strong> Représente et coordonne le serveur jeu + Discord.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="rank">(VA)</div>
+              <div>
+                <h3>Vice Amiral</h3>
+                <p><strong>Rôles / Responsabilités :</strong> Organise et gère le serveur jeu + Discord avec les modérateurs ainsi que les retours tickets.</p>
+              </div>
+            </div>
+
+            <div class="timeline-category">🟫 Officiers Supérieurs</div>
+
+            <div class="timeline-item">
+              <div class="rank">(CDT)</div>
+              <div>
+                <h3>Capitaine de Corvette</h3>
+                <p><strong>Rôles / Responsabilités :</strong> Est auteur / co-auteur du scénario général et des possibilités de gameplay.</p>
+                <p><strong>Obtention grade :</strong> Présence permanente.</p>
+              </div>
+            </div>
+
+            <div class="timeline-category">🟧 Officiers Subalternes</div>
+
+            <div class="timeline-item">
+              <div class="rank">(CAP)</div>
+              <div>
+                <h3>Lieutenant de Vaisseau</h3>
+                <p><strong>Rôles / Responsabilités :</strong> Présence régulière, propose de nombreuses reco et opex, fort impact scénaristique.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="rank">(LTN)</div>
+              <div>
+                <h3>Enseigne de Vaisseau 1ère Classe</h3>
+                <p><strong>Rôles / Responsabilités :</strong> Présence régulière, propose de nombreuses reco et opex, léger impact scénaristique.</p>
+              </div>
+            </div>
+
+            <div class="timeline-category">🟨 Officiers Mariniers Supérieurs</div>
+
+            <div class="timeline-item">
+              <div class="rank">(MAJ)</div>
+              <div>
+                <h3>Major</h3>
+                <p><strong>Rôles / Responsabilités :</strong> Reporte les évolutions de grade aux supérieurs avant cérémonie.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="rank">(MP)</div>
+              <div>
+                <h3>Maitre Principal</h3>
+                <p><strong>Rôles / Responsabilités :</strong> Observe efficacement les évolutions des Mariniers SUB.</p>
+                <p><strong>Obtention grade :</strong> Mener à bien des reconnaissances et des opex régulièrement.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="rank">(PM)</div>
+              <div>
+                <h3>Premier Maitre</h3>
+                <p><strong>Rôles / Responsabilités :</strong> Observe efficacement les évolutions des membres d’équipage.</p>
+                <p><strong>Obtention grade :</strong> Chef de Section validée.</p>
+              </div>
+            </div>
+
+            <div class="timeline-category">🟪 Officiers Mariniers Subalternes</div>
+
+            <div class="timeline-item">
+              <div class="rank">(ME)</div>
+              <div>
+                <h3>Maitre</h3>
+                <p><strong>Rôles / Responsabilités :</strong> Devient formateur, obtient le rôle de second de chef de section.</p>
+                <p><strong>Formations disponibles :</strong> Chef de Section.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="rank">(SM)</div>
+              <div>
+                <h3>Second Maitre</h3>
+                <p><strong>Rôles / Responsabilités :</strong> Passage Officiers, prise de SL (10 pers. max).</p>
+                <p><strong>Obtention grade :</strong> Régularité de présence très recommandée.</p>
+              </div>
+            </div>
+
+            <div class="timeline-category">🟩 Équipage</div>
+
+            <div class="timeline-item">
+              <div class="rank">(QM1)</div>
+              <div>
+                <h3>Quartier Maitre 1ère Classe</h3>
+                <p><strong>Rôles / Responsabilités :</strong> Prise de SL (8 pers. max), rédaction des rapports (patrouilles / opex).</p>
+                <p><strong>Obtention grade :</strong> SL validée.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="rank">(QM2)</div>
+              <div>
+                <h3>Quartier Maitre 2nde Classe</h3>
+                <p><strong>Rôles / Responsabilités :</strong> Prise de second du SL.</p>
+                <p><strong>Obtention grade :</strong> JTAC validée.</p>
+                <p><strong>Formations disponibles :</strong> SL (Squad Leader).</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="rank">(MAT)</div>
+              <div>
+                <h3>Matelot Breveté</h3>
+                <p><strong>Rôles / Responsabilités :</strong> Rendre l’expérience coopérative et respectueuse entre joueurs.</p>
+                <p><strong>Obtention grade :</strong> Formations obligatoires validées.</p>
+                <p><strong>Formations disponibles :</strong> Permis B / C, Tireur de Précision, Tireur d’Élite, toutes les formations de spécialisation.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="rank">(MAT)</div>
+              <div>
+                <h3>Matelot</h3>
+                <p><strong>Rôles / Responsabilités :</strong> Savoir accueillir les nouveaux et remplir une fiche Planton.</p>
+                <p><strong>Obtention grade :</strong> 1 semaine d’activité en jeu.</p>
+                <p><strong>Formations disponibles :</strong> JTAC, Mitrailleur, Lance-Grenade, Anti-Char, Mécanicien Léger.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="rank">(M)</div>
+              <div>
+                <h3>Mousse</h3>
+                <p><strong>Rôles / Responsabilités :</strong> Prendre connaissance du fonctionnement, participer activement.</p>
+                <p><strong>Obtention grade :</strong> Validation par fiche Planton + présence sur Discord.</p>
+                <p><strong>Formations disponibles :</strong> CQB, Communications, Médicale Basique.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="rank">Recrue</div>
+              <div>
+                <h3>Recrue</h3>
+                <p>Premier statut d’arrivée avant l’intégration complète dans la hiérarchie.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="note-box">
+            <strong>Conditions générales d’obtention de grade :</strong><br>
+            • Un bon comportement<br>
+            • Une présence régulière<br>
+            • Un investissement pertinent<br>
+            • L’accompagnement et le soutien des nouveaux et des gradés inférieurs<br>
+            • Casiers vierges<br>
+            • Respect des paquetages<br>
+            • Et autres…
+          </div>
+
+          <div class="note-box">
+            <strong>Remises de grades :</strong><br>
+            Les remises de grades ont lieu officiellement 1 fois par mois.<br><br>
+            Les rôles / responsabilités sont induits dans les fonctions supérieures, mais la diversification des rôles permet une meilleure répartition des possibilités et une progression engageante et motivante.
+          </div>
+        </article>
       </div>
-    </div>
-
-    <article class="card">
-      <div class="timeline">
-
-        <div class="timeline-category">🟥 Officiers Généraux</div>
-
-        <div class="timeline-item">
-          <div class="rank">(A)</div>
-          <div>
-            <h3>Amiral</h3>
-            <p><strong>Rôles / Responsabilités :</strong> Représente et coordonne le serveur jeu + Discord.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="rank">(VA)</div>
-          <div>
-            <h3>Vice Amiral</h3>
-            <p><strong>Rôles / Responsabilités :</strong> Organise et gère le serveur jeu + Discord avec les modérateurs ainsi que les retours tickets.</p>
-          </div>
-        </div>
-
-        <div class="timeline-category">🟫 Officiers Supérieurs</div>
-
-        <div class="timeline-item">
-          <div class="rank">(CDT)</div>
-          <div>
-            <h3>Capitaine de Corvette</h3>
-            <p><strong>Rôles / Responsabilités :</strong> Est auteur / co-auteur du scénario général et des possibilités de gameplay.</p>
-            <p><strong>Obtention grade :</strong> Présence permanente.</p>
-          </div>
-        </div>
-
-        <div class="timeline-category">🟧 Officiers Subalternes</div>
-
-        <div class="timeline-item">
-          <div class="rank">(CAP)</div>
-          <div>
-            <h3>Lieutenant de Vaisseau</h3>
-            <p><strong>Rôles / Responsabilités :</strong> Présence régulière, propose de nombreuses reco et opex, fort impact scénaristique.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="rank">(LTN)</div>
-          <div>
-            <h3>Enseigne de Vaisseau 1ère Classe</h3>
-            <p><strong>Rôles / Responsabilités :</strong> Présence régulière, propose de nombreuses reco et opex, léger impact scénaristique.</p>
-          </div>
-        </div>
-
-        <div class="timeline-category">🟨 Officiers Mariniers Supérieurs</div>
-
-        <div class="timeline-item">
-          <div class="rank">(MAJ)</div>
-          <div>
-            <h3>Major</h3>
-            <p><strong>Rôles / Responsabilités :</strong> Reporte les évolutions de grade aux supérieurs avant cérémonie.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="rank">(MP)</div>
-          <div>
-            <h3>Maitre Principal</h3>
-            <p><strong>Rôles / Responsabilités :</strong> Observe efficacement les évolutions des Mariniers SUB.</p>
-            <p><strong>Obtention grade :</strong> Mener à bien des reconnaissances et des opex régulièrement.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="rank">(PM)</div>
-          <div>
-            <h3>Premier Maitre</h3>
-            <p><strong>Rôles / Responsabilités :</strong> Observe efficacement les évolutions des membres d’équipage.</p>
-            <p><strong>Obtention grade :</strong> Chef de Section validée.</p>
-          </div>
-        </div>
-
-        <div class="timeline-category">🟪 Officiers Mariniers Subalternes</div>
-
-        <div class="timeline-item">
-          <div class="rank">(ME)</div>
-          <div>
-            <h3>Maitre</h3>
-            <p><strong>Rôles / Responsabilités :</strong> Devient formateur, obtient le rôle de second de chef de section.</p>
-            <p><strong>Formations disponibles :</strong> Chef de Section.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="rank">(SM)</div>
-          <div>
-            <h3>Second Maitre</h3>
-            <p><strong>Rôles / Responsabilités :</strong> Passage Officiers, prise de SL (10 pers. max).</p>
-            <p><strong>Obtention grade :</strong> Régularité de présence très recommandée.</p>
-          </div>
-        </div>
-
-        <div class="timeline-category">🟩 Équipage</div>
-
-        <div class="timeline-item">
-          <div class="rank">(QM1)</div>
-          <div>
-            <h3>Quartier Maitre 1ère Classe</h3>
-            <p><strong>Rôles / Responsabilités :</strong> Prise de SL (8 pers. max), rédaction des rapports (patrouilles / opex).</p>
-            <p><strong>Obtention grade :</strong> SL validée.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="rank">(QM2)</div>
-          <div>
-            <h3>Quartier Maitre 2nde Classe</h3>
-            <p><strong>Rôles / Responsabilités :</strong> Prise de second du SL.</p>
-            <p><strong>Obtention grade :</strong> JTAC validée.</p>
-            <p><strong>Formations disponibles :</strong> SL (Squad Leader).</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="rank">(MAT)</div>
-          <div>
-            <h3>Matelot Breveté</h3>
-            <p><strong>Rôles / Responsabilités :</strong> Rendre l’expérience coopérative et respectueuse entre joueurs.</p>
-            <p><strong>Obtention grade :</strong> Formations obligatoires validées.</p>
-            <p><strong>Formations disponibles :</strong> Permis B / C, Tireur de Précision, Tireur d’Élite, toutes les formations de spécialisation.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="rank">(MAT)</div>
-          <div>
-            <h3>Matelot</h3>
-            <p><strong>Rôles / Responsabilités :</strong> Savoir accueillir les nouveaux et remplir une fiche Planton.</p>
-            <p><strong>Obtention grade :</strong> 1 semaine d’activité en jeu.</p>
-            <p><strong>Formations disponibles :</strong> JTAC, Mitrailleur, Lance-Grenade, Anti-Char, Mécanicien Léger.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="rank">(M)</div>
-          <div>
-            <h3>Mousse</h3>
-            <p><strong>Rôles / Responsabilités :</strong> Prendre connaissance du fonctionnement, participer activement.</p>
-            <p><strong>Obtention grade :</strong> Validation par fiche Planton + présence sur Discord.</p>
-            <p><strong>Formations disponibles :</strong> CQB, Communications, Médicale Basique.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="rank">Recrue</div>
-          <div>
-            <h3>Recrue</h3>
-            <p>Premier statut d’arrivée avant l’intégration complète dans la hiérarchie.</p>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="note-box">
-        <strong>Conditions générales d’obtention de grade :</strong><br>
-        • Un bon comportement<br>
-        • Une présence régulière<br>
-        • Un investissement pertinent<br>
-        • L’accompagnement et le soutien des nouveaux et des gradés inférieurs<br>
-        • Casiers vierges<br>
-        • Respect des paquetages<br>
-        • Et autres…
-      </div>
-
-      <div class="note-box">
-        <strong>Remises de grades :</strong><br>
-        Les remises de grades ont lieu officiellement 1 fois par mois.<br><br>
-        Les rôles / responsabilités sont induits dans les fonctions supérieures, mais la diversification des rôles permet une meilleure répartition des possibilités et une progression engageante et motivante.
-      </div>
-    </article>
-  </div>
-</section>
+    </section>
 
     <section id="progression">
       <div class="container">
@@ -1580,46 +1328,30 @@
           <div class="step-box">
             <div class="step-number">1</div>
             <h3>Mousse</h3>
-            <p>
-              À l’arrivée sur le serveur, le joueur débute au grade de <strong>Mousse</strong> pendant <strong>1 semaine</strong>.
-              Durant cette période, il doit valider les <strong>3 formations obligatoires</strong> :
-              Premiers Secours, CQB et Communications.
-            </p>
+            <p>À l’arrivée sur le serveur, le joueur débute au grade de <strong>Mousse</strong> pendant <strong>1 semaine</strong>. Durant cette période, il doit valider les <strong>3 formations obligatoires</strong> : Premiers Secours, CQB et Communications.</p>
           </div>
 
           <div class="step-box">
             <div class="step-number">2</div>
             <h3>Matelot</h3>
-            <p>
-              Après cette première étape, le joueur passe <strong>Matelot</strong> pour <strong>3 semaines</strong>.
-              Il peut alors commencer à accéder aux <strong>formations de spécialisation possibles</strong>
-              selon son implication et les besoins de l’unité.
-            </p>
+            <p>Après cette première étape, le joueur passe <strong>Matelot</strong> pour <strong>3 semaines</strong>. Il peut alors commencer à accéder aux <strong>formations de spécialisation possibles</strong> selon son implication et les besoins de l’unité.</p>
           </div>
 
           <div class="step-box">
             <div class="step-number">3</div>
             <h3>Matelot Breveté</h3>
-            <p>
-              Une fois cette phase validée, le joueur devient <strong>Matelot Breveté</strong>.
-              À ce stade, il peut accéder à <strong>toutes les formations de pôles disponibles</strong>
-              et s’investir pleinement dans son domaine.
-            </p>
+            <p>Une fois cette phase validée, le joueur devient <strong>Matelot Breveté</strong>. À ce stade, il peut accéder à <strong>toutes les formations de pôles disponibles</strong> et s’investir pleinement dans son domaine.</p>
           </div>
 
           <div class="step-box">
             <div class="step-number">4</div>
             <h3>Montée en grade</h3>
-            <p>
-              Ensuite, la <strong>montée en grade</strong> se fait selon les <strong>aptitudes</strong>,
-              le sérieux, la discipline, la présence, l’implication en mission et les capacités d’encadrement.
-            </p>
+            <p>Ensuite, la <strong>montée en grade</strong> se fait selon les <strong>aptitudes</strong>, le sérieux, la discipline, la présence, l’implication en mission et les capacités d’encadrement.</p>
           </div>
         </div>
 
         <div class="note-box">
-          Le brassard bleu correspond à la période de whitelist sur 7 jours complets d’activité en jeu.
-          La progression dépend du comportement, des formations validées, de l’implication et des besoins du commandement.
+          Le brassard bleu correspond à la période de whitelist sur 7 jours complets d’activité en jeu. La progression dépend du comportement, des formations validées, de l’implication et des besoins du commandement.
         </div>
       </div>
     </section>
@@ -1646,16 +1378,16 @@
 
           <article class="card">
             <div class="icon">♻️</div>
-            <h3>Formations Optionnelles / Perfectionnement / Spécialisations </h3>
+            <h3>Formations Optionnelles / Perfectionnement / Spécialisations</h3>
             <ul class="list">
               <li>Permis B</li>
               <li>Permis C</li>
-			  <li>(MG) Mitrailleur</li>
+              <li>(MG) Mitrailleur</li>
               <li>(LG) Lance Grenade</li>
               <li>(AT) Anti-Char</li>
               <li>Mécanicien Léger</li>
               <li>Tireur de Précision</li>
-              <li>Tireur d'Elite</li>
+              <li>Tireur d'Élite</li>
             </ul>
           </article>
 
@@ -1685,99 +1417,10 @@
         </div>
 
         <div class="note-box">
-          Toutes les formations ci-dessus peuvent être détaillées auprès des responsables de pôle ou des formateurs agréés.
-          Nous vous invitons à leur demander directement des détails sur BOP.
+          Toutes les formations ci-dessus peuvent être détaillées auprès des responsables de pôle ou des formateurs agréés. Nous vous invitons à leur demander directement des détails sur BOP.
         </div>
       </div>
     </section>
-<!--
-    <section id="radio">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Organisation des escouades & fréquences radio</h2>
-            <p>Répartition des brassards, escouades et canaux de communication tactiques.</p>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <article class="card">
-            <div class="icon">🪖</div>
-            <h3>Organisation des Escouades</h3>
-
-            <div class="freq-list">
-              <div class="freq-item">
-                <strong>Brassard Bleu 🔵</strong>
-                <span>@🪣(WL) 𝖶𝗁𝗂𝗍𝖾𝗅𝗂𝗌𝗍é durant 7 jours complets d'activité en jeu</span>
-              </div>
-
-              <div class="freq-item">
-                <strong>Brassard Violet 🟣</strong>
-                <span>Génie = 40 MHz radio</span>
-              </div>
-
-              <div class="freq-item">
-                <strong>Brassard Orange 🟠</strong>
-                <span>Alpha = 41 MHz radio</span>
-              </div>
-
-              <div class="freq-item">
-                <strong>Brassard Rouge 🔴</strong>
-                <span>Bravo = 42 MHz radio</span>
-              </div>
-
-              <div class="freq-item">
-                <strong>Brassard Vert 🟢</strong>
-                <span>Charlie = 43 MHz radio</span>
-              </div>
-
-              <div class="freq-item">
-                <strong>Brassard Jaune 🟡</strong>
-                <span>Delta = 44 MHz radio</span>
-              </div>
-
-              <div class="freq-item">
-                <strong>Brassard Blanc ⚪</strong>
-                <span>Médic</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="icon">📡</div>
-            <h3>Fréquences Radio</h3>
-
-            <div class="freq-list">
-              <div class="freq-item">
-                <strong>34 MHz</strong>
-                <span>InterSquad</span>
-              </div>
-
-              <div class="freq-item">
-                <strong>38 MHz</strong>
-                <span>Blindé</span>
-              </div>
-
-              <div class="freq-item">
-                <strong>39 MHz</strong>
-                <span>Support Hélicoptère</span>
-              </div>
-
-              <div class="freq-item">
-                <strong>48 MHz</strong>
-                <span>Communication Urgente</span>
-              </div>
-
-              <div class="freq-item">
-                <strong>50 MHz</strong>
-                <span>Etat Major</span>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
--->
 
     <section id="poles">
       <div class="container">
@@ -1824,12 +1467,12 @@
             <h3>GAS</h3>
             <p>Groupe d’Action Spécialisé dédié aux missions les plus exigeantes, actions ciblées, engagements spécifiques et haute valeur tactique.</p>
           </article>
-		  
-		  <article class="card">
-  <div class="icon">🚨</div>
-  <h3>Police Militaire</h3>
-  <p>Maintien de l’ordre interne, contrôle du respect des consignes, encadrement disciplinaire et appui à la sécurité des opérations.</p>
-</article>
+
+          <article class="card">
+            <div class="icon">🚨</div>
+            <h3>Police Militaire</h3>
+            <p>Maintien de l’ordre interne, contrôle du respect des consignes, encadrement disciplinaire et appui à la sécurité des opérations.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -1870,66 +1513,6 @@
         </div>
       </div>
     </section>
-<!--
-    <section id="medias">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Médias</h2>
-            <p>Une vitrine pour montrer l’ambiance, le sérieux et la qualité des opérations.</p>
-          </div>
-        </div>
-
-        <div class="grid-3">
-          <article class="card">
-            <div class="icon">📷</div>
-            <h3>Captures d’écran</h3>
-            <p>Ajoute ici les meilleurs moments de mission, entraînements, briefings et extractions.</p>
-          </article>
-
-          <article class="card">
-            <div class="icon">🎬</div>
-            <h3>Vidéos</h3>
-            <p>Présente des trailers, extraits d’opérations ou montages mettant en valeur ton serveur.</p>
-          </article>
-
-          <article class="card">
-            <div class="icon">📝</div>
-            <h3>Rapports de mission</h3>
-            <p>Publie des comptes-rendus RP pour donner plus de profondeur et de continuité à l’univers du serveur.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Contact</h2>
-            <p>Coordonnées principales du serveur.</p>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <article class="card">
-            <div class="icon">💬</div>
-            <h3>Discord officiel</h3>
-            <p><strong>Lien :</strong> https://discord.gg/4szYdWtHMH</p>
-            <p>Le meilleur point d’entrée pour rejoindre la communauté, suivre les annonces et lancer le recrutement.</p>
-          </article>
-
-          <article class="card">
-            <div class="icon">📩</div>
-            <h3>Contact staff</h3>
-            <p><strong>Email :</strong> contact@commandohubert.fr</p>
-            <p>Tu peux remplacer cet email par une vraie adresse ou par les pseudos Discord du commandement.</p>
-          </article>
-	
-        </div>
-      </div>
-    </section>
-		  -->
   </main>
 
   <footer class="footer">
@@ -1939,36 +1522,35 @@
     </div>
   </footer>
 
- <script>
-  const menuToggle = document.getElementById('menuToggle');
-  const mobileMenu = document.getElementById('mobileMenu');
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
 
-  menuToggle.addEventListener('click', function () {
-    menuToggle.classList.toggle('active');
-    mobileMenu.classList.toggle('open');
-
-    const expanded = menuToggle.classList.contains('active');
-    menuToggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-  });
-
-  document.querySelectorAll('#mobileMenu a').forEach(link => {
-    link.addEventListener('click', function () {
-      menuToggle.classList.remove('active');
-      mobileMenu.classList.remove('open');
-      menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.addEventListener("click", function () {
+      menuToggle.classList.toggle("active");
+      mobileMenu.classList.toggle("open");
+      const expanded = menuToggle.classList.contains("active");
+      menuToggle.setAttribute("aria-expanded", expanded ? "true" : "false");
     });
-  });
 
-  document.addEventListener('click', function (e) {
-    const isClickInsideMenu = mobileMenu.contains(e.target);
-    const isClickOnButton = menuToggle.contains(e.target);
+    document.querySelectorAll("#mobileMenu a").forEach(link => {
+      link.addEventListener("click", function () {
+        menuToggle.classList.remove("active");
+        mobileMenu.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      });
+    });
 
-    if (!isClickInsideMenu && !isClickOnButton) {
-      menuToggle.classList.remove('active');
-      mobileMenu.classList.remove('open');
-      menuToggle.setAttribute('aria-expanded', 'false');
-    }
-  });
-</script>
+    document.addEventListener("click", function (e) {
+      const clickOnButton = menuToggle.contains(e.target);
+      const clickInMenu = mobileMenu.contains(e.target);
+
+      if (!clickOnButton && !clickInMenu) {
+        menuToggle.classList.remove("active");
+        mobileMenu.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  </script>
 </body>
 </html>
