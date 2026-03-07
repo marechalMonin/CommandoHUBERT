@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Commando Hubert | Site officiel</title>
-  <meta name="description" content="Serveur Commando Hubert - MilSim, RP tactique, hiérarchie, recrutement et pôles spécialisés." />
+  <meta name="description" content="Serveur Commando Hubert - MilSim, RP tactique, hiérarchie, formations, recrutement et organisation tactique." />
   <style>
     :root{
       --bg:#101711;
@@ -24,7 +24,7 @@
       --shadow:0 18px 50px rgba(0,0,0,.32);
       --radius:24px;
       --radius-sm:16px;
-      --max:1280px;
+      --max:1320px;
     }
 
     *{box-sizing:border-box}
@@ -144,8 +144,7 @@
       font-weight:900;
       letter-spacing:.08em;
       color:#11170f;
-      background:
-        linear-gradient(135deg, var(--accent), var(--accent-2));
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
       box-shadow:
         0 8px 24px rgba(199,229,154,.18),
         inset 0 1px 0 rgba(255,255,255,.32);
@@ -205,7 +204,7 @@
       position:absolute;
       top:calc(100% + 10px);
       right:0;
-      width:300px;
+      width:330px;
       padding:10px;
       border-radius:18px;
       background:rgba(16,24,16,.98);
@@ -317,7 +316,11 @@
       border-radius:50%;
       background:radial-gradient(circle, rgba(199,229,154,.18), transparent 65%);
     }
-
+	
+	.timeline-item p{
+		margin: 6px 0 0;
+	}
+	
     .eyebrow{
       display:inline-flex;
       align-items:center;
@@ -493,6 +496,12 @@
       gap:20px;
     }
 
+    .grid-4{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:20px;
+    }
+
     .card{
       padding:22px;
       transition:.25s ease;
@@ -521,7 +530,8 @@
 
     .card p,
     .card li,
-    .timeline-item p{
+    .timeline-item p,
+    .rule-block p{
       color:var(--muted);
       line-height:1.68;
     }
@@ -623,6 +633,17 @@
       gap:14px;
     }
 
+    .timeline-category{
+      margin-top:10px;
+      padding:14px 16px;
+      border-radius:16px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      font-size:1rem;
+      color:var(--accent-3);
+      font-weight:700;
+    }
+
     .timeline-item{
       display:flex;
       gap:14px;
@@ -642,50 +663,7 @@
       color:var(--accent-3);
       font-weight:700;
       border:1px solid rgba(231,245,205,.16);
-    }
-
-    .insignia-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:18px;
-    }
-
-    .insignia{
-      padding:20px;
-      border-radius:20px;
-      background:var(--panel-3);
-      border:1px solid rgba(255,255,255,.08);
-      text-align:center;
-      box-shadow:var(--shadow);
-    }
-
-    .insignia-badge{
-      width:84px;
-      height:84px;
-      margin:0 auto 14px;
-      border-radius:22px;
-      background:
-        linear-gradient(135deg, rgba(219,194,124,.28), rgba(199,229,154,.18));
-      border:1px solid rgba(255,255,255,.12);
-      position:relative;
-      display:grid;
-      place-items:center;
-      font-size:2rem;
-      color:var(--gold);
-    }
-
-    .insignia-badge::before{
-      content:"";
-      position:absolute;
-      inset:10px;
-      border:1px solid rgba(255,255,255,.16);
-      border-radius:16px;
-    }
-
-    .insignia p{
-      color:var(--muted);
-      margin-bottom:0;
-      line-height:1.6;
+      flex-shrink:0;
     }
 
     .recruit-grid{
@@ -723,6 +701,100 @@
       flex-shrink:0;
     }
 
+    .rule-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:20px;
+    }
+
+    .rule-block{
+      padding:18px;
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .rule-block h4{
+      margin-bottom:10px;
+      font-size:1.05rem;
+    }
+
+    .note-box{
+      margin-top:18px;
+      padding:16px 18px;
+      border-radius:16px;
+      background:rgba(199,229,154,.08);
+      border:1px solid rgba(199,229,154,.18);
+      color:var(--accent-3);
+      line-height:1.7;
+    }
+
+    .freq-list{
+      display:grid;
+      gap:12px;
+      margin-top:12px;
+    }
+
+    .freq-item{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      padding:12px 14px;
+      border-radius:14px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+    }
+
+    .freq-item strong{
+      color:var(--accent-3);
+    }
+
+    .staff-card{
+      padding:22px;
+      border-radius:20px;
+      background:var(--panel-3);
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:var(--shadow);
+    }
+
+    .staff-role{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(199,229,154,.10);
+      border:1px solid rgba(199,229,154,.18);
+      color:var(--accent-3);
+      font-size:.85rem;
+      margin-bottom:12px;
+    }
+
+    .progress-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:20px;
+    }
+
+    .step-box{
+      padding:22px;
+      border-radius:20px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .step-number{
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
+      color:#10150f;
+      font-weight:900;
+      margin-bottom:14px;
+    }
+
     .footer{
       margin-top:42px;
       padding:28px 0 36px;
@@ -746,9 +818,11 @@
       .hero-grid,
       .grid-3,
       .grid-2,
+      .grid-4,
       .discord-grid,
       .recruit-grid,
-      .insignia-grid{
+      .rule-grid,
+      .progress-grid{
         grid-template-columns:1fr;
       }
 
@@ -762,7 +836,7 @@
       .hero-side,
       .card,
       .discord-banner,
-      .insignia{
+      .staff-card{
         padding:20px;
       }
 
@@ -783,6 +857,16 @@
       h1{
         font-size:2.4rem;
       }
+
+      .freq-item,
+      .timeline-item{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .rank{
+        min-width:auto;
+      }
     }
   </style>
 </head>
@@ -791,11 +875,12 @@
   <div class="quick-nav">
     <a href="#accueil" title="Accueil">🏠</a>
     <a href="#discord" title="Discord">💬</a>
-    <a href="#rp" title="RP">📜</a>
-    <a href="#grades" title="Gradés">🎖️</a>
-    <a href="#poles" title="Pôles">🪖</a>
+    <a href="#rp" title="Règlement RP">📜</a>
+    <a href="#etat-major" title="État-Major">⭐</a>
+    <a href="#grades" title="Grades">🎖️</a>
+    <a href="#progression" title="Progression">🧭</a>
+    <a href="#formations" title="Formations">📘</a>
     <a href="#recrutement" title="Recrutement">✅</a>
-    <a href="#contact" title="Contact">📩</a>
   </div>
 
   <header class="topbar">
@@ -811,19 +896,22 @@
       <nav class="nav">
         <a href="#accueil">Accueil</a>
         <a href="#discord">Discord</a>
-        <a href="#grades">Gradés</a>
-        <a href="#recrutement">Recrutement</a>
+        <a href="#grades">Grades</a>
+        <a href="#progression">Progression</a>
+        <a href="#formations">Formations</a>
 
         <div class="dropdown" id="dropdownMenu">
           <button class="dropbtn" id="dropdownBtn">Pages ▼</button>
           <div class="dropdown-menu">
-            <a href="#rp">Informations RP<small>règles, ambiance, fonctionnement</small></a>
-            <a href="#grades">Gradés<small>hiérarchie et responsabilités</small></a>
-            <a href="#insignes">Insignes<small>présentation visuelle des rangs</small></a>
+            <a href="#rp">Règlement RP<small>règles, immersion et discipline</small></a>
+            <a href="#etat-major">État-Major<small>commandement et encadrement</small></a>
+            <a href="#grades">Grades<small>hiérarchie navale et progression</small></a>
+            <a href="#progression">Whitelist & progression<small>intégration et évolution</small></a>
+            <a href="#formations">Formations<small>obligatoires, options et spécialisations</small></a>
             <a href="#poles">Pôles<small>spécialisations tactiques</small></a>
             <a href="#recrutement">Recrutement<small>conditions et intégration</small></a>
             <a href="#medias">Médias<small>captures, vidéos, rapports</small></a>
-            <a href="#contact">Contact<small>Discord, staff, email</small></a>
+           <!-- <a href="#contact">Contact<small>Discord, staff, email</small></a> -->
           </div>
         </div>
       </nav>
@@ -838,21 +926,19 @@
           <h1>Commando Hubert</h1>
 
           <p class="lead">
-            Un serveur <strong>MilSim / RP militaire</strong> pensé pour les joueurs qui cherchent une ambiance
-            sérieuse, structurée et immersive autour d’opérations inspirées des forces spéciales.
+            Un serveur <strong>MilSim / RP militaire</strong> pensé pour les joueurs recherchant une ambiance
+            sérieuse, structurée et immersive, avec hiérarchie, formations, progression et organisation tactique complète.
           </p>
 
           <p class="lead">
-            Infiltration, assaut, défense, reconnaissance, coordination radio et commandement : chaque mission
-            repose sur l’organisation, le sang-froid et le travail d’équipe.
+            Infiltration, assaut, défense, reconnaissance, coordination radio, chaîne de commandement et
+            spécialisation par pôle : chaque mission repose sur la cohésion, l’exécution et le respect des consignes.
           </p>
 
           <div class="hero-actions">
-            <a href="https://discord.gg/tonserveur" target="_blank" class="btn btn-primary">Rejoindre le Discord</a>
-            <a href="#rp" class="btn btn-secondary">Voir les informations RP</a>
+            <a href="https://discord.gg/4szYdWtHMH" target="_blank" class="btn btn-primary">Rejoindre le Discord</a>
+            <a href="#rp" class="btn btn-secondary">Voir le règlement RP</a>
           </div>
-
-          <div class="hero-note">Pense à remplacer le lien Discord, les textes et les rangs par ceux de ton vrai serveur.</div>
 
           <div class="hero-stats">
             <div class="stat">
@@ -878,17 +964,17 @@
 
           <div class="info-box">
             <strong>Ambiance</strong>
-            <span>Discipline, cohésion, immersion, organisation et esprit de corps.</span>
+            <span>Discipline, cohésion, immersion, esprit de corps et sérieux en opération.</span>
           </div>
 
           <div class="info-box">
             <strong>Objectif</strong>
-            <span>Créer une unité stable, sérieuse et immersive avec de vrais rôles utiles sur le terrain.</span>
+            <span>Créer une unité stable, crédible et immersive avec une vraie progression et un encadrement solide.</span>
           </div>
 
           <div class="info-box">
             <strong>Niveau attendu</strong>
-            <span>Motivation, écoute, respect des consignes et volonté de progresser en équipe.</span>
+            <span>Motivation, écoute, respect des consignes, présence vocale et volonté de progresser en équipe.</span>
           </div>
         </div>
       </div>
@@ -902,11 +988,11 @@
               <h2>Discord opérationnel</h2>
               <p class="lead" style="max-width:none;">
                 Le Discord est le centre de commandement du serveur : annonces, organisation des opérations,
-                briefings, recrutement, suivi des membres, communication avec les gradés et vie générale de l’unité.
+                recrutement, validations de formations, suivi des membres, coordination des escouades et communication avec l’état-major.
               </p>
 
               <div class="hero-actions">
-                <a href="https://discord.gg/tonserveur" target="_blank" class="btn btn-primary">Accéder au Discord</a>
+                <a href="https://discord.gg/4szYdWtHMH" target="_blank" class="btn btn-primary">Accéder au Discord</a>
                 <a href="#contact" class="btn btn-secondary">Contacter le staff</a>
               </div>
 
@@ -914,11 +1000,11 @@
                 <span class="tag">Annonces</span>
                 <span class="tag">Briefings</span>
                 <span class="tag">Recrutement</span>
+                <span class="tag">Formations</span>
                 <span class="tag">Organisation mission</span>
-                <span class="tag">Vie du serveur</span>
               </div>
             </div>
-
+<!--
             <div class="discord-widget">
               <div class="widget-head">
                 <strong>État du QG vocal</strong>
@@ -927,24 +1013,30 @@
 
               <div class="channel">
                 <strong># annonces-officielles</strong>
-                Infos importantes du serveur et calendrier des opérations.
+                Informations importantes du serveur et calendrier des opérations.
               </div>
 
               <div class="channel">
                 <strong># recrutement</strong>
-                Entrée des nouvelles recrues et suivi de candidature.
+                Arrivée des nouvelles recrues et suivi des candidatures.
+              </div>
+
+              <div class="channel">
+                <strong># formations</strong>
+                Programmes, validations et échanges avec les formateurs.
               </div>
 
               <div class="channel">
                 <strong>🎙 Briefing Opération</strong>
-                Salon vocal pour préparation et départ mission.
+                Préparation, départ mission et directives générales.
               </div>
 
               <div class="channel">
                 <strong>🎙 Commandement</strong>
-                Coordination des chefs de groupe et staff.
+                Coordination des chefs de groupe, de section et de l’état-major.
               </div>
             </div>
+			-->
           </div>
         </div>
       </div>
@@ -954,168 +1046,583 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>Informations RP</h2>
+            <h2>Règlement RP</h2>
             <p>Le cadre nécessaire pour garder un serveur propre, crédible et cohérent.</p>
           </div>
         </div>
 
-        <div class="grid-2">
-          <article class="card">
-            <div class="icon">📜</div>
-            <h3>Règles principales</h3>
-            <ul class="list">
-              <li>Respect obligatoire entre tous les membres</li>
-              <li>Respect de la hiérarchie et des décisions de commandement</li>
-              <li>Immersion sérieuse en mission</li>
-              <li>Communication claire, utile et disciplinée</li>
-              <li>Pas de troll, d’anti-jeu ou de comportement toxique</li>
-            </ul>
-          </article>
-
-          <article class="card">
-            <div class="icon">🎯</div>
-            <h3>Philosophie du serveur</h3>
-            <ul class="list">
-              <li>Le collectif passe avant l’individuel</li>
-              <li>Chaque rôle doit servir l’équipe</li>
-              <li>Le sérieux améliore les opérations</li>
-              <li>La discipline renforce l’immersion RP</li>
-              <li>La progression se mérite par l’implication</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="grades">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Gradés</h2>
-            <p>Exemple de chaîne hiérarchique à adapter à ta structure réelle.</p>
-          </div>
-        </div>
-
         <article class="card">
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="rank">Recrue</div>
-              <div>
-                <h3>Phase d’intégration</h3>
-                <p>Découvre le règlement, l’ambiance, les bases tactiques et le fonctionnement général du serveur.</p>
-              </div>
+          <div class="icon">📜</div>
+          <h3>📜 RÈGLEMENT RP – COMMANDO HUBERT</h3>
+
+          <div class="rule-grid">
+            <div class="rule-block">
+              <h4>Respect & Comportement</h4>
+              <p>
+                Respect entre joueurs obligatoire.<br>
+                Aucune insulte, toxicité ou propos discriminatoires
+                (racisme, sexisme, etc.) ne seront tolérés.
+              </p>
             </div>
 
-            <div class="timeline-item">
-              <div class="rank">Opérateur</div>
-              <div>
-                <h3>Membre actif</h3>
-                <p>Participe aux missions, applique les consignes, connaît les bases et tient correctement son rôle.</p>
-              </div>
+            <div class="rule-block">
+              <h4>Immersion RP</h4>
+              <p>
+                Jouez votre personnage.<br>
+                Pas de troll, pas de comportements absurdes.<br>
+                Utilisez un langage militaire crédible.<br>
+                Les discussions hors RP se font dans les espaces prévus.
+              </p>
             </div>
 
-            <div class="timeline-item">
-              <div class="rank">Chef d’équipe</div>
-              <div>
-                <h3>Encadrement terrain</h3>
-                <p>Dirige une escouade, relaie les ordres, maintient la cohésion et assure l’exécution de la mission.</p>
-              </div>
+            <div class="rule-block">
+              <h4>Communication Radio</h4>
+              <p>
+                Utilisez un langage clair et structuré.<br>
+                Exemple : « Alpha de Médic, deux blessés en Echo, soins en cours, terminé. »<br>
+                Pas de spam vocal, pas de blabla inutile en mission.
+              </p>
             </div>
 
-            <div class="timeline-item">
-              <div class="rank">Officier</div>
-              <div>
-                <h3>Commandement</h3>
-                <p>Prépare les opérations, distribue les rôles, définit les objectifs et coordonne les différents pôles.</p>
-              </div>
+            <div class="rule-block">
+              <h4>Hiérarchie & Ordres</h4>
+              <p>
+                Respect des grades et des chefs d’escouade.<br>
+                Obéissance obligatoire en mission.<br>
+                Pas d’initiatives solitaires sans ordre.
+              </p>
             </div>
+
+            <div class="rule-block">
+              <h4>Conduite en opération</h4>
+              <p>
+                Pas de freekill, pas de TK.<br>
+                Les véhicules sont réservés aux rôles prévus.<br>
+                Le RP doit primer sur la performance pure.
+              </p>
+            </div>
+
+            <div class="rule-block">
+              <h4>Blessures & Médic RP</h4>
+              <p>
+                Toute blessure doit être jouée RP.<br>
+                Soins RP par médic uniquement.<br>
+                Pas de résurrection instantanée.<br>
+                Une mort RP peut être imposée par l’encadrement.
+              </p>
+            </div>
+
+            <div class="rule-block">
+              <h4>Méta & Power Gaming</h4>
+              <p>
+                Interdits : méta-gaming et power-gaming.<br>
+                Jouez honnêtement et de manière immersive.
+              </p>
+            </div>
+
+            <div class="rule-block">
+              <h4>Sanctions</h4>
+              <p>
+                En cas de non-respect : avertissement, kick ou ban selon la gravité.
+              </p>
+            </div>
+          </div>
+
+          <div class="note-box">
+            🎖️ Rejoindre Commando Hubert, c’est incarner l’élite. Honore ton rôle, ton équipe et ton RP.
           </div>
         </article>
       </div>
     </section>
 
-    <section id="insignes">
+    <section id="etat-major">
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>Insignes & rangs</h2>
-            <p>Une présentation visuelle plus premium pour les grades principaux.</p>
+            <h2>État-Major</h2>
+            <p>Structure de commandement et encadrement de l’unité.</p>
           </div>
         </div>
 
-        <div class="insignia-grid">
-          <div class="insignia">
-            <div class="insignia-badge">✦</div>
-            <h3>Recrue</h3>
-            <p>Nouveau membre en phase de découverte et d’apprentissage.</p>
+        <div class="grid-4">
+          <div class="staff-card">
+            <div class="staff-role">Commandement suprême</div>
+            <h3>Amiral</h3>
+            <p>Direction générale de l’unité, vision stratégique, validation des orientations majeures et autorité principale.</p>
           </div>
 
-          <div class="insignia">
-            <div class="insignia-badge">✦✦</div>
-            <h3>Opérateur</h3>
-            <p>Membre formé, actif et intégré dans les opérations.</p>
+          <div class="staff-card">
+            <div class="staff-role">Adjoint commandement</div>
+            <h3>Vice Amiral</h3>
+            <p>Appui direct au commandement, supervision des pôles et maintien de la cohérence globale du serveur.</p>
           </div>
 
-          <div class="insignia">
-            <div class="insignia-badge">⬟</div>
-            <h3>Chef d’équipe</h3>
-            <p>Responsable tactique d’un groupe sur le terrain.</p>
+          <div class="staff-card">
+            <div class="staff-role">Encadrement supérieur</div>
+            <h3>Capitaine de Corvette</h3>
+            <p>Organisation avancée, gestion des éléments cadres, conduite des opérations et suivi des effectifs.</p>
           </div>
 
-          <div class="insignia">
-            <div class="insignia-badge">★</div>
-            <h3>Officier</h3>
-            <p>Encadrement supérieur et pilotage global des missions.</p>
+          <div class="staff-card">
+            <div class="staff-role">Terrain & exécution</div>
+            <h3>Officiers / cadres</h3>
+            <p>Application des ordres, commandement terrain, gestion des escouades, briefings et discipline opérationnelle.</p>
           </div>
         </div>
       </div>
     </section>
+
+   <section id="grades">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Grades</h2>
+        <p>Hiérarchie, responsabilités, obtention des grades et formations associées.</p>
+      </div>
+    </div>
+
+    <article class="card">
+      <div class="timeline">
+
+        <div class="timeline-category">🟥 Officiers Généraux</div>
+
+        <div class="timeline-item">
+          <div class="rank">(A)</div>
+          <div>
+            <h3>Amiral</h3>
+            <p><strong>Rôles / Responsabilités :</strong> Représente et coordonne le serveur jeu + Discord.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="rank">(VA)</div>
+          <div>
+            <h3>Vice Amiral</h3>
+            <p><strong>Rôles / Responsabilités :</strong> Organise et gère le serveur jeu + Discord avec les modérateurs ainsi que les retours tickets.</p>
+          </div>
+        </div>
+
+        <div class="timeline-category">🟫 Officiers Supérieurs</div>
+
+        <div class="timeline-item">
+          <div class="rank">(CDT)</div>
+          <div>
+            <h3>Capitaine de Corvette</h3>
+            <p><strong>Rôles / Responsabilités :</strong> Est auteur / co-auteur du scénario général et des possibilités de gameplay.</p>
+            <p><strong>Obtention grade :</strong> Présence permanente.</p>
+          </div>
+        </div>
+
+        <div class="timeline-category">🟧 Officiers Subalternes</div>
+
+        <div class="timeline-item">
+          <div class="rank">(CAP)</div>
+          <div>
+            <h3>Lieutenant de Vaisseau</h3>
+            <p><strong>Rôles / Responsabilités :</strong> Présence régulière, propose de nombreuses reco et opex, fort impact scénaristique.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="rank">(LTN)</div>
+          <div>
+            <h3>Enseigne de Vaisseau 1ère Classe</h3>
+            <p><strong>Rôles / Responsabilités :</strong> Présence régulière, propose de nombreuses reco et opex, léger impact scénaristique.</p>
+          </div>
+        </div>
+
+        <div class="timeline-category">🟨 Officiers Mariniers Supérieurs</div>
+
+        <div class="timeline-item">
+          <div class="rank">(MAJ)</div>
+          <div>
+            <h3>Major</h3>
+            <p><strong>Rôles / Responsabilités :</strong> Reporte les évolutions de grade aux supérieurs avant cérémonie.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="rank">(MP)</div>
+          <div>
+            <h3>Maitre Principal</h3>
+            <p><strong>Rôles / Responsabilités :</strong> Observe efficacement les évolutions des Mariniers SUB.</p>
+            <p><strong>Obtention grade :</strong> Mener à bien des reconnaissances et des opex régulièrement.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="rank">(PM)</div>
+          <div>
+            <h3>Premier Maitre</h3>
+            <p><strong>Rôles / Responsabilités :</strong> Observe efficacement les évolutions des membres d’équipage.</p>
+            <p><strong>Obtention grade :</strong> Chef de Section validée.</p>
+          </div>
+        </div>
+
+        <div class="timeline-category">🟪 Officiers Mariniers Subalternes</div>
+
+        <div class="timeline-item">
+          <div class="rank">(ME)</div>
+          <div>
+            <h3>Maitre</h3>
+            <p><strong>Rôles / Responsabilités :</strong> Devient formateur, obtient le rôle de second de chef de section.</p>
+            <p><strong>Formations disponibles :</strong> Chef de Section.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="rank">(SM)</div>
+          <div>
+            <h3>Second Maitre</h3>
+            <p><strong>Rôles / Responsabilités :</strong> Passage Officiers, prise de SL (10 pers. max).</p>
+            <p><strong>Obtention grade :</strong> Régularité de présence très recommandée.</p>
+          </div>
+        </div>
+
+        <div class="timeline-category">🟩 Équipage</div>
+
+        <div class="timeline-item">
+          <div class="rank">(QM1)</div>
+          <div>
+            <h3>Quartier Maitre 1ère Classe</h3>
+            <p><strong>Rôles / Responsabilités :</strong> Prise de SL (8 pers. max), rédaction des rapports (patrouilles / opex).</p>
+            <p><strong>Obtention grade :</strong> SL validée.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="rank">(QM2)</div>
+          <div>
+            <h3>Quartier Maitre 2nde Classe</h3>
+            <p><strong>Rôles / Responsabilités :</strong> Prise de second du SL.</p>
+            <p><strong>Obtention grade :</strong> JTAC validée.</p>
+            <p><strong>Formations disponibles :</strong> SL (Squad Leader).</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="rank">(MAT)</div>
+          <div>
+            <h3>Matelot Breveté</h3>
+            <p><strong>Rôles / Responsabilités :</strong> Rendre l’expérience coopérative et respectueuse entre joueurs.</p>
+            <p><strong>Obtention grade :</strong> Formations obligatoires validées.</p>
+            <p><strong>Formations disponibles :</strong> Permis B / C, Tireur de Précision, Tireur d’Élite, toutes les formations de spécialisation.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="rank">(MAT)</div>
+          <div>
+            <h3>Matelot</h3>
+            <p><strong>Rôles / Responsabilités :</strong> Savoir accueillir les nouveaux et remplir une fiche Planton.</p>
+            <p><strong>Obtention grade :</strong> 1 semaine d’activité en jeu.</p>
+            <p><strong>Formations disponibles :</strong> JTAC, Mitrailleur, Lance-Grenade, Anti-Char, Mécanicien Léger.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="rank">(M)</div>
+          <div>
+            <h3>Mousse</h3>
+            <p><strong>Rôles / Responsabilités :</strong> Prendre connaissance du fonctionnement, participer activement.</p>
+            <p><strong>Obtention grade :</strong> Validation par fiche Planton + présence sur Discord.</p>
+            <p><strong>Formations disponibles :</strong> CQB, Communications, Médicale Basique.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="rank">Recrue</div>
+          <div>
+            <h3>Recrue</h3>
+            <p>Premier statut d’arrivée avant l’intégration complète dans la hiérarchie.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="note-box">
+        <strong>Conditions générales d’obtention de grade :</strong><br>
+        • Un bon comportement<br>
+        • Une présence régulière<br>
+        • Un investissement pertinent<br>
+        • L’accompagnement et le soutien des nouveaux et des gradés inférieurs<br>
+        • Casiers vierges<br>
+        • Respect des paquetages<br>
+        • Et autres…
+      </div>
+
+      <div class="note-box">
+        <strong>Remises de grades :</strong><br>
+        Les remises de grades ont lieu officiellement 1 fois par mois.<br><br>
+        Les rôles / responsabilités sont induits dans les fonctions supérieures, mais la diversification des rôles permet une meilleure répartition des possibilités et une progression engageante et motivante.
+      </div>
+    </article>
+  </div>
+</section>
+
+    <section id="progression">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Whitelist & progression</h2>
+            <p>Parcours d’intégration et évolution d’un membre au sein de l’unité.</p>
+          </div>
+        </div>
+
+        <div class="progress-grid">
+          <div class="step-box">
+            <div class="step-number">1</div>
+            <h3>Mousse</h3>
+            <p>
+              À l’arrivée sur le serveur, le joueur débute au grade de <strong>Mousse</strong> pendant <strong>1 semaine</strong>.
+              Durant cette période, il doit valider les <strong>3 formations obligatoires</strong> :
+              Premiers Secours, CQB et Communications.
+            </p>
+          </div>
+
+          <div class="step-box">
+            <div class="step-number">2</div>
+            <h3>Matelot</h3>
+            <p>
+              Après cette première étape, le joueur passe <strong>Matelot</strong> pour <strong>3 semaines</strong>.
+              Il peut alors commencer à accéder aux <strong>formations de spécialisation possibles</strong>
+              selon son implication et les besoins de l’unité.
+            </p>
+          </div>
+
+          <div class="step-box">
+            <div class="step-number">3</div>
+            <h3>Matelot Breveté</h3>
+            <p>
+              Une fois cette phase validée, le joueur devient <strong>Matelot Breveté</strong>.
+              À ce stade, il peut accéder à <strong>toutes les formations de pôles disponibles</strong>
+              et s’investir pleinement dans son domaine.
+            </p>
+          </div>
+
+          <div class="step-box">
+            <div class="step-number">4</div>
+            <h3>Montée en grade</h3>
+            <p>
+              Ensuite, la <strong>montée en grade</strong> se fait selon les <strong>aptitudes</strong>,
+              le sérieux, la discipline, la présence, l’implication en mission et les capacités d’encadrement.
+            </p>
+          </div>
+        </div>
+
+        <div class="note-box">
+          Le brassard bleu correspond à la période de whitelist sur 7 jours complets d’activité en jeu.
+          La progression dépend du comportement, des formations validées, de l’implication et des besoins du commandement.
+        </div>
+      </div>
+    </section>
+
+    <section id="formations">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Formations</h2>
+            <p>Liste des formations disponibles dans l’ordre de priorité et d’accès.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <div class="icon">🛑</div>
+            <h3>Formations Obligatoires</h3>
+            <ul class="list">
+              <li>Premiers Secours</li>
+              <li>CQB</li>
+              <li>Communications</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <div class="icon">♻️</div>
+            <h3>Formations Optionnelles / Perfectionnement / Spécialisations </h3>
+            <ul class="list">
+              <li>Permis B</li>
+              <li>Permis C</li>
+			  <li>(MG) Mitrailleur</li>
+              <li>(LG) Lance Grenade</li>
+              <li>(AT) Anti-Char</li>
+              <li>Mécanicien Léger</li>
+              <li>Tireur de Précision</li>
+              <li>Tireur d'Elite</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <div class="icon">💠</div>
+            <h3>Formations de Pôles</h3>
+            <ul class="list">
+              <li>GENIE</li>
+              <li>BLINDE</li>
+              <li>AVIATION NAVALE</li>
+              <li>GROUPE ACTION SPECIALISE</li>
+              <li>REGIMENT MEDICAL</li>
+              <li>SERVICE DE LOGISTIQUE ET DE LA MAINTENANCE</li>
+              <li>POLICE MILITAIRE</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <div class="icon">🔖</div>
+            <h3>Formations d'Évolution</h3>
+            <ul class="list">
+              <li>(JTAC) Transmission Radio = si validé, passage QM2 en remise de grade</li>
+              <li>(SL) Chef de Groupe = si validé, passage QM1 en remise de grade</li>
+              <li>(OPR) Chef de Section = si validé, passage PM en remise de grade</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="note-box">
+          Toutes les formations ci-dessus peuvent être détaillées auprès des responsables de pôle ou des formateurs agréés.
+          Nous vous invitons à leur demander directement des détails sur BOP.
+        </div>
+      </div>
+    </section>
+<!--
+    <section id="radio">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Organisation des escouades & fréquences radio</h2>
+            <p>Répartition des brassards, escouades et canaux de communication tactiques.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <div class="icon">🪖</div>
+            <h3>Organisation des Escouades</h3>
+
+            <div class="freq-list">
+              <div class="freq-item">
+                <strong>Brassard Bleu 🔵</strong>
+                <span>@🪣(WL) 𝖶𝗁𝗂𝗍𝖾𝗅𝗂𝗌𝗍é durant 7 jours complets d'activité en jeu</span>
+              </div>
+
+              <div class="freq-item">
+                <strong>Brassard Violet 🟣</strong>
+                <span>Génie = 40 MHz radio</span>
+              </div>
+
+              <div class="freq-item">
+                <strong>Brassard Orange 🟠</strong>
+                <span>Alpha = 41 MHz radio</span>
+              </div>
+
+              <div class="freq-item">
+                <strong>Brassard Rouge 🔴</strong>
+                <span>Bravo = 42 MHz radio</span>
+              </div>
+
+              <div class="freq-item">
+                <strong>Brassard Vert 🟢</strong>
+                <span>Charlie = 43 MHz radio</span>
+              </div>
+
+              <div class="freq-item">
+                <strong>Brassard Jaune 🟡</strong>
+                <span>Delta = 44 MHz radio</span>
+              </div>
+
+              <div class="freq-item">
+                <strong>Brassard Blanc ⚪</strong>
+                <span>Médic</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="icon">📡</div>
+            <h3>Fréquences Radio</h3>
+
+            <div class="freq-list">
+              <div class="freq-item">
+                <strong>34 MHz</strong>
+                <span>InterSquad</span>
+              </div>
+
+              <div class="freq-item">
+                <strong>38 MHz</strong>
+                <span>Blindé</span>
+              </div>
+
+              <div class="freq-item">
+                <strong>39 MHz</strong>
+                <span>Support Hélicoptère</span>
+              </div>
+
+              <div class="freq-item">
+                <strong>48 MHz</strong>
+                <span>Communication Urgente</span>
+              </div>
+
+              <div class="freq-item">
+                <strong>50 MHz</strong>
+                <span>Etat Major</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+-->
 
     <section id="poles">
       <div class="container">
         <div class="section-head">
           <div>
             <h2>Pôles spécialisés</h2>
-            <p>Des fonctions complémentaires pour enrichir les opérations et la coordination.</p>
+            <p>Les pôles opérationnels accessibles selon la progression et les formations validées.</p>
           </div>
         </div>
 
         <div class="grid-3">
           <article class="card">
-            <div class="icon">🪖</div>
-            <h3>Assaut</h3>
-            <p>Force principale d’intervention, progression offensive, nettoyage de zone et prise d’objectif.</p>
+            <div class="icon">🛠️</div>
+            <h3>Génie</h3>
+            <p>Ouverture d’itinéraire, déminages et interventions spécialisées sur le terrain.</p>
           </article>
 
           <article class="card">
-            <div class="icon">🎯</div>
-            <h3>Sniper</h3>
-            <p>Observation, neutralisation ciblée et soutien longue distance pendant les opérations.</p>
+            <div class="icon">📦</div>
+            <h3>Logistique</h3>
+            <p>Gestion du ravitaillement, transport, soutien matériel, organisation des ressources et construction.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon">🚙</div>
+            <h3>Blindé</h3>
+            <p>Utilisation des véhicules blindés, appui mécanisé, mobilité protégée et soutien offensif des groupes au sol.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon">🚁</div>
+            <h3>Aéro</h3>
+            <p>Appui aérien, transport tactique, insertion, extraction et tir embarqué selon les qualifications obtenues.</p>
           </article>
 
           <article class="card">
             <div class="icon">🩺</div>
             <h3>Médic</h3>
-            <p>Maintien des effectifs, soin des blessés et soutien vital dans les phases critiques.</p>
+            <p>Prise en charge des blessés, maintien de la capacité opérationnelle et application du médical RP en mission.</p>
           </article>
 
           <article class="card">
-            <div class="icon">💥</div>
-            <h3>Explosifs</h3>
-            <p>Brèches, ouverture d’accès, démolition ciblée et interventions spécialisées sur objectifs verrouillés.</p>
+            <div class="icon">🎯</div>
+            <h3>GAS</h3>
+            <p>Groupe d’Action Spécialisé dédié aux missions les plus exigeantes, actions ciblées, engagements spécifiques et haute valeur tactique.</p>
           </article>
-
-          <article class="card">
-            <div class="icon">🛰️</div>
-            <h3>Recon</h3>
-            <p>Repérage, infiltration, observation avancée et collecte d’informations avant engagement.</p>
-          </article>
-
-          <article class="card">
-            <div class="icon">📡</div>
-            <h3>Commandement</h3>
-            <p>Gestion radio, coordination inter-groupes, supervision tactique et prise de décision.</p>
-          </article>
+		  
+		  <article class="card">
+  <div class="icon">🚨</div>
+  <h3>Police Militaire</h3>
+  <p>Maintien de l’ordre interne, contrôle du respect des consignes, encadrement disciplinaire et appui à la sécurité des opérations.</p>
+</article>
         </div>
       </div>
     </section>
@@ -1125,7 +1632,7 @@
         <div class="section-head">
           <div>
             <h2>Recrutement</h2>
-            <p>Ce que tu peux demander aux candidats avant leur intégration.</p>
+            <p>Conditions et étapes d’entrée dans l’unité.</p>
           </div>
         </div>
 
@@ -1137,7 +1644,7 @@
               <div class="check"><span>✓</span> Être respectueux et motivé</div>
               <div class="check"><span>✓</span> Aimer le jeu en équipe</div>
               <div class="check"><span>✓</span> Respecter les règles RP</div>
-              <div class="check"><span>✓</span> Avoir un micro si nécessaire</div>
+              <div class="check"><span>✓</span> Avoir un micro fonctionnel</div>
               <div class="check"><span>✓</span> Être actif et impliqué</div>
             </div>
           </article>
@@ -1149,8 +1656,8 @@
               <div class="check"><span>1</span> Rejoindre le Discord</div>
               <div class="check"><span>2</span> Lire le règlement</div>
               <div class="check"><span>3</span> Contacter le staff / recruteur</div>
-              <div class="check"><span>4</span> Passer la phase recrue</div>
-              <div class="check"><span>5</span> Être affecté à un rôle ou pôle</div>
+              <div class="check"><span>4</span> Passer la phase Mousse / intégration</div>
+              <div class="check"><span>5</span> Évoluer vers les spécialisations et les pôles selon les aptitudes</div>
             </div>
           </article>
         </div>
@@ -1187,13 +1694,13 @@
         </div>
       </div>
     </section>
-
+<!--
     <section id="contact">
       <div class="container">
         <div class="section-head">
           <div>
             <h2>Contact</h2>
-            <p>Remplace les informations ci-dessous par tes vraies coordonnées serveur.</p>
+            <p>Coordonnées principales du serveur.</p>
           </div>
         </div>
 
@@ -1201,19 +1708,21 @@
           <article class="card">
             <div class="icon">💬</div>
             <h3>Discord officiel</h3>
-            <p><strong>Lien :</strong> discord.gg/tonserveur</p>
-            <p>Le meilleur point d’entrée pour rejoindre la communauté, suivre les annonces et lancer ton recrutement.</p>
+            <p><strong>Lien :</strong> https://discord.gg/4szYdWtHMH</p>
+            <p>Le meilleur point d’entrée pour rejoindre la communauté, suivre les annonces et lancer le recrutement.</p>
           </article>
 
           <article class="card">
             <div class="icon">📩</div>
             <h3>Contact staff</h3>
             <p><strong>Email :</strong> contact@commandohubert.fr</p>
-            <p>Tu peux aussi mettre ici le pseudo Discord du fondateur, des recruteurs ou du commandement.</p>
+            <p>Tu peux remplacer cet email par une vraie adresse ou par les pseudos Discord du commandement.</p>
           </article>
+	
         </div>
       </div>
     </section>
+		  -->
   </main>
 
   <footer class="footer">
@@ -1239,5 +1748,4 @@
     });
   </script>
 </body>
-
 </html>
