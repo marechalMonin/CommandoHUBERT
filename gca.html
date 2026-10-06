@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr" class="verrou">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>GCA — Désamorçage IED | Commando Hubert</title>
+  <link rel="stylesheet" href="assets/espace.css">
+  <script src="assets/comptes.js"></script>
+  <script src="assets/auth.js"></script>
+  <script>Auth.exiger("gca");</script>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">CH</div>
+        <div class="brand-text">
+          <strong>Commando Hubert</strong>
+          <span>GCA</span>
+        </div>
+      </a>
+      <nav class="nav" id="navEspace"></nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="entete-page">
+      <div>
+        <span class="eyebrow">💣 gca</span>
+        <h1>Désamorçage IED</h1>
+        <p>Renseignez ce que vous observez sur l’engin pour obtenir l’action à effectuer.</p>
+      </div>
+      <div class="onglets" role="tablist">
+        <button type="button" class="actif" role="tab" aria-selected="true" data-onglet="cable">IED Câble</button>
+        <button type="button" role="tab" aria-selected="false" data-onglet="tuyaux">IED Tuyaux</button>
+      </div>
+    </div>
+
+    <!-- IED Câble -->
+    <div class="gca-grille" id="onglet-cable">
+      <aside class="panel">
+        <h2>État des fils</h2>
+        <div id="fils"></div>
+        <button class="btn btn-secondary btn-petit" type="button" id="razCable">Réinitialiser</button>
+      </aside>
+
+      <section class="panel" id="resultatCable" aria-live="polite">
+        <div class="vide">Sélectionnez l’état des 4 fils.</div>
+      </section>
+    </div>
+
+    <!-- IED Tuyaux -->
+    <div class="gca-grille" id="onglet-tuyaux" hidden>
+      <aside class="panel">
+        <h2>Marquages et switchs</h2>
+        <div class="grille-form">
+          <div class="champ"><label for="pvc">Marquage PVC (0 à 9)</label><input id="pvc" type="number" min="0" max="9" value="0" inputmode="numeric"></div>
+          <div class="champ"><label for="lot">Marquage LOT (0 à 9)</label><input id="lot" type="number" min="0" max="9" value="0" inputmode="numeric"></div>
+          <div class="champ large"><label for="rev">Marquage REV</label><select id="rev"></select></div>
+          <div class="champ large" id="switchs"></div>
+        </div>
+        <button class="btn btn-secondary btn-petit" type="button" id="razTuyaux">Réinitialiser</button>
+      </aside>
+
+      <section class="panel" aria-live="polite">
+        <h2>Résultat</h2>
+        <div class="decision" id="somme"></div>
+        <h3>Détail du calcul</h3>
+        <p class="note" id="detailSomme" style="margin:0"></p>
+      </section>
+    </div>
+  </main>
+
+  <script src="assets/ied-regles.js"></script>
+  <script>
+    Auth.barre("gca");
+
+    const $ = id => document.getElementById(id);
+
+    // Construit un élément avec du texte (jamais de HTML injecté).
+    function el(balise, classe, texte) {
+      const e = document.createElement(balise);
+      if (classe) e.className = classe;
+      if (texte != null) e.textContent = texte;
+      return e;
+    }
+
+    function option(valeur, texte) {
+      const o = el("option", "", texte);
+      o.value = valeur;
+      return o;
+    }
+
+    /* ---------- Onglets ---------- */
+    document.querySelectorAll("[data-onglet]").forEach(b => b.addEventListener("click", () => {
+      document.querySelectorAll("[data-onglet]").forEach(x => {
+        const actif = x === b;
+        x.classList.toggle("actif", actif);
+        x.setAttribute("aria-selected", actif);
+        $("onglet-" + x.dataset.onglet).hidden = !actif;
+      });
+    }));
+
+    /* ---------- IED Câble ---------- */
+    const FILS = window.IED_FILS, ETATS = window.IED_ETATS, REGLES = window.IED_REGLES_CABLE;
+    const selects = {};
+
+    for (const fil in FILS) {
+      const champ = el("div", "champ");
+      const label = el("label", "", "Fil " + FILS[fil]);
+      label.htmlFor = "fil-" + fil;
+      const s = el("select");
+      s.id = "fil-" + fil;
+      s.append(option("", "— État du fil —"));
+      for (const code in ETATS) s.append(option(code, ETATS[code]));
+      s.addEventListener("change", analyser);
+      selects[fil] = s;
+      champ.append(label, s);
+      $("fils").append(champ);
+    }
+
+    function analyser() {
+      const zone = $("resultatCable");
+      zone.textContent = "";
+      const f = {};
+      for (const fil in selects) f[fil] = selects[fil].value;
+      const manquants = Object.values(f).filter(v => !v).length;
+      if (manquants) {
+        return zone.append(el("div", "vide", manquants === 4 ? "Sélectionnez l’état des 4 fils." : "Encore " + manquants + " fil(s) à renseigner."));
+      }
+
+      const trouvees = REGLES.filter(r => r.test(f));
+      if (!trouvees.length) {
+        zone.append(
+          el("h2", "", "Aucune correspondance"),
+          el("div", "decision rouge", "🎲 Procédure aléatoire d’urgence"),
+          el("p", "note", "Aucune règle ne correspond à cette combinaison de fils.")
+        );
+        return;
+      }
+
+      const actions = [...new Set(trouvees.map(r => r.couper))];
+      zone.append(el("h2", "", trouvees.length + " solution" + (trouvees.length > 1 ? "s" : "") + " identifiée" + (trouvees.length > 1 ? "s" : "")));
+      for (const a of actions) {
+        zone.append(a
+          ? el("div", "decision", "✂️ Coupez le fil " + FILS[a])
+          : el("div", "decision jaune", "🎲 Bonne chance : aucun fil désigné"));
+      }
+      if (actions.length > 1) {
+        zone.append(el("p", "note", "Plusieurs règles correspondent et désignent des fils différents : à trancher avec le chef d’équipe."));
+      }
+
+      zone.append(el("h3", "", "Règles correspondantes"));
+      const liste = el("ul", "etapes");
+      for (const r of trouvees) {
+        liste.append(el("li", "", "Règle " + r.n + " — " + r.texte + " ➜ " + (r.couper ? "couper le fil " + FILS[r.couper] : "bonne chance")));
+      }
+      zone.append(liste);
+    }
+
+    $("razCable").addEventListener("click", () => {
+      for (const fil in selects) selects[fil].value = "";
+      analyser();
+    });
+
+    /* ---------- IED Tuyaux ---------- */
+    const T = window.IED_TUYAUX;
+    const cases = {};
+
+    for (const lettre in T.rev) $("rev").append(option(lettre, lettre + " (= " + T.rev[lettre] + ")"));
+    for (const lettre in T.switchs) {
+      const label = el("label", "case");
+      const c = el("input");
+      c.type = "checkbox";
+      cases[lettre] = c;
+      label.append(c, " Switch " + lettre + " sur ON (= " + T.switchs[lettre] + ")");
+      $("switchs").append(label);
+    }
+
+    function chiffre(id) {
+      const n = parseInt($(id).value, 10);
+      return isNaN(n) ? 0 : n;
+    }
+
+    function calculer() {
+      const termes = [["PVC", chiffre("pvc")], ["LOT", chiffre("lot")], ["REV " + $("rev").value, T.rev[$("rev").value]]];
+      for (const lettre in cases) termes.push(["Switch " + lettre, cases[lettre].checked ? T.switchs[lettre] : 0]);
+      const total = termes.reduce((s, t) => s + t[1], 0) + T.correction;
+      $("somme").textContent = "💣 SOMME : " + total;
+      $("detailSomme").textContent = termes.map(t => t[0] + " " + t[1]).join(" + ") +
+        (T.correction < 0 ? " − " + -T.correction : " + " + T.correction) + " = " + total;
+    }
+
+    ["pvc", "lot", "rev"].forEach(id => $(id).addEventListener("input", calculer));
+    Object.values(cases).forEach(c => c.addEventListener("change", calculer));
+    $("razTuyaux").addEventListener("click", () => {
+      $("pvc").value = $("lot").value = 0;
+      $("rev").selectedIndex = 0;
+      Object.values(cases).forEach(c => { c.checked = false; });
+      calculer();
+    });
+    calculer();
+  </script>
+</body>
+</html>

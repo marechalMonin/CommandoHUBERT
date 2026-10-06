@@ -1,0 +1,254 @@
+/* Styles communs aux pages de l'espace membres (connexion, médecins, GCA).
+   Reprend la charte de index.html. */
+:root{
+  --bg:#101711;
+  --bg-deep:#0a0f0a;
+  --panel:rgba(24,34,24,.92);
+  --panel-2:rgba(30,42,30,.94);
+  --panel-3:rgba(38,52,38,.95);
+  --line:rgba(231,245,205,.12);
+  --line-strong:rgba(231,245,205,.24);
+  --text:#f8fbf2;
+  --muted:#d3dcc7;
+  --accent:#c7e59a;
+  --accent-2:#7ea65a;
+  --accent-3:#eef8dd;
+  --danger:#d97b7b;
+  --warn:#e3c26b;
+  --shadow:0 18px 50px rgba(0,0,0,.32);
+  --radius:24px;
+  --max:1320px;
+}
+
+*{box-sizing:border-box}
+
+/* Tant que la session n'est pas vérifiée, rien n'est affiché. */
+.verrou body{visibility:hidden}
+
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  color:var(--text);
+  min-height:100vh;
+  background:
+    linear-gradient(rgba(22,30,22,.86), rgba(12,18,12,.94)),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.018) 0 1px, transparent 1px 32px),
+    var(--bg);
+  background-attachment:fixed;
+}
+
+.container{width:min(calc(100% - 32px), var(--max));margin:auto}
+
+h1,h2,h3,h4{margin-top:0;color:var(--accent-3)}
+h1{font-size:clamp(1.7rem, 4vw, 2.6rem);text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px}
+h2{font-size:1.35rem}
+h3{font-size:1.08rem}
+p{line-height:1.65}
+.muted{color:var(--muted)}
+[hidden]{display:none !important}
+
+/* ---------- Barre haute ---------- */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(10px);
+  background:rgba(12,17,12,.9);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.topbar-inner{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:14px;min-height:74px;padding:10px 0;flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--text)}
+.brand-mark{
+  width:52px;height:52px;border-radius:16px;display:grid;place-items:center;
+  font-weight:900;letter-spacing:.08em;color:#11170f;flex-shrink:0;
+  background:linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+.brand-text strong{display:block;text-transform:uppercase;letter-spacing:.10em;font-size:1rem}
+.brand-text span{color:var(--muted);font-size:.9rem}
+.nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.nav a,.nav button{
+  font:inherit;font-size:.93rem;cursor:pointer;text-decoration:none;color:var(--text);
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);
+  padding:10px 15px;border-radius:999px;transition:.2s ease;
+}
+.nav a:hover,.nav button:hover{background:rgba(199,229,154,.15);border-color:var(--line-strong)}
+.nav a.actif{background:rgba(199,229,154,.18);border-color:var(--line-strong);color:var(--accent-3)}
+.nav .qui{color:var(--muted);font-size:.9rem;padding:0 4px}
+
+main{padding:34px 0 60px}
+
+/* ---------- Blocs ---------- */
+.panel{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;
+}
+.eyebrow{
+  display:inline-block;padding:7px 13px;border-radius:999px;
+  background:rgba(199,229,154,.12);border:1px solid var(--line-strong);
+  color:var(--accent-3);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:14px;
+}
+.note{
+  padding:14px 16px;border-radius:16px;font-size:.93rem;line-height:1.6;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--muted);
+}
+.erreur{
+  padding:12px 14px;border-radius:14px;margin-top:14px;
+  background:rgba(217,123,123,.12);border:1px solid rgba(217,123,123,.4);color:#f3c4c4;
+}
+
+/* ---------- Boutons ---------- */
+.btn{
+  display:inline-block;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;
+  padding:12px 18px;border-radius:999px;border:1px solid transparent;transition:.2s ease;
+}
+.btn-primary{background:linear-gradient(135deg, var(--accent), var(--accent-2));color:#10150f}
+.btn-primary:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.btn-secondary{color:var(--accent-3);border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.06)}
+.btn-secondary:hover{background:rgba(255,255,255,.10);border-color:var(--line-strong)}
+.btn-danger{color:#f3c4c4;border-color:rgba(217,123,123,.4);background:rgba(217,123,123,.10)}
+.btn-danger:hover{background:rgba(217,123,123,.2)}
+.btn-petit{padding:8px 13px;font-size:.88rem}
+.btn:disabled{opacity:.55;cursor:wait}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* ---------- Formulaires ---------- */
+label{display:block;font-size:.88rem;color:var(--muted);margin-bottom:6px}
+input,select,textarea{
+  width:100%;font:inherit;color:var(--text);
+  background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.14);
+  border-radius:12px;padding:11px 13px;
+}
+textarea{min-height:84px;resize:vertical;line-height:1.5}
+select option{background:#182218;color:var(--text)}
+input:focus,select:focus,textarea:focus,.btn:focus-visible,.nav a:focus-visible,.nav button:focus-visible{
+  outline:2px solid var(--accent);outline-offset:2px;
+}
+.champ{margin-bottom:14px}
+.grille-form{display:grid;grid-template-columns:repeat(2,1fr);gap:0 16px}
+.grille-form .large{grid-column:1 / -1}
+
+/* ---------- Pastilles ---------- */
+.pastille{
+  display:inline-block;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:700;
+  border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:var(--muted);
+  white-space:nowrap;
+}
+.pastille.vert{color:#d6f0ae;border-color:rgba(199,229,154,.45);background:rgba(199,229,154,.14)}
+.pastille.jaune{color:#f1dc9d;border-color:rgba(227,194,107,.45);background:rgba(227,194,107,.13)}
+.pastille.rouge{color:#f3c4c4;border-color:rgba(217,123,123,.45);background:rgba(217,123,123,.13)}
+
+/* ---------- Fenêtres (dialog) ---------- */
+dialog{
+  width:min(720px, calc(100% - 24px));max-height:calc(100vh - 32px);overflow:auto;
+  color:var(--text);background:#172017;border:1px solid var(--line-strong);
+  border-radius:22px;padding:24px;box-shadow:0 30px 80px rgba(0,0,0,.6);
+}
+dialog::backdrop{background:rgba(0,0,0,.66)}
+dialog .actions{justify-content:flex-end;margin-top:8px}
+
+/* ---------- Connexion ---------- */
+.connexion{max-width:480px;margin:5vh auto 0}
+.choix-espaces{display:grid;gap:12px;margin:18px 0}
+.choix-espaces a{
+  display:flex;gap:14px;align-items:center;padding:16px;border-radius:18px;text-decoration:none;
+  color:var(--text);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);transition:.2s;
+}
+.choix-espaces a:hover{border-color:var(--line-strong);background:rgba(199,229,154,.1)}
+.choix-espaces .ico{font-size:1.6rem}
+.choix-espaces span{color:var(--muted);font-size:.9rem;display:block;margin-top:2px}
+
+/* ---------- Médecins ---------- */
+.entete-page{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.entete-page p{margin:0;color:var(--muted)}
+.med-grille{display:grid;grid-template-columns:360px 1fr;gap:20px;align-items:start}
+.med-liste{padding:18px;position:sticky;top:94px;max-height:calc(100vh - 114px);display:flex;flex-direction:column}
+.med-filtres{display:grid;gap:10px;margin-bottom:12px}
+.fiches{list-style:none;margin:0;padding:0;overflow:auto;display:grid;gap:8px}
+.fiches button{
+  width:100%;text-align:left;font:inherit;color:var(--text);cursor:pointer;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;gap:10px;align-items:center;
+}
+.fiches li,.fiches button > span:first-child{min-width:0;overflow-wrap:anywhere}
+.fiches button:hover{border-color:var(--line-strong)}
+.fiches button.actif{background:rgba(199,229,154,.14);border-color:var(--line-strong)}
+.fiches small{display:block;color:var(--muted);margin-top:3px}
+.vide{color:var(--muted);text-align:center;padding:26px 10px}
+.infos{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.info{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px 14px}
+.info.large{grid-column:1 / -1}
+.info dt{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+.info dd{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.visite{
+  border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);
+  border-radius:16px;padding:16px;margin-top:12px;
+}
+.visite-tete{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.visite-tete strong{color:var(--accent-3)}
+.visite p{margin:6px 0;color:var(--muted);white-space:pre-wrap;overflow-wrap:anywhere}
+.visite p b{color:var(--text);font-weight:700}
+.constantes{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+
+/* ---------- GCA ---------- */
+.gca-grille{display:grid;grid-template-columns:380px 1fr;gap:20px;align-items:start}
+.regle-tete{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.decision{
+  margin:16px 0;padding:16px 18px;border-radius:16px;font-weight:700;font-size:1.08rem;
+  border:1px solid var(--line-strong);background:rgba(199,229,154,.10);color:var(--accent-3);
+}
+.decision.rouge{border-color:rgba(217,123,123,.5);background:rgba(217,123,123,.12);color:#f3c4c4}
+.decision.jaune{border-color:rgba(227,194,107,.5);background:rgba(227,194,107,.12);color:#f1dc9d}
+.etapes{margin:0;padding-left:22px;line-height:1.8;color:var(--muted)}
+.etapes li{margin-bottom:4px}
+.interdits{margin:0;padding-left:20px;line-height:1.8;color:#f3c4c4}
+
+/* ---------- Responsive ---------- */
+@media (max-width:980px){
+  .med-grille,.gca-grille{grid-template-columns:1fr}
+  .med-liste{position:static;max-height:none}
+  .fiches{max-height:340px}
+  .infos{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:600px){
+  .grille-form,.infos{grid-template-columns:1fr}
+  .panel{padding:18px}
+  .brand-text span{display:none}
+}
+
+/* ---------- Impression d'une fiche ---------- */
+@media print{
+  body{background:#fff;color:#000}
+  .topbar,.med-liste,.actions,.note,dialog{display:none !important}
+  .med-grille{display:block}
+  .panel,.info,.visite{background:#fff;border-color:#999;box-shadow:none;color:#000}
+  h1,h2,h3,.visite-tete strong,.visite p b{color:#000}
+  .muted,.info dt,.visite p,.entete-page p{color:#333}
+  .pastille{color:#000 !important;background:#fff !important;border-color:#666 !important}
+}
+
+/* ---------- Titres de rubrique (dossier médical) ---------- */
+.titre-section{
+  margin:22px 0 12px;padding:10px 14px;border-radius:12px;font-size:1rem;
+  background:rgba(199,229,154,.10);border:1px solid rgba(199,229,154,.2);
+}
+dialog .titre-section:first-of-type{margin-top:8px}
+.infos{margin-top:0}
+
+/* ---------- Onglets et cases (GCA) ---------- */
+.onglets{display:flex;gap:8px;flex-wrap:wrap}
+.onglets button{
+  font:inherit;font-weight:700;cursor:pointer;color:var(--text);padding:11px 18px;border-radius:999px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
+}
+.onglets button:hover{border-color:var(--line-strong)}
+.onglets button.actif{background:linear-gradient(135deg, var(--accent), var(--accent-2));color:#10150f;border-color:transparent}
+.onglets button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+label.case{display:flex;align-items:center;gap:10px;color:var(--text);font-size:.95rem;padding:8px 0;cursor:pointer}
+label.case input{width:20px;height:20px;accent-color:var(--accent-2);flex-shrink:0}
+
+@media print{
+  .titre-section{background:#fff;border-color:#999;color:#000}
+}

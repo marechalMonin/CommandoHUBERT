@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Outil identifiants | Commando Hubert</title>
+  <link rel="stylesheet" href="assets/espace.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">CH</div>
+        <div class="brand-text">
+          <strong>Commando Hubert</strong>
+          <span>Outil état-major</span>
+        </div>
+      </a>
+      <nav class="nav"><a href="connexion.html">Connexion</a></nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="connexion" style="max-width:640px">
+      <form class="panel" id="formOutil">
+        <span class="eyebrow">état-major</span>
+        <h1>Créer un identifiant</h1>
+        <p class="muted">
+          Génère la ligne à coller dans <code>assets/comptes.js</code> pour ajouter un compte ou changer un mot de passe.
+          Le calcul se fait dans votre navigateur : rien n’est envoyé ni enregistré.
+        </p>
+
+        <div class="champ">
+          <label for="identifiant">Identifiant</label>
+          <input id="identifiant" autocomplete="off" autocapitalize="none" required maxlength="40">
+        </div>
+        <div class="champ">
+          <label for="motDePasse">Mot de passe (12 caractères minimum conseillés)</label>
+          <input id="motDePasse" type="password" autocomplete="new-password" required minlength="8">
+        </div>
+        <div class="champ">
+          <label>Accès</label>
+          <label style="color:var(--text)"><input type="checkbox" id="roleMedecin" style="width:auto"> Page Médecins</label>
+          <label style="color:var(--text)"><input type="checkbox" id="roleGca" style="width:auto"> Page GCA</label>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Générer la ligne</button>
+        <div class="erreur" id="erreur" hidden></div>
+
+        <div id="resultat" hidden style="margin-top:18px">
+          <label for="ligne">Ligne à coller dans <code>window.COMPTES = [ ... ]</code></label>
+          <textarea id="ligne" readonly style="min-height:120px;font-family:Consolas,monospace;font-size:.85rem"></textarea>
+          <button class="btn btn-secondary btn-petit" type="button" id="copier" style="margin-top:8px">Copier</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script src="assets/auth.js"></script>
+  <script>
+    const erreur = document.getElementById("erreur");
+
+    document.getElementById("formOutil").addEventListener("submit", async e => {
+      e.preventDefault();
+      erreur.hidden = true;
+      const roles = [];
+      if (document.getElementById("roleMedecin").checked) roles.push("medecin");
+      if (document.getElementById("roleGca").checked) roles.push("gca");
+      if (!roles.length) {
+        erreur.textContent = "Cochez au moins un accès.";
+        erreur.hidden = false;
+        return;
+      }
+      const sel = Auth.nouveauSel();
+      const empreinte = await Auth.empreinte(document.getElementById("motDePasse").value, sel);
+      const compte = { identifiant: document.getElementById("identifiant").value.trim(), roles, sel, empreinte };
+      document.getElementById("ligne").value = "  " + JSON.stringify(compte) + ",";
+      document.getElementById("resultat").hidden = false;
+      document.getElementById("motDePasse").value = "";
+    });
+
+    document.getElementById("copier").addEventListener("click", async () => {
+      const zone = document.getElementById("ligne");
+      zone.select();
+      try { await navigator.clipboard.writeText(zone.value); } catch (err) { document.execCommand("copy"); }
+    });
+  </script>
+</body>
+</html>

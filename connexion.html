@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Connexion | Commando Hubert</title>
+  <link rel="stylesheet" href="assets/espace.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">CH</div>
+        <div class="brand-text">
+          <strong>Commando Hubert</strong>
+          <span>Espace membres</span>
+        </div>
+      </a>
+      <nav class="nav">
+        <a href="index.html">← Retour au site</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="connexion">
+
+      <form class="panel" id="formConnexion">
+        <span class="eyebrow">accès restreint</span>
+        <h1>Connexion</h1>
+        <p class="muted">Espace réservé aux médecins et aux membres du GCA.</p>
+
+        <div class="champ">
+          <label for="identifiant">Identifiant</label>
+          <input id="identifiant" name="identifiant" autocomplete="username" autocapitalize="none" required>
+        </div>
+        <div class="champ">
+          <label for="motDePasse">Mot de passe</label>
+          <input id="motDePasse" name="motDePasse" type="password" autocomplete="current-password" required>
+        </div>
+
+        <button class="btn btn-primary" id="btnConnexion" type="submit">Se connecter</button>
+        <div class="erreur" id="erreur" role="alert" hidden></div>
+        <p class="muted" style="font-size:.88rem;margin-bottom:0">
+          Identifiants perdus ? Contactez l’état-major sur le Discord.
+        </p>
+      </form>
+
+      <div class="panel" id="dejaConnecte" hidden>
+        <span class="eyebrow">connecté</span>
+        <h1>Vos espaces</h1>
+        <p class="muted">Connecté en tant que <strong id="qui"></strong>.</p>
+        <div class="choix-espaces" id="espaces"></div>
+        <button class="btn btn-secondary" id="btnDeconnexion" type="button">Se déconnecter</button>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="assets/comptes.js"></script>
+  <script src="assets/auth.js"></script>
+  <script>
+    const form = document.getElementById("formConnexion");
+    const erreur = document.getElementById("erreur");
+    const bouton = document.getElementById("btnConnexion");
+    // "retour" ne peut désigner qu'un espace connu, jamais une adresse libre.
+    const retour = new URLSearchParams(location.search).get("retour");
+
+    function afficherEspaces(s) {
+      form.hidden = true;
+      document.getElementById("dejaConnecte").hidden = false;
+      document.getElementById("qui").textContent = s.identifiant;
+      const zone = document.getElementById("espaces");
+      zone.textContent = "";
+      for (const role of s.roles) {
+        const esp = Auth.ESPACES[role];
+        if (!esp) continue;
+        const a = document.createElement("a");
+        a.href = esp.page;
+        const ico = document.createElement("div");
+        ico.className = "ico";
+        ico.textContent = esp.ico;
+        const txt = document.createElement("div");
+        const nom = document.createElement("strong");
+        nom.textContent = esp.nom;
+        const desc = document.createElement("span");
+        desc.textContent = esp.desc;
+        txt.append(nom, desc);
+        a.append(ico, txt);
+        zone.append(a);
+      }
+    }
+
+    function entrer(s) {
+      const cibles = s.roles.filter(r => Auth.ESPACES[r]);
+      if (retour && cibles.includes(retour)) location.href = Auth.ESPACES[retour].page;
+      else if (cibles.length === 1) location.href = Auth.ESPACES[cibles[0]].page;
+      else afficherEspaces(s);
+    }
+
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+      erreur.hidden = true;
+      bouton.disabled = true;
+      try {
+        const r = await Auth.connecter(form.identifiant.value, form.motDePasse.value);
+        if (r.ok) return entrer(r.session);
+        erreur.textContent = r.message;
+      } catch (err) {
+        erreur.textContent = "Connexion impossible depuis ce navigateur (" + err.message + ").";
+      }
+      erreur.hidden = false;
+      form.motDePasse.value = "";
+      bouton.disabled = false;
+    });
+
+    document.getElementById("btnDeconnexion").addEventListener("click", Auth.deconnecter);
+
+    const s = Auth.session();
+    if (s) afficherEspaces(s);
+  </script>
+</body>
+</html>

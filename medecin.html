@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr" class="verrou">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Dossiers médicaux | Commando Hubert</title>
+  <link rel="stylesheet" href="assets/espace.css">
+  <script src="assets/comptes.js"></script>
+  <script src="assets/auth.js"></script>
+  <script>Auth.exiger("medecin");</script>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">CH</div>
+        <div class="brand-text">
+          <strong>Commando Hubert</strong>
+          <span>Régiment médical</span>
+        </div>
+      </a>
+      <nav class="nav" id="navEspace"></nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="entete-page">
+      <div>
+        <span class="eyebrow">🩺 accès réservé au personnel médical — données 100 % RP</span>
+        <h1>Dossiers médicaux</h1>
+        <p>Dossier de chaque joueur, première consultation et suivi des visites.</p>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" id="btnNouveau" type="button">+ Nouveau dossier</button>
+        <button class="btn btn-secondary" id="btnExporter" type="button">Exporter</button>
+        <button class="btn btn-secondary" id="btnImporter" type="button">Importer</button>
+        <input type="file" id="fichierImport" accept="application/json,.json" hidden>
+      </div>
+    </div>
+
+    <div class="med-grille">
+      <aside class="panel med-liste">
+        <div class="med-filtres">
+          <input id="recherche" type="search" placeholder="Rechercher (N° MED, pseudo RP, pseudo Arma…)" aria-label="Rechercher un dossier">
+          <select id="filtreAptitude" aria-label="Filtrer par aptitude">
+            <option value="">Toutes les aptitudes</option>
+          </select>
+        </div>
+        <ul class="fiches" id="liste"></ul>
+        <div class="vide" id="listeVide" hidden></div>
+      </aside>
+
+      <section class="panel" id="detail"></section>
+    </div>
+
+    <p class="note" style="margin-top:20px">
+      ℹ️ Les dossiers sont enregistrés dans <strong>ce navigateur</strong>. Pour les transmettre à un autre médecin
+      ou changer d’appareil : <strong>Exporter</strong>, puis <strong>Importer</strong> le fichier .json de l’autre côté.
+      Données fictives de roleplay : n’y saisissez aucune information médicale réelle.
+    </p>
+  </main>
+
+  <dialog id="dlgDossier">
+    <form id="formDossier" method="dialog">
+      <h2 id="titreDossier"></h2>
+      <div id="champsDossier"></div>
+      <div class="actions">
+        <button class="btn btn-secondary" type="button" data-fermer>Annuler</button>
+        <button class="btn btn-primary" type="submit">💾 Sauvegarder le dossier</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlgVisite">
+    <form id="formVisite" method="dialog">
+      <h2 id="titreVisite"></h2>
+      <div id="champsVisite"></div>
+      <div class="actions">
+        <button class="btn btn-secondary" type="button" data-fermer>Annuler</button>
+        <button class="btn btn-primary" type="submit">💾 Sauvegarder la visite</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="assets/medecin.js"></script>
+</body>
+</html>
