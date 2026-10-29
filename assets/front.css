@@ -1,0 +1,660 @@
+/* Situation du front (page d'accueil) — complète le style de index.html.
+   Couleurs des camps vérifiées pour le daltonisme et le contraste sur le fond sombre du site. */
+
+.front{
+  --front-joueurs:#3987e5;
+  --front-ia:#e66767;
+  --front-neutre:#8f9a8b;
+  --front-encre:#eef8dd;
+  --front-fond-carte:#0d140d;
+  --front-ok:#0ca30c;
+  --front-alerte:#fab219;
+  --front-critique:#d03b3b;
+  padding:40px 0 4px;
+  scroll-margin-top:96px;
+}
+
+.front + .hero{
+  padding-top:28px;
+}
+
+.front-panel{
+  padding:38px;
+}
+
+/* En-tête : titre, contexte de campagne, état du flux */
+.front-entete{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px 24px;
+  flex-wrap:wrap;
+}
+
+.front-entete h2{
+  margin:0 0 6px;
+}
+
+.front-contexte{
+  margin:0;
+  color:var(--muted);
+  line-height:1.5;
+  max-width:62ch;
+}
+
+.front-statut{
+  margin:0;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 15px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.05);
+  color:var(--text);
+  font-size:.92rem;
+}
+
+.front-pastille{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--front-neutre);
+  flex:none;
+}
+
+.front-statut[data-etat="direct"] .front-pastille{
+  background:var(--front-ok);
+  box-shadow:0 0 0 4px rgba(12,163,12,.18);
+}
+
+.front-statut[data-etat="ancien"] .front-pastille{
+  background:var(--front-alerte);
+}
+
+.front-statut[data-etat="erreur"] .front-pastille{
+  background:var(--front-critique);
+}
+
+.front-statut[data-etat="demo"] .front-pastille{
+  background:transparent;
+  border:2px solid var(--muted);
+}
+
+/* Rapport de force */
+.front-rapport{
+  margin:26px 0 4px;
+}
+
+.front-forces{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.front-force{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+  margin:0;
+}
+
+.front-force.droite{
+  flex-direction:row-reverse;
+}
+
+.front-force b{
+  font-size:2rem;
+  line-height:1;
+  color:var(--text);
+}
+
+.front-force-nom{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:var(--muted);
+  font-size:.95rem;
+}
+
+.front-barre{
+  display:flex;
+  gap:2px;
+  height:14px;
+}
+
+.front-barre .seg{
+  min-width:6px;
+  transition:flex-grow .8s ease;
+}
+
+.front-barre .seg.joueurs{ background:var(--front-joueurs); }
+.front-barre .seg.neutre{ background:var(--front-neutre); }
+.front-barre .seg.ia{ background:var(--front-ia); }
+.front-barre .seg.debut{ border-radius:4px 0 0 4px; }
+.front-barre .seg.fin{ border-radius:0 4px 4px 0; }
+.front-barre .seg.debut.fin{ border-radius:4px; }
+
+.front-total{
+  margin:8px 0 0;
+  text-align:center;
+  color:var(--muted);
+  font-size:.88rem;
+}
+
+/* Grille : carte à gauche, opérations et journal à droite */
+.front-grille{
+  display:grid;
+  grid-template-columns:minmax(0, 1.15fr) minmax(0, .85fr);
+  grid-template-areas:
+    "carte ops"
+    "carte journal";
+  grid-template-rows:auto 1fr;
+  gap:24px 28px;
+  margin-top:24px;
+}
+
+.front-carte{ grid-area:carte; margin:0; }
+.front-bloc-ops{ grid-area:ops; }
+.front-bloc-journal{ grid-area:journal; }
+
+.front-bloc h3{
+  margin:0 0 12px;
+  font-size:1.08rem;
+}
+
+/* Carte schématique */
+.front-plateau{
+  position:relative;
+  border-radius:18px;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg, rgba(10,15,10,.74), rgba(10,15,10,.6));
+  overflow:hidden;
+}
+
+.front-svg{
+  display:block;
+  width:100%;
+  height:auto;
+}
+
+.front-svg .grille line{
+  stroke:rgba(231,245,205,.07);
+  stroke-width:1;
+  vector-effect:non-scaling-stroke;
+}
+
+.front-svg .repere text{
+  fill:rgba(211,220,199,.42);
+  font-size:19px;
+}
+
+.front-svg .nord path{ fill:rgba(238,248,221,.55); }
+
+.front-svg .nord text{
+  fill:rgba(238,248,221,.65);
+  font-size:20px;
+  font-weight:700;
+}
+
+.front-svg .lien{
+  stroke-width:3.5;
+  stroke-linecap:round;
+}
+
+.front-svg .lien.joueurs{ stroke:var(--front-joueurs); stroke-opacity:.42; }
+.front-svg .lien.ia{ stroke:var(--front-ia); stroke-opacity:.42; }
+.front-svg .lien.neutre{ stroke:var(--front-neutre); stroke-opacity:.35; }
+
+.front-svg .lien.front{
+  stroke:var(--front-encre);
+  stroke-opacity:.8;
+  stroke-width:5;
+}
+
+.front-svg .zone{ cursor:pointer; }
+.front-svg .zone .cible{ fill:transparent; }
+
+.front-svg .forme{
+  stroke:var(--front-fond-carte);
+  stroke-width:4;
+  transform-box:fill-box;
+  transform-origin:center;
+}
+
+.front-svg .forme.joueurs{ fill:var(--front-joueurs); }
+.front-svg .forme.ia{ fill:var(--front-ia); }
+.front-svg .forme.neutre{ fill:var(--front-neutre); }
+
+/* Prise récente, pas encore consolidée : symbole évidé */
+.front-svg .zone.fragile .forme{ fill:var(--front-fond-carte); stroke-width:6; }
+.front-svg .zone.fragile .forme.joueurs{ stroke:var(--front-joueurs); }
+.front-svg .zone.fragile .forme.ia{ stroke:var(--front-ia); }
+.front-svg .zone.fragile .forme.neutre{ stroke:var(--front-neutre); }
+
+.front-svg .zone:hover .forme,
+.front-svg .zone.choisie .forme{
+  stroke:var(--front-encre);
+  stroke-width:5;
+}
+
+.front-svg .fob{
+  fill:var(--front-encre);
+  stroke:var(--front-encre);
+  stroke-width:3;
+  stroke-linejoin:round;
+}
+
+.front-svg .lbl{
+  fill:var(--front-encre);
+  font-size:25px;
+  font-weight:700;
+  paint-order:stroke;
+  stroke:var(--front-fond-carte);
+  stroke-width:7px;
+  stroke-linejoin:round;
+  pointer-events:none;
+}
+
+.front-svg .lbl.mineur{
+  fill:#d3dcc7;
+  font-size:22px;
+  font-weight:400;
+}
+
+.front-svg .lbl.cache{ display:none; }
+
+.front-svg .pulse{
+  fill:none;
+  stroke-width:4;
+  transform-box:fill-box;
+  transform-origin:center;
+  animation:front-pulse 2.4s ease-out infinite;
+}
+
+.front-svg .pulse.joueurs{ stroke:var(--front-joueurs); }
+.front-svg .pulse.ia{ stroke:var(--front-ia); }
+
+@keyframes front-pulse{
+  0%{ transform:scale(.85); opacity:.95; }
+  100%{ transform:scale(2.6); opacity:0; }
+}
+
+.front-svg .vide{
+  fill:var(--muted);
+  font-size:30px;
+}
+
+.front-info{
+  margin:12px 0 0;
+  min-height:1.5em;
+  color:var(--text);
+  font-size:.95rem;
+  line-height:1.5;
+}
+
+.front-legende{
+  list-style:none;
+  margin:10px 0 0;
+  padding:0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 16px;
+  color:var(--muted);
+  font-size:.86rem;
+}
+
+.front-legende li{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+}
+
+.front-cle-front{
+  width:22px;
+  height:4px;
+  border-radius:2px;
+  background:var(--front-encre);
+  opacity:.85;
+}
+
+.front-cle-combat{
+  width:9px;
+  height:9px;
+  margin:0 3px;
+  border-radius:50%;
+  background:var(--muted);
+  box-shadow:0 0 0 2px var(--panel-2), 0 0 0 4px var(--muted);
+}
+
+.front-cle-fragile{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  border:3px solid var(--muted);
+}
+
+.front-cle-base{
+  width:11px;
+  height:11px;
+  border-radius:2px;
+  background:var(--muted);
+}
+
+.front-cle-point{
+  width:9px;
+  height:9px;
+  margin:0 1px;
+  transform:rotate(45deg);
+  background:var(--muted);
+}
+
+.front-cle-fob{
+  display:block;
+  width:12px;
+  height:14px;
+}
+
+/* Pastilles de camp (journal, tableau, légende) */
+.front-puce{
+  display:inline-block;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--front-neutre);
+  flex:none;
+}
+
+.front-puce.joueurs{ background:var(--front-joueurs); }
+.front-puce.ia{ background:var(--front-ia); }
+
+/* Opérations en cours */
+.front-ops,
+.front-journal{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  gap:10px;
+}
+
+.front-op{
+  position:relative;
+  padding:12px 14px 12px 22px;
+  border-radius:16px;
+  background:var(--panel-2);
+  border:1px solid rgba(255,255,255,.08);
+  cursor:pointer;
+  transition:border-color .2s ease;
+}
+
+.front-op::before{
+  content:"";
+  position:absolute;
+  left:9px;
+  top:12px;
+  bottom:12px;
+  width:4px;
+  border-radius:4px;
+  background:var(--front-neutre);
+}
+
+.front-op[data-attaquant="joueurs"]::before{ background:var(--front-joueurs); }
+.front-op[data-attaquant="ia"]::before{ background:var(--front-ia); }
+
+.front-op.annoncee{
+  background:rgba(250,178,25,.06);
+  border-color:rgba(250,178,25,.3);
+}
+
+.front-op:hover{
+  border-color:var(--line-strong);
+}
+
+.front-op:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+.front-op-titre{
+  margin:0;
+  font-weight:700;
+  color:var(--text);
+  line-height:1.35;
+}
+
+.front-op-meta{
+  margin:6px 0 0;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:4px 12px;
+  color:var(--muted);
+  font-size:.9rem;
+}
+
+.front-chrono{
+  color:var(--text);
+  font-variant-numeric:tabular-nums;
+}
+
+.front-vagues{
+  display:inline-flex;
+  gap:4px;
+  color:var(--front-neutre);
+}
+
+.front-op[data-attaquant="joueurs"] .front-vagues{ color:var(--front-joueurs); }
+.front-op[data-attaquant="ia"] .front-vagues{ color:var(--front-ia); }
+
+.front-vagues i{
+  display:block;
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  border:2px solid currentColor;
+}
+
+.front-vagues i.faite{ background:currentColor; }
+
+.front-jauge{
+  margin-top:10px;
+  height:8px;
+  border-radius:4px;
+  background:rgba(57,135,229,.22);
+  overflow:hidden;
+}
+
+.front-jauge span{
+  display:block;
+  height:100%;
+  border-radius:4px;
+  background:var(--front-joueurs);
+  transition:width .8s ease;
+}
+
+.front-op[data-attaquant="ia"] .front-jauge{ background:rgba(230,103,103,.22); }
+.front-op[data-attaquant="ia"] .front-jauge span{ background:var(--front-ia); }
+
+.front-vide{
+  color:var(--muted);
+  padding:4px 0;
+  line-height:1.5;
+}
+
+/* Journal */
+.front-journal li{
+  display:grid;
+  grid-template-columns:10px minmax(0, 1fr) auto;
+  gap:10px;
+  align-items:start;
+  color:var(--text);
+  font-size:.95rem;
+  line-height:1.45;
+}
+
+.front-journal li.front-vide{
+  display:block;
+  color:var(--muted);
+}
+
+.front-journal .front-puce{
+  margin-top:.42em;
+}
+
+.front-journal time{
+  color:var(--muted);
+  font-size:.84rem;
+  white-space:nowrap;
+  padding-top:.1em;
+}
+
+/* Toutes les zones */
+.front-zones{
+  margin-top:24px;
+  border-top:1px solid var(--line);
+  padding-top:12px;
+}
+
+.front-zones summary{
+  cursor:pointer;
+  list-style:none;
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  padding:6px 0;
+  font-weight:700;
+  color:var(--accent-3);
+}
+
+.front-zones summary::-webkit-details-marker{ display:none; }
+
+.front-zones summary::before{
+  content:"";
+  width:7px;
+  height:7px;
+  border-right:2px solid currentColor;
+  border-bottom:2px solid currentColor;
+  transform:rotate(-45deg);
+  transition:transform .2s ease;
+}
+
+.front-zones[open] summary::before{ transform:rotate(45deg); }
+
+.front-zones summary:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:4px;
+  border-radius:6px;
+}
+
+.front-zones summary span{
+  color:var(--muted);
+  font-weight:400;
+}
+
+.front-table{
+  margin-top:8px;
+  overflow-x:auto;
+}
+
+.front-zones table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.93rem;
+}
+
+.front-zones th,
+.front-zones td{
+  text-align:left;
+  padding:10px 8px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  vertical-align:top;
+  color:var(--text);
+}
+
+.front-zones thead th{
+  color:var(--muted);
+  font-weight:400;
+  font-size:.84rem;
+}
+
+.front-zones tbody th small{
+  display:block;
+  margin-top:2px;
+  color:var(--muted);
+  font-weight:400;
+  font-size:.8rem;
+}
+
+.front-zones .num{
+  text-align:right;
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+
+.front-zones td .front-puce{
+  width:9px;
+  height:9px;
+  margin-right:2px;
+}
+
+.front-pied{
+  margin:16px 0 0;
+  color:var(--muted);
+  font-size:.86rem;
+  line-height:1.5;
+}
+
+.front-sr{
+  position:absolute;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+  clip:rect(0 0 0 0);
+  clip-path:inset(50%);
+  white-space:nowrap;
+}
+
+@media (max-width:900px){
+  .front-grille{
+    grid-template-columns:minmax(0, 1fr);
+    grid-template-areas:
+      "ops"
+      "carte"
+      "journal";
+    grid-template-rows:auto;
+  }
+}
+
+@media (max-width:768px){
+  .front{ padding:22px 0 0; }
+  .front + .hero{ padding-top:20px; }
+  .front-panel{ padding:18px; }
+  .front-force b{ font-size:1.6rem; }
+  .front-force-nom{ font-size:.88rem; }
+}
+
+@media (max-width:600px){
+  .front-svg .forme{ transform:scale(1.45); }
+  .front-svg .lbl{ font-size:40px; stroke-width:10px; }
+  .front-svg .lbl.mineur,
+  .front-svg .repere{ display:none; }
+  .front-svg .lien{ stroke-width:5; }
+  .front-svg .lien.front{ stroke-width:7; }
+  .front-journal li:nth-child(n+5){ display:none; }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .front-svg .pulse{
+    animation:none;
+    transform:scale(1.5);
+    opacity:.85;
+  }
+
+  .front-barre .seg,
+  .front-jauge span,
+  .front-op{ transition:none; }
+}

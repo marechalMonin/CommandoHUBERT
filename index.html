@@ -896,11 +896,13 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="assets/front.css" />
 </head>
 <body>
 
   <div class="quick-nav">
     <a href="#accueil" title="Accueil">🏠</a>
+    <a href="#front" title="Situation du front">🗺️</a>
     <a href="#discord" title="Discord">💬</a>
     <a href="#rp" title="Règlement RP">📜</a>
     <a href="#etat-major" title="État-Major">⭐</a>
@@ -928,6 +930,7 @@
 
       <nav class="main-nav" id="mobileMenu">
         <a href="#accueil">Accueil</a>
+        <a href="#front">Front</a>
         <a href="#discord">Discord</a>
         <a href="#rp">Règlement RP</a>
         <a href="#etat-major">État-Major</a>
@@ -942,6 +945,97 @@
   </header>
 
   <main>
+    <!-- Situation du front : suivi en direct de la campagne « Front Dynamique ».
+         Pour passer en direct, remplacer data-source par l'adresse du flux (voir docs/flux-front.md). -->
+    <section class="front" id="front" aria-labelledby="front-titre" data-source="data/front.json">
+      <div class="container">
+        <div class="panel front-panel">
+          <div class="front-entete">
+            <div>
+              <h2 id="front-titre">Situation du front</h2>
+              <p class="front-contexte" id="front-contexte">Lecture de la situation en cours…</p>
+            </div>
+            <p class="front-statut" id="front-statut" data-etat="chargement">
+              <span class="front-pastille" aria-hidden="true"></span>
+              <span id="front-statut-texte">Connexion…</span>
+            </p>
+          </div>
+
+          <div class="front-rapport" id="front-rapport" hidden>
+            <div class="front-forces">
+              <p class="front-force">
+                <b id="front-n-joueurs">0</b>
+                <span class="front-force-nom"><span class="front-puce joueurs" aria-hidden="true"></span><span id="front-nom-joueurs">Commando</span></span>
+              </p>
+              <p class="front-force droite">
+                <b id="front-n-ia">0</b>
+                <span class="front-force-nom"><span id="front-nom-ia">Ennemi</span><span class="front-puce ia" aria-hidden="true"></span></span>
+              </p>
+            </div>
+            <div class="front-barre" id="front-barre" role="img" aria-label="Répartition des zones">
+              <span class="seg joueurs"></span><span class="seg neutre"></span><span class="seg ia"></span>
+            </div>
+            <p class="front-total" id="front-total"></p>
+          </div>
+
+          <div class="front-grille">
+            <figure class="front-carte">
+              <div class="front-plateau">
+                <svg class="front-svg" id="front-svg" viewBox="0 0 1000 1000" role="img" aria-label="Carte schématique du front"></svg>
+              </div>
+              <figcaption>
+                <p class="front-info" id="front-info">Chargement de la carte…</p>
+                <ul class="front-legende" aria-label="Légende de la carte">
+                  <li><span class="front-puce joueurs"></span>Allié</li>
+                  <li><span class="front-puce ia"></span>Ennemi</li>
+                  <li><span class="front-puce"></span>Neutre</li>
+                  <li><span class="front-cle-front"></span>Ligne de front</li>
+                  <li><span class="front-cle-combat"></span>Combat en cours</li>
+                  <li><span class="front-cle-fragile"></span>Prise récente</li>
+                  <li><span class="front-cle-base"></span>Base</li>
+                  <li><span class="front-cle-point"></span>Point clé</li>
+                  <li><svg class="front-cle-fob" viewBox="0 0 12 14" aria-hidden="true"><path d="M2 1V13M2 1L10 4L2 7Z" fill="#eef8dd" stroke="#eef8dd" stroke-width="1.6" stroke-linejoin="round"/></svg>FOB</li>
+                </ul>
+              </figcaption>
+            </figure>
+
+            <div class="front-bloc front-bloc-ops">
+              <h3>Opérations en cours</h3>
+              <ul class="front-ops" id="front-ops">
+                <li class="front-vide">Chargement de la situation…</li>
+              </ul>
+            </div>
+
+            <div class="front-bloc front-bloc-journal">
+              <h3>Journal du front</h3>
+              <ol class="front-journal" id="front-journal"></ol>
+            </div>
+          </div>
+
+          <details class="front-zones">
+            <summary>Toutes les zones <span id="front-n-zones"></span></summary>
+            <div class="front-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Zone</th>
+                    <th scope="col">Camp</th>
+                    <th scope="col">État</th>
+                    <th scope="col" class="num">Contrôle</th>
+                  </tr>
+                </thead>
+                <tbody id="front-zones-corps"></tbody>
+              </table>
+            </div>
+          </details>
+
+          <p class="front-pied" id="front-pied"></p>
+          <noscript><p class="front-pied">Activez JavaScript pour suivre le front en direct.</p></noscript>
+          <p class="front-sr" id="front-annonce" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
     <section class="hero" id="accueil">
       <div class="container hero-grid">
         <div class="panel hero-main">
@@ -1617,5 +1711,6 @@
       }
     });
   </script>
+  <script src="assets/front.js" defer></script>
 </body>
 </html>
