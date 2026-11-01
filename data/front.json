@@ -1,0 +1,458 @@
+{
+  "version": 1,
+  "demo": true,
+  "maj": 1793275200,
+  "intervalle": 30,
+  "serveur": {
+    "enLigne": true,
+    "joueurs": 14,
+    "joueursMax": 40
+  },
+  "campagne": {
+    "map": "Île de démonstration",
+    "saison": 1,
+    "jour": 12
+  },
+  "carte": {
+    "largeur": 12800,
+    "hauteur": 12800
+  },
+  "camps": {
+    "joueurs": {
+      "nom": "Commando Hubert"
+    },
+    "ia": {
+      "nom": "Forces adverses"
+    }
+  },
+  "zones": [
+    {
+      "id": "z01",
+      "nom": "Base Hubert",
+      "type": "base",
+      "x": 1800,
+      "z": 1900,
+      "camp": "joueurs",
+      "etat": "securisee",
+      "controle": 100,
+      "fob": true,
+      "voisins": [
+        "z02",
+        "z03"
+      ]
+    },
+    {
+      "id": "z02",
+      "nom": "Port-Sablon",
+      "type": "ville",
+      "x": 3600,
+      "z": 1500,
+      "camp": "joueurs",
+      "etat": "securisee",
+      "controle": 100,
+      "fob": true,
+      "voisins": [
+        "z01",
+        "z04",
+        "z05"
+      ]
+    },
+    {
+      "id": "z03",
+      "nom": "Les Genêts",
+      "type": "village",
+      "x": 2300,
+      "z": 3900,
+      "camp": "joueurs",
+      "etat": "securisee",
+      "controle": 100,
+      "fob": false,
+      "voisins": [
+        "z01",
+        "z04",
+        "z06",
+        "z20"
+      ]
+    },
+    {
+      "id": "z04",
+      "nom": "Calvaire",
+      "type": "point",
+      "x": 4300,
+      "z": 3300,
+      "camp": "joueurs",
+      "etat": "securisee",
+      "controle": 85,
+      "fob": false,
+      "voisins": [
+        "z02",
+        "z03",
+        "z05",
+        "z06",
+        "z07"
+      ]
+    },
+    {
+      "id": "z05",
+      "nom": "Vauclair",
+      "type": "village",
+      "x": 5600,
+      "z": 2300,
+      "camp": "joueurs",
+      "etat": "menacee",
+      "controle": 90,
+      "fob": false,
+      "voisins": [
+        "z02",
+        "z04",
+        "z07",
+        "z08"
+      ]
+    },
+    {
+      "id": "z06",
+      "nom": "Moulin-Brûlé",
+      "type": "village",
+      "x": 3500,
+      "z": 5600,
+      "camp": "joueurs",
+      "etat": "contre-attaque",
+      "controle": 55,
+      "fob": false,
+      "voisins": [
+        "z03",
+        "z04",
+        "z07",
+        "z09",
+        "z10"
+      ]
+    },
+    {
+      "id": "z07",
+      "nom": "Saint-Aubert",
+      "type": "ville",
+      "x": 6200,
+      "z": 4600,
+      "camp": "ia",
+      "etat": "assaut",
+      "controle": 35,
+      "fob": false,
+      "voisins": [
+        "z04",
+        "z05",
+        "z06",
+        "z08",
+        "z09",
+        "z11",
+        "z12"
+      ]
+    },
+    {
+      "id": "z08",
+      "nom": "Mont-Rouge",
+      "type": "point",
+      "x": 7300,
+      "z": 3000,
+      "camp": "ia",
+      "etat": "calme",
+      "controle": 100,
+      "fob": false,
+      "voisins": [
+        "z05",
+        "z07",
+        "z11",
+        "z14"
+      ]
+    },
+    {
+      "id": "z09",
+      "nom": "Aérodrome de Varne",
+      "type": "base",
+      "x": 5000,
+      "z": 7400,
+      "camp": "ia",
+      "etat": "calme",
+      "controle": 100,
+      "fob": false,
+      "voisins": [
+        "z06",
+        "z07",
+        "z10",
+        "z12",
+        "z15",
+        "z17"
+      ]
+    },
+    {
+      "id": "z10",
+      "nom": "Roche-Haute",
+      "type": "village",
+      "x": 2000,
+      "z": 6900,
+      "camp": "ia",
+      "etat": "calme",
+      "controle": 70,
+      "fob": false,
+      "voisins": [
+        "z06",
+        "z09",
+        "z17",
+        "z20"
+      ]
+    },
+    {
+      "id": "z11",
+      "nom": "Fort Kerval",
+      "type": "base",
+      "x": 8600,
+      "z": 5200,
+      "camp": "ia",
+      "etat": "calme",
+      "controle": 100,
+      "fob": false,
+      "voisins": [
+        "z07",
+        "z08",
+        "z12",
+        "z14",
+        "z19"
+      ]
+    },
+    {
+      "id": "z12",
+      "nom": "Lavandière",
+      "type": "village",
+      "x": 7500,
+      "z": 6700,
+      "camp": "ia",
+      "etat": "calme",
+      "controle": 100,
+      "fob": false,
+      "voisins": [
+        "z07",
+        "z09",
+        "z11",
+        "z13",
+        "z15",
+        "z18"
+      ]
+    },
+    {
+      "id": "z13",
+      "nom": "Bourg-Noir",
+      "type": "ville",
+      "x": 9400,
+      "z": 8200,
+      "camp": "ia",
+      "etat": "calme",
+      "controle": 100,
+      "fob": false,
+      "voisins": [
+        "z12",
+        "z16",
+        "z18",
+        "z19"
+      ]
+    },
+    {
+      "id": "z14",
+      "nom": "Les Salines",
+      "type": "village",
+      "x": 10200,
+      "z": 3700,
+      "camp": "ia",
+      "etat": "calme",
+      "controle": 100,
+      "fob": false,
+      "voisins": [
+        "z08",
+        "z11",
+        "z19"
+      ]
+    },
+    {
+      "id": "z15",
+      "nom": "Col de Varne",
+      "type": "point",
+      "x": 6400,
+      "z": 9000,
+      "camp": "ia",
+      "etat": "calme",
+      "controle": 100,
+      "fob": false,
+      "voisins": [
+        "z09",
+        "z12",
+        "z17",
+        "z18"
+      ]
+    },
+    {
+      "id": "z16",
+      "nom": "Pointe-aux-Phares",
+      "type": "point",
+      "x": 11300,
+      "z": 10600,
+      "camp": "ia",
+      "etat": "calme",
+      "controle": 100,
+      "fob": false,
+      "voisins": [
+        "z13",
+        "z18"
+      ]
+    },
+    {
+      "id": "z17",
+      "nom": "Saint-Clair",
+      "type": "village",
+      "x": 3400,
+      "z": 9600,
+      "camp": "ia",
+      "etat": "calme",
+      "controle": 100,
+      "fob": false,
+      "voisins": [
+        "z09",
+        "z10",
+        "z15"
+      ]
+    },
+    {
+      "id": "z18",
+      "nom": "Gué-Martin",
+      "type": "village",
+      "x": 8200,
+      "z": 10200,
+      "camp": "ia",
+      "etat": "calme",
+      "controle": 100,
+      "fob": false,
+      "voisins": [
+        "z12",
+        "z13",
+        "z15",
+        "z16"
+      ]
+    },
+    {
+      "id": "z19",
+      "nom": "Écluse Nord",
+      "type": "point",
+      "x": 10800,
+      "z": 6200,
+      "camp": "neutre",
+      "etat": "calme",
+      "controle": 0,
+      "fob": false,
+      "voisins": [
+        "z11",
+        "z13",
+        "z14"
+      ]
+    },
+    {
+      "id": "z20",
+      "nom": "Vieille Carrière",
+      "type": "point",
+      "x": 900,
+      "z": 5400,
+      "camp": "neutre",
+      "etat": "calme",
+      "controle": 0,
+      "fob": false,
+      "voisins": [
+        "z03",
+        "z10"
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "id": "op-118",
+      "type": "contre-attaque",
+      "zone": "z06",
+      "attaquant": "ia",
+      "etat": "en-cours",
+      "debut": 1793274840,
+      "fin": 1793276040,
+      "vague": 2,
+      "vagues": 3
+    },
+    {
+      "id": "op-119",
+      "type": "attaque",
+      "zone": "z05",
+      "attaquant": "ia",
+      "etat": "annoncee",
+      "debut": 1793275620
+    },
+    {
+      "id": "op-117",
+      "type": "assaut",
+      "zone": "z07",
+      "attaquant": "joueurs",
+      "etat": "en-cours",
+      "debut": 1793274120,
+      "progression": 65
+    }
+  ],
+  "journal": [
+    {
+      "t": 1793275140,
+      "type": "vague",
+      "camp": "ia",
+      "zone": "z06",
+      "texte": "Deuxième vague ennemie engagée sur Moulin-Brûlé."
+    },
+    {
+      "t": 1793274960,
+      "type": "annonce",
+      "camp": "ia",
+      "zone": "z05",
+      "texte": "Renseignement : une colonne ennemie se dirige vers Vauclair."
+    },
+    {
+      "t": 1793274660,
+      "type": "mission",
+      "camp": "joueurs",
+      "zone": "z07",
+      "texte": "Convoi de renforts intercepté entre Fort Kerval et Saint-Aubert."
+    },
+    {
+      "t": 1793274120,
+      "type": "assaut",
+      "camp": "joueurs",
+      "zone": "z07",
+      "texte": "Assaut lancé sur Saint-Aubert."
+    },
+    {
+      "t": 1793273160,
+      "type": "prise",
+      "camp": "joueurs",
+      "zone": "z06",
+      "texte": "Moulin-Brûlé prise par le Commando."
+    },
+    {
+      "t": 1793271000,
+      "type": "perte",
+      "camp": "ia",
+      "zone": "z10",
+      "texte": "Roche-Haute reprise par l'ennemi, faute de défenseurs."
+    },
+    {
+      "t": 1793267700,
+      "type": "fob",
+      "camp": "joueurs",
+      "zone": "z02",
+      "texte": "FOB établie à Port-Sablon."
+    },
+    {
+      "t": 1793263200,
+      "type": "defense",
+      "camp": "joueurs",
+      "zone": "z05",
+      "texte": "Contre-attaque repoussée à Vauclair : zone sécurisée."
+    }
+  ]
+}
