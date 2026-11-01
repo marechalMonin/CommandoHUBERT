@@ -945,9 +945,9 @@
   </header>
 
   <main>
-    <!-- Situation du front : suivi en direct de la campagne « Front Dynamique ».
-         Pour passer en direct, remplacer data-source par l'adresse du flux (voir docs/flux-front.md). -->
-    <section class="front" id="front" aria-labelledby="front-titre" data-source="data/front.json" data-intervalle="120">
+    <!-- Situation du front : suivi en direct de la campagne « Front Dynamique », publiée par le serveur de jeu
+         dans la base Firebase front-dynamique (voir docs/flux-front.md). Pour revenir à la démonstration : data-source="data/front.json". -->
+    <section class="front" id="front" aria-labelledby="front-titre" data-source="https://front-dynamique-default-rtdb.europe-west1.firebasedatabase.app/front.json" data-intervalle="120">
       <div class="container">
         <div class="panel front-panel">
           <div class="front-entete">
