@@ -15,8 +15,9 @@
     // "auto" : flux continu (EventSource) pour une base Firebase, relecture périodique sinon.
     // "flux" ou "lecture" pour forcer l'un des deux.
     mode: racine.dataset.mode || "auto",
-    intervalle: Number(racine.dataset.intervalle) || 30, // secondes entre deux relectures
-    silenceMax: 150, // secondes sans nouvelles avant d'afficher « sans nouvelles »
+    intervalle: Number(racine.dataset.intervalle) || 120, // secondes entre deux relectures
+    // « Sans nouvelles » : 2,5 fois la période de publication annoncée par le serveur, 150 s au moins.
+    silenceMin: 150,
     journalMax: 6
   };
 
@@ -110,6 +111,12 @@
     return h ? `${h} h ${deux(m)}` : `${deux(m)}:${deux(s % 60)}`;
   }
 
+  // 120 -> « 2 min », 90 -> « 90 s »
+  function duree(secondes) {
+    const s = Math.max(0, Math.round(secondes));
+    return s >= 60 && s % 60 === 0 ? `${s / 60} min` : `${s} s`;
+  }
+
   function ilYa(ms) {
     const s = Math.max(0, Math.round(ms / 1000));
     if (s < 10) return "à l'instant";
@@ -201,6 +208,7 @@
     return {
       demo,
       maj: t(brut.maj),
+      intervalle: nombre(brut.intervalle, null),
       enLigne: serveur.enLigne !== false,
       joueurs: nombre(serveur.joueurs, null),
       joueursMax: nombre(serveur.joueursMax, null),
@@ -761,7 +769,7 @@
     } else if (etat.modeFlux) {
       el.pied.textContent = "Mise à jour en continu depuis le serveur de jeu.";
     } else {
-      el.pied.textContent = `Mise à jour automatique toutes les ${CONFIG.intervalle} s.`;
+      el.pied.textContent = `Mise à jour automatique toutes les ${duree(CONFIG.intervalle)}.`;
     }
   }
 
@@ -789,7 +797,8 @@
     } else {
       // ageServeur : âge annoncé par le serveur (« maj ») ; ageVu : depuis quand rien de neuf n'est arrivé ici.
       // Si « maj » change pendant la visite, le flux vit, même si les horloges ne sont pas à l'heure.
-      const limite = CONFIG.silenceMax * 1000;
+      const periode = d.intervalle > 0 ? d.intervalle : CONFIG.intervalle;
+      const limite = Math.max(CONFIG.silenceMin, 2.5 * periode) * 1000;
       const ageVu = maintenant - etat.majVueA;
       const ageServeur = d.maj ? maintenant - d.maj : ageVu;
       const vivant = ageServeur <= limite || (etat.majChangee && ageVu <= limite);
@@ -831,7 +840,7 @@
   function afficherIndisponible() {
     vider(el.ops);
     h("li", "front-vide", el.ops).textContent = "Situation indisponible pour l'instant. Nouvel essai automatique dans "
-      + `${CONFIG.intervalle} s.`;
+      + `${duree(CONFIG.intervalle)}.`;
     vider(el.journal);
     el.info.textContent = "La carte s'affichera dès que le flux répondra.";
   }

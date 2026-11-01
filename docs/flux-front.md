@@ -12,7 +12,7 @@ Les réglages se trouvent sur la balise `<section id="front">` de `index.html`.
 | --- | --- | --- |
 | `data-source` | Adresse du flux | `data/front.json` (démonstration) |
 | `data-mode` | `auto`, `flux` (écoute continue) ou `lecture` (relecture périodique) | `auto` : écoute continue pour une base Firebase, relecture sinon |
-| `data-intervalle` | Secondes entre deux relectures | `30` |
+| `data-intervalle` | Secondes entre deux relectures | `120` (2 min) |
 
 Passage en direct avec Firebase :
 
@@ -21,7 +21,8 @@ Passage en direct avec Firebase :
          data-source="https://<projet>-default-rtdb.europe-west1.firebasedatabase.app/front.json">
 ```
 
-Le site affiche « En direct » tant que `maj` change, « Sans nouvelles » après 150 s sans changement,
+Le site affiche « En direct » tant que `maj` change, « Sans nouvelles » après 2,5 fois la période
+annoncée par le serveur (`intervalle`, soit 5 min pour un envoi toutes les 2 min ; 150 s au moins) sans changement,
 « Serveur arrêté » si `serveur.enLigne` vaut `false`, et garde toujours la dernière situation connue.
 
 ## Format du document (version 1)
@@ -83,7 +84,7 @@ Exemple complet : `data/front.json`.
 
 ## Côté mod (Enforce Script)
 
-- Seul le serveur publie (`Replication.IsServer()`), toutes les 30 s et à chaque événement
+- Seul le serveur publie (`Replication.IsServer()`), toutes les 2 min et à chaque événement
   (prise, perte, annonce de contre-attaque), jamais plus d'une fois toutes les 10 s.
 - Le document pèse quelques Ko (20 zones ≈ 8 Ko) ; l'API REST du jeu limite les envois à moins de 1 Mo.
 - L'adresse et le secret sont lus dans un fichier de config du serveur
