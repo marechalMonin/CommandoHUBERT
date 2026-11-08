@@ -310,11 +310,73 @@ pre code{background:none;padding:0;color:#e6f2cf}
 .etat-liste li{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07)}
 .etat-liste .pastille{margin-top:2px}
 
+/* ---------- Agenda des GM ---------- */
+.agenda-pseudo{display:grid;grid-template-columns:minmax(200px,320px) 1fr;gap:12px;align-items:end;margin-bottom:10px}
+.agenda-pseudo .champ{margin:0}
+.agenda-pseudo .qui{color:var(--muted);font-size:.9rem;padding-bottom:12px}
+.agenda-barre{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0}
+.agenda-barre .periode{font-weight:700;color:var(--accent-3)}
+#agendaStatut{font-weight:700}
+#agendaStatut[data-etat="direct"],#agendaStatut[data-etat="lecture"]{color:#d6f0ae;border-color:rgba(199,229,154,.45);background:rgba(199,229,154,.14)}
+#agendaStatut[data-etat="coupure"],#agendaStatut[data-etat="chargement"]{color:#f1dc9d;border-color:rgba(227,194,107,.45);background:rgba(227,194,107,.13)}
+#agendaStatut[data-etat="refuse"],#agendaStatut[data-etat="erreur"]{color:#f3c4c4;border-color:rgba(217,123,123,.45);background:rgba(217,123,123,.13)}
+.agenda-entete{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px}
+.agenda-entete span{text-align:center;font-size:.76rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.agenda-grille{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.jour{
+  font:inherit;text-align:left;color:var(--text);cursor:pointer;min-height:104px;padding:8px;border-radius:14px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  display:flex;flex-direction:column;gap:6px;align-items:stretch;transition:.15s;
+}
+.jour:hover:not(:disabled){border-color:var(--line-strong);background:rgba(199,229,154,.08)}
+.jour:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.jour.passe{opacity:.38;cursor:default}
+.jour.aujourdhui{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.jour .tete{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.jour .jsem{display:none;color:var(--muted);font-size:.8rem;text-transform:uppercase}
+.jour .num{font-weight:800;font-size:1.05rem;color:var(--accent-3)}
+.jour .mois{color:var(--muted);font-size:.8rem}
+.jour .badge{
+  margin-left:auto;font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700;
+  color:#10150f;background:linear-gradient(135deg,var(--accent),var(--accent-2));padding:2px 7px;border-radius:999px;
+}
+.jour .rep{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px}
+.jour .rep .pastille{font-size:.72rem;padding:3px 8px;white-space:normal;overflow-wrap:anywhere}
+.jour .rep .moi{outline:2px solid rgba(255,255,255,.35);outline-offset:1px}
+.jour .compte{margin-top:auto;font-size:.78rem;color:var(--accent);font-weight:700}
+.jour .vide{margin-top:auto;color:rgba(255,255,255,.18)}
+.agenda-legende{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0 0;font-size:.88rem;color:var(--muted)}
+.choix-etat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.choix-etat button{
+  font:inherit;font-weight:700;cursor:pointer;color:var(--text);padding:14px 10px;border-radius:14px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
+}
+.choix-etat button:hover{border-color:var(--line-strong)}
+.choix-etat button[data-etat="present"].actif{color:#d6f0ae;border-color:rgba(199,229,154,.6);background:rgba(199,229,154,.18)}
+.choix-etat button[data-etat="peut-etre"].actif{color:#f1dc9d;border-color:rgba(227,194,107,.6);background:rgba(227,194,107,.18)}
+.choix-etat button[data-etat="absent"].actif{color:#f3c4c4;border-color:rgba(217,123,123,.6);background:rgba(217,123,123,.18)}
+.rep-ligne{display:flex;gap:10px;align-items:center;padding:8px 0;border-top:1px solid rgba(255,255,255,.06);color:var(--text)}
+.rep-ligne .pastille{min-width:110px;text-align:center}
+
 @media (max-width:980px){
   .tuto-grille{grid-template-columns:1fr}
   .sommaire{position:static;max-height:none}
   .tuto{padding:20px}
   .tuto h2{scroll-margin-top:140px}
+}
+@media (max-width:700px){
+  .agenda-pseudo{grid-template-columns:1fr}
+  .agenda-pseudo .qui{padding-bottom:0}
+  .agenda-entete{display:none}
+  .agenda-grille{grid-template-columns:1fr}
+  .jour{min-height:0;flex-direction:row;align-items:center;flex-wrap:wrap;padding:10px 12px}
+  .jour .jsem{display:inline}
+  .jour.passe{display:none}
+  .jour .tete{min-width:118px}
+  .jour .badge{margin-left:0}
+  .jour .rep{flex:1}
+  .jour .compte,.jour .vide{margin-top:0;margin-left:auto}
+  .choix-etat{grid-template-columns:1fr}
 }
 @media print{
   .sommaire,.onglets,.entete-page .actions{display:none !important}

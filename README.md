@@ -18,8 +18,7 @@ Accès par compte depuis `connexion.html` (vérification dans le navigateur, voi
 | --- | --- | --- |
 | Régiment médical | `medecin.html` | `medecin` |
 | GCA (désamorçage IED) | `gca.html` | `gca` |
-| Administration (tutos Game Master, économie, front dynamique, site) | `admin.html` | `admin` |
+| Administration (tutos Game Master, GM Tools, économie, front dynamique ; agenda des GM) | `admin.html` | `admin` |
 
 - Comptes : `assets/comptes.js` (empreintes seulement). Créer ou modifier un compte : `outil-identifiants.html`.
-- Ajouter un tuto d'administration : copier une `<section class="tuto">` dans `admin.html`
-  (onglets et sommaire sont générés automatiquement ; mode d'emploi dans l'onglet « Site & accès »).
+- Mode d'emploi complet (comptes, nouvel espace, ajout d'un tuto, agenda) : `docs/espace-membres.md`.

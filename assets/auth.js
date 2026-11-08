@@ -13,7 +13,7 @@ const Auth = (() => {
   const ESPACES = {
     medecin: { page: "medecin.html", nom: "Régiment médical", ico: "🩺", desc: "Fiches médicales et visites" },
     gca: { page: "gca.html", nom: "GCA", ico: "💣", desc: "Règles de désamorçage IED" },
-    admin: { page: "admin.html", nom: "Administration", ico: "🛠️", desc: "Tutos Game Master, économie, front dynamique, site" }
+    admin: { page: "admin.html", nom: "Administration", ico: "🛠️", desc: "Tutos Game Master et GM Tools, économie, front, agenda des GM" }
   };
 
   const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");

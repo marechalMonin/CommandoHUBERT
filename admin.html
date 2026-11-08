@@ -222,16 +222,94 @@
         </ul>
 
         <h2 id="gm-mods">Mods du serveur utiles au GM</h2>
-        <div class="note chantier">🚧 <strong>À compléter</strong> avec la liste des mods installés sur le serveur et ce qu’ils changent pour le GM (menus, entités supplémentaires, raccourcis). Donnez la liste à l’état-major du site pour remplir ce tableau.</div>
         <div class="defilant">
         <table>
           <thead><tr><th>Mod</th><th>Ce qu’il apporte au GM</th><th>Points d’attention</th></tr></thead>
           <tbody>
-            <tr><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td><a href="#gmtools">GM Tools</a> (H0VI)</td><td>Commandes de chat : avertissements, téléportation, caméra sur un joueur, grades, nettoyage, fin de session, alertes Discord.</td><td>Droits admin requis ; <code>#endsession</code> et <code>#rank -all</code> touchent tout le monde.</td></tr>
           </tbody>
         </table>
         </div>
+        <div class="note chantier">🚧 <strong>À compléter</strong> avec les autres mods installés sur le serveur et ce qu’ils changent pour le GM (menus, entités supplémentaires, raccourcis).</div>
         <p>Rappel : dans le navigateur d’entités, le filtre <em>Contenu</em> permet d’afficher uniquement les entités issues des mods.</p>
+      </section>
+
+      <!-- ======================= GM TOOLS ======================= -->
+      <section class="tuto panel" id="tuto-gmtools" data-titre="GM Tools" data-ico="🧰" data-maj="2026-11-08" hidden>
+
+        <h2 id="gmtools-presentation">Le mod GM Tools</h2>
+        <p class="intro"><strong>GM Tools</strong> (Workshop, auteur H0VI) ajoute au Game Master une boîte à outils pilotée depuis le chat : avertissements aux joueurs, téléportation, caméra sur un joueur, grades, nettoyage du serveur, fin de session propre, alertes vers le Discord et journal des sessions GM. Tout se fait avec des commandes qui commencent par <code>#</code>, après un <code>#login</code> (voir <a href="#gm-acces">Accéder au Game Master</a>).</p>
+        <div class="cartes">
+          <div class="carte"><b>Commandes de chat</b><span>Avertir, téléporter, suivre, nettoyer, terminer : sans ouvrir l’interface du GM.</span></div>
+          <div class="carte"><b>Discord</b><span>Alerte formatée vers un webhook (avec mention de rôle et délai anti-spam) et, en option, copie du chat du jeu.</span></div>
+          <div class="carte"><b>Popups</b><span>Messages à l’écran pour un joueur, une faction ou tout le monde, avec titre, durée et son.</span></div>
+          <div class="carte"><b>Journal GM</b><span>Entrées et sorties du mode GM enregistrées avec la durée de chaque session.</span></div>
+          <div class="carte"><b>Vision nocturne GM</b><span>Luminosité de la vision nocturne du GM adaptée à la météo.</span></div>
+          <div class="carte"><b>Nettoyage</b><span>Purge des corps, épaves et objets placés pour soulager le serveur.</span></div>
+        </div>
+        <p>Fiche du mod : <a href="https://reforger.armaplatform.com/workshop/64F10E068D5880A6" target="_blank" rel="noopener">reforger.armaplatform.com/workshop/64F10E068D5880A6</a> (version 2.2.0 pour le jeu 1.7 au 30 mai 2026). Sa licence interdit toute utilisation sur un serveur monétisé.</p>
+
+        <h2 id="gmtools-commandes">Les commandes</h2>
+        <p>Toutes se tapent dans le chat, droits d’administration requis. <code>&lt;joueur&gt;</code> accepte le numéro de joueur (<code>#players</code>), le nom complet ou partiel (sans tenir compte des majuscules) ou l’identifiant Reforger (UID).</p>
+        <div class="defilant">
+        <table>
+          <thead><tr><th>Commande</th><th>Effet</th></tr></thead>
+          <tbody>
+            <tr><td><code>#warn &lt;joueur&gt; &lt;message&gt;</code></td><td>Popup d’avertissement à un joueur.</td></tr>
+            <tr><td><code>#warnall &lt;message&gt;</code></td><td>Popup à tous les joueurs (brief, consigne générale, pause).</td></tr>
+            <tr><td><code>#warnfaction &lt;faction&gt; &lt;message&gt;</code></td><td>Popup aux seuls joueurs d’une faction.</td></tr>
+            <tr><td><code>#tp &lt;joueur&gt;</code></td><td>Amène le joueur (ou son véhicule) près de vous : près de la caméra GM si elle est ouverte, sinon près de votre soldat. Vous devez contrôler un personnage.</td></tr>
+            <tr><td><code>#mc &lt;joueur&gt;</code></td><td>Déplace la caméra libre du GM sur le joueur et la lui accroche (suivi).</td></tr>
+            <tr><td><code>#mc -s &lt;cible&gt;</code></td><td>Même chose, caméra fixe (ne suit pas).</td></tr>
+            <tr><td><code>#rank &lt;joueur&gt; [grade]</code></td><td>Affiche ou change le grade d’un joueur. Grade par nom complet, nom court ou numéro ; la liste des grades est lue dans le scénario en cours.</td></tr>
+            <tr><td><code>#rank -all &lt;grade&gt;</code></td><td>Donne le même grade à tous les joueurs connectés.</td></tr>
+            <tr><td><code>#admin &lt;message&gt;</code></td><td>Envoie une alerte formatée sur le Discord (webhook configuré côté serveur).</td></tr>
+            <tr><td><code>#garbagesystem</code></td><td>Force le nettoyage des entités suivies par le moteur (corps, véhicules détruits…).</td></tr>
+            <tr><td><code>#deleteplaced</code></td><td>Supprime les sacs de sable et barbelés placés par les joueurs et le GM.</td></tr>
+            <tr><td><code>#endsession</code></td><td>Termine la session immédiatement.</td></tr>
+            <tr><td><code>#endsession -time &lt;secondes&gt;</code></td><td>Termine la session après un compte à rebours silencieux : prévenez d’abord avec <code>#warnall</code>.</td></tr>
+            <tr><td><code>#gmtools -status</code></td><td>Affiche les fonctions du mod activées sur le serveur.</td></tr>
+            <tr><td><code>#gmtools -reload</code></td><td>Recharge la configuration sans redémarrer (seules les clés déjà présentes dans le fichier JSON sont relues).</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="note astuce">💡 Le nom partiel suffit : <code>#warn ced Reste avec ton groupe</code> vise le joueur dont le nom contient « ced ». En cas de doute entre deux joueurs, utilisez le numéro donné par <code>#players</code>.</div>
+
+        <h2 id="gmtools-usage">En situation sur Commando Hubert</h2>
+        <div class="defilant">
+        <table>
+          <thead><tr><th>Situation</th><th>Commande</th></tr></thead>
+          <tbody>
+            <tr><td>Un joueur sort du RP (rush, tir en base, hors-sujet radio)</td><td><code>#warn &lt;joueur&gt; Rappel : RP militaire strict en OPEX.</code> — un seul avertissement, puis le règlement s’applique.</td></tr>
+            <tr><td>Lancer ou interrompre la mission pour tout le monde</td><td><code>#warnall Brief dans 5 min sur la radio de commandement.</code></td></tr>
+            <tr><td>Consigne à l’ennemi joué par des joueurs (OPFOR)</td><td><code>#warnfaction &lt;faction&gt; Repliez-vous sur la ligne 2.</code></td></tr>
+            <tr><td>Joueur coincé, tombé sous la carte, spawn raté</td><td><code>#tp &lt;joueur&gt;</code> depuis la caméra GM placée là où il doit réapparaître.</td></tr>
+            <tr><td>Suivre une escouade sans la survoler bruyamment</td><td><code>#mc &lt;chef de groupe&gt;</code> ; <code>#mc -s</code> pour une vue fixe d’un point chaud.</td></tr>
+            <tr><td>Entre deux vagues, ou si le serveur rame</td><td><code>#garbagesystem</code>, puis <em>Nettoyer les entités détruites</em> dans l’interface GM.</td></tr>
+            <tr><td>Fin d’OPEX : rendre la base propre</td><td><code>#deleteplaced</code> pour les fortifications, puis suppression des entités restantes.</td></tr>
+            <tr><td>Clôturer la session</td><td><code>#warnall Fin de session dans 2 minutes, merci à tous.</code> puis <code>#endsession -time 120</code>.</td></tr>
+            <tr><td>Prévenir l’état-major sans quitter le jeu</td><td><code>#admin Joueur X : second avertissement, à surveiller.</code></td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="note attention">⚠️ <code>#endsession</code> sans <code>-time</code> coupe tout le monde sur-le-champ, et <code>#rank -all</code> écrase le grade de tous les connectés : deux commandes à taper en connaissance de cause.</div>
+
+        <h2 id="gmtools-config">Configuration côté serveur</h2>
+        <ol>
+          <li>Au premier démarrage avec le mod, un dossier <code>GM_Tools</code> apparaît dans le profil du serveur (<code>$profile:/GM_Tools/</code>) avec deux fichiers : <code>gm_tools_config.json</code> (à modifier) et <code>GM_Tools_README.txt</code> (référence générée automatiquement, à ne pas éditer : il se met à jour quand de nouveaux réglages arrivent).</li>
+          <li>Les réglages couvrent l’activation de chaque fonction, l’adresse du webhook Discord des alertes (<code>m_sAdminAlertWebhookURL</code>), la copie du chat vers Discord (<code>m_bDiscordChatForwardingEnabled</code>), les textes et sons des popups et les valeurs de luminosité de la vision nocturne.</li>
+          <li>Après une modification : redémarrer le serveur, ou <code>#gmtools -reload</code> si vous n’avez changé que des valeurs existantes.</li>
+          <li><code>#gmtools -status</code> en jeu confirme ce qui est actif.</li>
+        </ol>
+        <div class="note attention">⚠️ L’adresse du webhook Discord donne le droit d’écrire dans le salon : elle reste dans le fichier de configuration du serveur, jamais sur le Discord ni sur ce site.</div>
+
+        <h2 id="gmtools-bonnes-pratiques">Bonnes pratiques</h2>
+        <ul>
+          <li>Un popup est intrusif : un message court, clair, et pas plus d’un par problème.</li>
+          <li>Le journal des sessions GM existe pour ça : l’état-major peut voir qui a tenu le GM et combien de temps — jouez le jeu et sortez du mode GM quand vous reprenez votre soldat.</li>
+          <li>La copie du chat vers Discord concerne tous les joueurs : si elle est activée, annoncez-le dans le règlement.</li>
+          <li>Après une mise à jour du jeu, vérifiez sur la fiche du mod qu’une version compatible est sortie avant de relancer le serveur.</li>
+        </ul>
       </section>
 
       <!-- ======================= ÉCONOMIE ======================= -->
@@ -390,75 +468,102 @@
         </div>
       </section>
 
-      <!-- ======================= SITE & ACCÈS ======================= -->
-      <section class="tuto panel" id="tuto-site" data-titre="Site & accès" data-ico="🔐" data-maj="2026-11-08" hidden>
+      <!-- ======================= AGENDA ======================= -->
+      <section class="tuto panel" id="tuto-agenda" data-titre="Agenda" data-ico="📅" data-maj="2026-11-08" hidden>
 
-        <h2 id="site-structure">Comment le site est construit</h2>
-        <p class="intro">Le site est un ensemble de pages statiques hébergées par <strong>GitHub Pages</strong> depuis le dépôt <code>marechalMonin/CommandoHUBERT</code>. Chaque modification validée sur la branche <code>main</code> est en ligne au bout d’une à deux minutes. Il n’y a ni serveur ni base de données côté site : tout se passe dans le navigateur du visiteur.</p>
-        <div class="defilant">
-        <table>
-          <thead><tr><th>Fichier</th><th>Rôle</th></tr></thead>
-          <tbody>
-            <tr><td><code>index.html</code></td><td>Page publique : bandeau du front, présentation, règlement, grades, formations, recrutement.</td></tr>
-            <tr><td><code>connexion.html</code></td><td>Connexion à l’espace membres et choix de l’espace.</td></tr>
-            <tr><td><code>medecin.html</code>, <code>gca.html</code>, <code>admin.html</code></td><td>Les espaces protégés : dossiers médicaux RP, désamorçage IED, tutos d’administration (cette page).</td></tr>
-            <tr><td><code>outil-identifiants.html</code></td><td>Outil de l’état-major pour créer un compte ou changer un mot de passe.</td></tr>
-            <tr><td><code>assets/auth.js</code>, <code>assets/comptes.js</code></td><td>Mécanique de connexion et liste des comptes (empreintes seulement).</td></tr>
-            <tr><td><code>assets/espace.css</code></td><td>Style commun des pages de l’espace membres.</td></tr>
-            <tr><td><code>assets/front.js</code>, <code>assets/front.css</code>, <code>data/front.json</code>, <code>docs/flux-front.md</code></td><td>Bandeau du front dynamique, données de démonstration et documentation du flux.</td></tr>
-            <tr><td><code>assets/ied-regles.js</code>, <code>assets/medecin.js</code></td><td>Règles IED du GCA et logique des dossiers médicaux.</td></tr>
-          </tbody>
-        </table>
+        <h2 id="agenda-dispos">Disponibilités des GM</h2>
+        <p class="intro">Cliquez sur un jour pour dire si vous pouvez tenir le Game Master : présent, absent ou peut-être. Les réponses de tous les GM s’affichent dans la case du jour et se mettent à jour en direct.</p>
+
+        <!-- Adresse de la base partagée (nœud "agenda" de la base du front). Règles à poser : voir « Configuration de la base ». -->
+        <div id="agenda" data-agenda="https://front-dynamique-default-rtdb.europe-west1.firebasedatabase.app/agenda" data-intervalle="60">
+          <div class="agenda-pseudo">
+            <div class="champ">
+              <label for="agendaPseudo">Votre pseudo GM</label>
+              <input id="agendaPseudo" list="agendaPseudos" maxlength="24" autocomplete="off" autocapitalize="none" placeholder="ex. Cedric">
+              <datalist id="agendaPseudos"></datalist>
+            </div>
+            <p class="qui" id="agendaQui"></p>
+          </div>
+
+          <div class="agenda-barre">
+            <div class="actions">
+              <button class="btn btn-secondary btn-petit" type="button" id="agendaPrec">‹ Semaine précédente</button>
+              <button class="btn btn-secondary btn-petit" type="button" id="agendaAujourdhui">Aujourd’hui</button>
+              <button class="btn btn-secondary btn-petit" type="button" id="agendaSuiv">Semaine suivante ›</button>
+            </div>
+            <span class="periode" id="agendaPeriode"></span>
+            <span class="pastille" id="agendaStatut" data-etat="chargement">Connexion…</span>
+          </div>
+          <p class="note attention" id="agendaMessage" hidden></p>
+
+          <div class="agenda-entete" aria-hidden="true">
+            <span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span><span>Sam</span><span>Dim</span>
+          </div>
+          <div class="agenda-grille" id="agendaGrille" aria-label="Calendrier des disponibilités"></div>
+
+          <div class="agenda-legende">
+            <span class="pastille vert">✔ Présent</span>
+            <span class="pastille jaune">? Peut-être</span>
+            <span class="pastille rouge">✘ Absent</span>
+            <span>Les jours passés ne se modifient plus.</span>
+          </div>
         </div>
 
-        <h2 id="site-comptes">Gérer les comptes de l’espace membres</h2>
-        <p>Les mots de passe ne sont jamais écrits sur le site : seule une <strong>empreinte</strong> (PBKDF2-SHA256, 150 000 itérations, sel aléatoire) figure dans <code>assets/comptes.js</code>. La vérification se fait dans le navigateur.</p>
-        <h3>Ajouter un compte ou changer un mot de passe</h3>
-        <ol>
-          <li>Ouvrir <a href="outil-identifiants.html">outil-identifiants.html</a>, saisir l’identifiant, le mot de passe (12 caractères minimum conseillés) et cocher les accès.</li>
-          <li>Cliquer <em>Générer la ligne</em> puis <em>Copier</em>. Rien n’est envoyé : le calcul est local.</li>
-          <li>Sur GitHub, ouvrir <code>assets/comptes.js</code>, cliquer le crayon (modifier), coller la ligne dans la liste <code>window.COMPTES</code> (ou remplacer l’ancienne ligne du même identifiant).</li>
-          <li><em>Commit changes</em>. Le nouveau compte fonctionne une à deux minutes plus tard.</li>
-        </ol>
-        <h3>Ce qu’il faut savoir</h3>
+        <h2 id="agenda-fonctionnement">Comment ça marche</h2>
         <ul>
-          <li>L’identifiant est insensible à la casse (<code>Admin</code> = <code>admin</code>) ; le mot de passe, lui, est exact.</li>
-          <li>Rôles possibles : <code>medecin</code>, <code>gca</code>, <code>admin</code>. Un compte peut en cumuler plusieurs (ex. <code>etat-major</code>).</li>
-          <li>Pour supprimer un compte : effacer sa ligne.</li>
-          <li>La session dure 8 h et se termine à la fermeture du navigateur. Après 5 échecs, 30 s d’attente.</li>
-          <li><strong>Limite importante</strong> : c’est une barrière d’accès RP, pas une protection forte. Un visiteur déterminé peut lire le code des pages protégées. N’y mettez rien de réellement confidentiel (mot de passe admin du serveur, secret Firebase, données personnelles).</li>
+          <li>Le calendrier s’ouvre toujours sur la semaine en cours, le jour actuel en surbrillance, et avance tout seul chaque jour. Les boutons permettent de regarder les semaines suivantes.</li>
+          <li>Votre pseudo est mémorisé dans ce navigateur (lettres, chiffres, tiret et souligné, sans accent, 24 caractères maximum). Chaque GM répond sous son propre pseudo : le compte de connexion du site, lui, est commun.</li>
+          <li>Les réponses sont enregistrées dans la base Firebase du front (nœud <code>agenda</code>) : tout le monde voit les mêmes, depuis n’importe quel appareil.</li>
+          <li>Pour corriger : recliquez sur le jour et choisissez une autre réponse, ou « Effacer ma réponse ».</li>
+          <li>Les cases affichent le nombre de GM présents : pratique pour caler une OPEX.</li>
         </ul>
 
-        <h2 id="site-roles">Ajouter un nouvel espace</h2>
-        <ol>
-          <li>Dans <code>assets/auth.js</code>, ajouter une entrée dans <code>ESPACES</code> : <code>nouveau: { page: "nouveau.html", nom: "…", ico: "…", desc: "…" }</code>.</li>
-          <li>Créer <code>nouveau.html</code> sur le modèle de <code>gca.html</code> : classe <code>verrou</code> sur <code>&lt;html&gt;</code>, les scripts <code>comptes.js</code> et <code>auth.js</code> puis <code>Auth.exiger("nouveau")</code> dans le <code>&lt;head&gt;</code>, et <code>Auth.barre("nouveau")</code> en bas.</li>
-          <li>Dans <code>outil-identifiants.html</code>, ajouter la case à cocher du nouveau rôle (deux lignes : la case et le <code>roles.push</code>).</li>
-          <li>Donner le rôle aux comptes concernés via l’outil.</li>
-        </ol>
-
-        <h2 id="site-tutos">Ajouter ou modifier un tuto de cette page</h2>
-        <p>Chaque tuto est une <code>&lt;section class="tuto panel"&gt;</code> dans <code>admin.html</code>. Les onglets et le sommaire sont générés automatiquement : il n’y a rien d’autre à toucher.</p>
-        <ol>
-          <li>Copier une section entière et changer : <code>id="tuto-xxx"</code>, <code>data-titre</code> (nom de l’onglet), <code>data-ico</code> (émoji) et <code>data-maj</code> (date au format AAAA-MM-JJ).</li>
-          <li>Écrire le contenu avec des <code>&lt;h2 id="xxx-yyy"&gt;</code> : chaque <code>h2</code> devient une entrée du sommaire et un lien partageable (<code>admin.html#xxx-yyy</code>).</li>
-          <li>Éléments disponibles : <code>&lt;h3&gt;</code>, listes, tableaux (dans un <code>&lt;div class="defilant"&gt;</code>), <code>&lt;kbd&gt;</code> pour une touche, <code>&lt;code&gt;</code> pour une commande, <code>&lt;pre&gt;&lt;code&gt;</code> pour un bloc, encadrés <code>note astuce</code> / <code>note attention</code> / <code>note chantier</code>, et <code>cartes</code> pour des blocs côte à côte.</li>
-          <li>Pour un lien direct vers un onglet : <code>admin.html#xxx</code> (sans le préfixe <code>tuto-</code>).</li>
-        </ol>
-        <div class="note astuce">💡 Pour partager un tuto sur le Discord, copiez l’adresse de la page une fois l’onglet ouvert : elle contient déjà l’onglet (et la section si vous avez cliqué dans le sommaire). Le lecteur devra se connecter avec un compte ayant l’accès Administration.</div>
-
-        <h2 id="site-modifier">Modifier le site sur GitHub</h2>
-        <ol>
-          <li>Se connecter sur GitHub avec un compte ayant accès au dépôt <code>marechalMonin/CommandoHUBERT</code>.</li>
-          <li>Ouvrir le fichier à modifier, cliquer le crayon <em>Edit</em>, faire la modification, puis <em>Commit changes</em> avec un message clair (ex. « Ajoute le tuto convois »).</li>
-          <li>Attendre une à deux minutes, puis recharger la page (<kbd>Ctrl</kbd>+<kbd>F5</kbd> pour forcer le cache).</li>
-          <li>En cas d’erreur, l’onglet <em>History</em> d’un fichier permet de revenir à une version précédente.</li>
-        </ol>
-        <p>Pour une modification plus lourde (nouvelle page, changement de style), passez par une branche et une <em>pull request</em> : c’est ainsi qu’ont été ajoutés l’espace membres et le bandeau du front.</p>
+        <h2 id="agenda-config">Configuration de la base (état-major)</h2>
+        <p>L’agenda lit et écrit dans la Realtime Database du projet <strong>front-dynamique</strong>, nœud <code>agenda</code>. Pour l’autoriser, remplacer les règles de la base (console Firebase → Realtime Database → onglet Règles → Publier) par :</p>
+        <pre><code>{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "front": { ".read": true },
+    "agenda": {
+      ".read": true,
+      "$jour": {
+        ".validate": "$jour.matches(/^20[0-9][0-9]-[01][0-9]-[0-3][0-9]$/)",
+        "$gm": {
+          ".write": true,
+          ".validate": "$gm.matches(/^[A-Za-z0-9_-]+$/) && $gm.length <= 24 && newData.isString() && (newData.val() == 'present' || newData.val() == 'absent' || newData.val() == 'peut-etre')"
+        }
+      }
+    }
+  }
+}</code></pre>
+        <ul>
+          <li>Le front ne change pas : lecture publique, écriture réservée au mod (avec le secret).</li>
+          <li>Pour l’agenda : lecture publique ; écriture sans mot de passe, mais uniquement une date au format AAAA-MM-JJ, un pseudo simple et l’une des trois valeurs <code>present</code>, <code>absent</code>, <code>peut-etre</code>. Rien d’autre ne peut être écrit.</li>
+          <li>C’est le même niveau de protection que l’espace membres : suffisant pour un agenda de disponibilités, pas pour des données sensibles. En cas d’abus, retirer le bloc <code>agenda</code> des règles suffit à tout bloquer.</li>
+          <li>Tant que les règles ne sont pas publiées, le statut affiche « Base non configurée pour l’agenda » et les réponses ne s’enregistrent pas.</li>
+          <li>Pour utiliser une autre base : changer l’attribut <code>data-agenda</code> du bloc <code>&lt;div id="agenda"&gt;</code> dans <code>admin.html</code>.</li>
+        </ul>
       </section>
     </div>
   </main>
 
+  <dialog id="dlgJour">
+    <h2 id="titreJour"></h2>
+    <p class="muted" style="margin-top:0">Votre réponse pour ce jour :</p>
+    <div class="choix-etat">
+      <button type="button" data-etat="present">✔ Présent</button>
+      <button type="button" data-etat="peut-etre">? Peut-être</button>
+      <button type="button" data-etat="absent">✘ Absent</button>
+    </div>
+    <div id="reponsesJour"></div>
+    <div class="actions">
+      <button class="btn btn-danger btn-petit" type="button" id="btnEffacer" hidden>Effacer ma réponse</button>
+      <button class="btn btn-secondary" type="button" data-fermer>Fermer</button>
+    </div>
+  </dialog>
+
+  <script src="assets/agenda.js"></script>
   <script>
     Auth.barre("admin");
 
