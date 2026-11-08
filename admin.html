@@ -176,6 +176,7 @@
           <li><strong>Soigner / réapprovisionner</strong> un joueur : uniquement pour corriger un bug, jamais pour « sauver » une escouade — c’est le rôle des médics et de la logistique.</li>
           <li><strong>Neutraliser</strong> un joueur : seulement si l’état-major impose une mort RP ou en cas de triche flagrante.</li>
           <li><strong>Respawn</strong> : dans les propriétés du scénario (<kbd>V</kbd>), activer la réapparition, le délai et l’option « près des opérateurs radio ». Annoncez les règles de respawn au brief.</li>
+          <li><strong>Avec le mod maison</strong> : <code>#gm aller &lt;joueur&gt;</code> amène votre caméra sur lui, <code>#gm gel on</code> fige tout le monde pour un briefing, <code>#gm info &lt;joueur&gt;</code> donne sa position (voir <a href="#gmtools">GM Tools</a>).</li>
         </ul>
         <div class="note attention">⚠️ <strong>Retirer une faction jouable tue instantanément tous les joueurs qui lui sont assignés.</strong> Ne touchez pas aux factions pendant une opération.</div>
 
@@ -226,7 +227,7 @@
         <table>
           <thead><tr><th>Mod</th><th>Ce qu’il apporte au GM</th><th>Points d’attention</th></tr></thead>
           <tbody>
-            <tr><td><a href="#gmtools">GM Tools</a> (H0VI)</td><td>Commandes de chat : avertissements, téléportation, caméra sur un joueur, grades, nettoyage, fin de session, alertes Discord.</td><td>Droits admin requis ; <code>#endsession</code> et <code>#rank -all</code> touchent tout le monde.</td></tr>
+            <tr><td><a href="#gmtools">C-HUBERT GM Tools</a> (mod maison)</td><td>Commandes <code>#gm …</code> : messages et objectifs aux joueurs, ordres à l’IA autour de la caméra, effets (explosions, fumées, sirène), voix depuis la caméra, gel des joueurs, bans et expulsions.</td><td>Les effets utilisent les vraies munitions ; un ordre IA remplace les points de passage du groupe.</td></tr>
           </tbody>
         </table>
         </div>
@@ -237,79 +238,139 @@
       <!-- ======================= GM TOOLS ======================= -->
       <section class="tuto panel" id="tuto-gmtools" data-titre="GM Tools" data-ico="🧰" data-maj="2026-11-08" hidden>
 
-        <h2 id="gmtools-presentation">Le mod GM Tools</h2>
-        <p class="intro"><strong>GM Tools</strong> (Workshop, auteur H0VI) ajoute au Game Master une boîte à outils pilotée depuis le chat : avertissements aux joueurs, téléportation, caméra sur un joueur, grades, nettoyage du serveur, fin de session propre, alertes vers le Discord et journal des sessions GM. Tout se fait avec des commandes qui commencent par <code>#</code>, après un <code>#login</code> (voir <a href="#gm-acces">Accéder au Game Master</a>).</p>
+        <h2 id="gmtools-principe">C-HUBERT GM Tools : le principe</h2>
+        <p class="intro">Le mod maison du serveur donne au GM des commandes de chat pour parler aux joueurs, diriger l’IA, déclencher des effets et administrer, sans quitter sa caméra. Tout se tape dans le chat du jeu, avec le <code>#</code> devant.</p>
         <div class="cartes">
-          <div class="carte"><b>Commandes de chat</b><span>Avertir, téléporter, suivre, nettoyer, terminer : sans ouvrir l’interface du GM.</span></div>
-          <div class="carte"><b>Discord</b><span>Alerte formatée vers un webhook (avec mention de rôle et délai anti-spam) et, en option, copie du chat du jeu.</span></div>
-          <div class="carte"><b>Popups</b><span>Messages à l’écran pour un joueur, une faction ou tout le monde, avec titre, durée et son.</span></div>
-          <div class="carte"><b>Journal GM</b><span>Entrées et sorties du mode GM enregistrées avec la durée de chaque session.</span></div>
-          <div class="carte"><b>Vision nocturne GM</b><span>Luminosité de la vision nocturne du GM adaptée à la météo.</span></div>
-          <div class="carte"><b>Nettoyage</b><span>Purge des corps, épaves et objets placés pour soulager le serveur.</span></div>
+          <div class="carte"><b>Syntaxe</b><span><code>[ ]</code> = facultatif, <code>&lt; &gt;</code> = obligatoire.</span></div>
+          <div class="carte"><b>Désigner un joueur</b><span>Par son id ou un morceau de son pseudo. <code>#gm joueurs</code> donne la liste.</span></div>
+          <div class="carte"><b>Un trou de mémoire ?</b><span><code>#gm aide</code> rappelle toutes les commandes en jeu.</span></div>
+          <div class="carte"><b>Depuis la caméra</b><span>Beaucoup de commandes agissent autour de la caméra d’éditeur (rayon) ou juste en dessous (effets, voix).</span></div>
         </div>
-        <p>Fiche du mod : <a href="https://reforger.armaplatform.com/workshop/64F10E068D5880A6" target="_blank" rel="noopener">reforger.armaplatform.com/workshop/64F10E068D5880A6</a> (version 2.2.0 pour le jeu 1.7 au 30 mai 2026). Sa licence interdit toute utilisation sur un serveur monétisé.</p>
 
-        <h2 id="gmtools-commandes">Les commandes</h2>
-        <p>Toutes se tapent dans le chat, droits d’administration requis. <code>&lt;joueur&gt;</code> accepte le numéro de joueur (<code>#players</code>), le nom complet ou partiel (sans tenir compte des majuscules) ou l’identifiant Reforger (UID).</p>
+        <h2 id="gmtools-messages">Messages</h2>
         <div class="defilant">
         <table>
           <thead><tr><th>Commande</th><th>Effet</th></tr></thead>
           <tbody>
-            <tr><td><code>#warn &lt;joueur&gt; &lt;message&gt;</code></td><td>Popup d’avertissement à un joueur.</td></tr>
-            <tr><td><code>#warnall &lt;message&gt;</code></td><td>Popup à tous les joueurs (brief, consigne générale, pause).</td></tr>
-            <tr><td><code>#warnfaction &lt;faction&gt; &lt;message&gt;</code></td><td>Popup aux seuls joueurs d’une faction.</td></tr>
-            <tr><td><code>#tp &lt;joueur&gt;</code></td><td>Amène le joueur (ou son véhicule) près de vous : près de la caméra GM si elle est ouverte, sinon près de votre soldat. Vous devez contrôler un personnage.</td></tr>
-            <tr><td><code>#mc &lt;joueur&gt;</code></td><td>Déplace la caméra libre du GM sur le joueur et la lui accroche (suivi).</td></tr>
-            <tr><td><code>#mc -s &lt;cible&gt;</code></td><td>Même chose, caméra fixe (ne suit pas).</td></tr>
-            <tr><td><code>#rank &lt;joueur&gt; [grade]</code></td><td>Affiche ou change le grade d’un joueur. Grade par nom complet, nom court ou numéro ; la liste des grades est lue dans le scénario en cours.</td></tr>
-            <tr><td><code>#rank -all &lt;grade&gt;</code></td><td>Donne le même grade à tous les joueurs connectés.</td></tr>
-            <tr><td><code>#admin &lt;message&gt;</code></td><td>Envoie une alerte formatée sur le Discord (webhook configuré côté serveur).</td></tr>
-            <tr><td><code>#garbagesystem</code></td><td>Force le nettoyage des entités suivies par le moteur (corps, véhicules détruits…).</td></tr>
-            <tr><td><code>#deleteplaced</code></td><td>Supprime les sacs de sable et barbelés placés par les joueurs et le GM.</td></tr>
-            <tr><td><code>#endsession</code></td><td>Termine la session immédiatement.</td></tr>
-            <tr><td><code>#endsession -time &lt;secondes&gt;</code></td><td>Termine la session après un compte à rebours silencieux : prévenez d’abord avec <code>#warnall</code>.</td></tr>
-            <tr><td><code>#gmtools -status</code></td><td>Affiche les fonctions du mod activées sur le serveur.</td></tr>
-            <tr><td><code>#gmtools -reload</code></td><td>Recharge la configuration sans redémarrer (seules les clés déjà présentes dans le fichier JSON sont relues).</td></tr>
+            <tr><td><code>#annonce [durée] texte</code></td><td>Message à tous, en pop-up avec son. Durée en secondes (3 à 120, 10 par défaut).</td></tr>
+            <tr><td><code>#gm faction &lt;clé&gt; [durée] texte</code></td><td>À une faction (<code>#gm factions</code> pour les clés).</td></tr>
+            <tr><td><code>#gm mp &lt;joueur&gt; texte</code></td><td>Message privé.</td></tr>
+            <tr><td><code>#gm groupe &lt;joueur&gt; [durée] texte</code></td><td>À tout le groupe de ce joueur.</td></tr>
+            <tr><td><code>#gm zone &lt;rayon&gt; [durée] texte</code></td><td>Aux joueurs à moins de <code>rayon</code> m de votre caméra.</td></tr>
+            <tr><td><code>#gm qg [faction] texte</code></td><td>Message radio du QG.</td></tr>
+            <tr><td><code>#gm dire &lt;nom&gt;</code></td><td>Message tout prêt (<code>#gm dire</code> seul : la liste).</td></tr>
+            <tr><td><code>#gm objectif [faction] texte</code> / <code>#gm objectif off</code></td><td>Objectif qui reste à l’écran, aussi pour ceux qui arrivent après.</td></tr>
+            <tr><td><code>#gm chrono &lt;minutes&gt; [texte]</code> / <code>#gm chrono off</code></td><td>Compte à rebours visible par tous.</td></tr>
+            <tr><td><code>#gm fin &lt;victoire|echec&gt; [texte]</code></td><td>Écran « Mission accomplie / échouée ». La partie continue.</td></tr>
           </tbody>
         </table>
         </div>
-        <div class="note astuce">💡 Le nom partiel suffit : <code>#warn ced Reste avec ton groupe</code> vise le joueur dont le nom contient « ced ». En cas de doute entre deux joueurs, utilisez le numéro donné par <code>#players</code>.</div>
+        <div class="note astuce">💡 Exemples : <code>#annonce 20 Briefing au PC dans 5 min</code> · <code>#gm faction FIA Renforts par le nord</code> · <code>#gm chrono 10 Exfiltration</code></div>
 
-        <h2 id="gmtools-usage">En situation sur Commando Hubert</h2>
+        <h2 id="gmtools-joueurs">Joueurs</h2>
         <div class="defilant">
         <table>
-          <thead><tr><th>Situation</th><th>Commande</th></tr></thead>
+          <thead><tr><th>Commande</th><th>Effet</th></tr></thead>
           <tbody>
-            <tr><td>Un joueur sort du RP (rush, tir en base, hors-sujet radio)</td><td><code>#warn &lt;joueur&gt; Rappel : RP militaire strict en OPEX.</code> — un seul avertissement, puis le règlement s’applique.</td></tr>
-            <tr><td>Lancer ou interrompre la mission pour tout le monde</td><td><code>#warnall Brief dans 5 min sur la radio de commandement.</code></td></tr>
-            <tr><td>Consigne à l’ennemi joué par des joueurs (OPFOR)</td><td><code>#warnfaction &lt;faction&gt; Repliez-vous sur la ligne 2.</code></td></tr>
-            <tr><td>Joueur coincé, tombé sous la carte, spawn raté</td><td><code>#tp &lt;joueur&gt;</code> depuis la caméra GM placée là où il doit réapparaître.</td></tr>
-            <tr><td>Suivre une escouade sans la survoler bruyamment</td><td><code>#mc &lt;chef de groupe&gt;</code> ; <code>#mc -s</code> pour une vue fixe d’un point chaud.</td></tr>
-            <tr><td>Entre deux vagues, ou si le serveur rame</td><td><code>#garbagesystem</code>, puis <em>Nettoyer les entités détruites</em> dans l’interface GM.</td></tr>
-            <tr><td>Fin d’OPEX : rendre la base propre</td><td><code>#deleteplaced</code> pour les fortifications, puis suppression des entités restantes.</td></tr>
-            <tr><td>Clôturer la session</td><td><code>#warnall Fin de session dans 2 minutes, merci à tous.</code> puis <code>#endsession -time 120</code>.</td></tr>
-            <tr><td>Prévenir l’état-major sans quitter le jeu</td><td><code>#admin Joueur X : second avertissement, à surveiller.</code></td></tr>
+            <tr><td><code>#gm joueurs</code> / <code>#gm factions</code></td><td>Listes des joueurs et des factions.</td></tr>
+            <tr><td><code>#gm info &lt;joueur&gt;</code></td><td>Faction, groupe, état, grille, distance à votre caméra.</td></tr>
+            <tr><td><code>#gm appels</code></td><td>Les derniers appels des joueurs (côté joueur : <code>#appelgm texte</code>).</td></tr>
+            <tr><td><code>#gm aller [joueur]</code></td><td>Votre caméra d’éditeur va sur ce joueur (sans nom : sur le dernier appel).</td></tr>
+            <tr><td><code>#gm gel on [faction]</code> / <code>#gm gel off</code></td><td>Bloque déplacement et tir (briefing, cinématique). Les GM ne sont pas gelés.</td></tr>
           </tbody>
         </table>
         </div>
-        <div class="note attention">⚠️ <code>#endsession</code> sans <code>-time</code> coupe tout le monde sur-le-champ, et <code>#rank -all</code> écrase le grade de tous les connectés : deux commandes à taper en connaissance de cause.</div>
+        <div class="note astuce">💡 Rappelez aux joueurs la commande <code>#appelgm texte</code> : un appel, puis <code>#gm aller</code> vous amène directement sur eux.</div>
 
-        <h2 id="gmtools-config">Configuration côté serveur</h2>
-        <ol>
-          <li>Au premier démarrage avec le mod, un dossier <code>GM_Tools</code> apparaît dans le profil du serveur (<code>$profile:/GM_Tools/</code>) avec deux fichiers : <code>gm_tools_config.json</code> (à modifier) et <code>GM_Tools_README.txt</code> (référence générée automatiquement, à ne pas éditer : il se met à jour quand de nouveaux réglages arrivent).</li>
-          <li>Les réglages couvrent l’activation de chaque fonction, l’adresse du webhook Discord des alertes (<code>m_sAdminAlertWebhookURL</code>), la copie du chat vers Discord (<code>m_bDiscordChatForwardingEnabled</code>), les textes et sons des popups et les valeurs de luminosité de la vision nocturne.</li>
-          <li>Après une modification : redémarrer le serveur, ou <code>#gmtools -reload</code> si vous n’avez changé que des valeurs existantes.</li>
-          <li><code>#gmtools -status</code> en jeu confirme ce qui est actif.</li>
-        </ol>
-        <div class="note attention">⚠️ L’adresse du webhook Discord donne le droit d’écrire dans le salon : elle reste dans le fichier de configuration du serveur, jamais sur le Discord ni sur ce site.</div>
+        <h2 id="gmtools-voix">Voix (dans l’éditeur)</h2>
+        <p>En caméra, vous parlez et entendez depuis la caméra, portée 10 m. Caméra haute : la voix part du sol juste en dessous.</p>
+        <div class="defilant">
+        <table>
+          <thead><tr><th>Commande</th><th>Effet</th></tr></thead>
+          <tbody>
+            <tr><td><code>#gm micro muet</code> / <code>#gm micro camera</code></td><td>Écouter sans parler, puis rallumer. La radio marche toujours.</td></tr>
+            <tr><td><code>#gm ecoute &lt;joueur&gt;</code> / <code>#gm ecoute off</code></td><td>Entendre ce qu’entend ce joueur (micro coupé pendant l’écoute).</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="note attention">⚠️ Caméra à 10 m d’une escouade = les joueurs vous entendent. Passez en <code>#gm micro muet</code> avant de vous approcher.</div>
 
-        <h2 id="gmtools-bonnes-pratiques">Bonnes pratiques</h2>
+        <h2 id="gmtools-ia">IA</h2>
+        <p>Les ordres s’appliquent aux groupes IA dans un rayon autour de votre caméra : 200 m par défaut, <code>tous</code> = toute la carte. Un ordre remplace les points de passage du groupe.</p>
+        <div class="defilant">
+        <table>
+          <thead><tr><th>Commande</th><th>Effet</th></tr></thead>
+          <tbody>
+            <tr><td><code>#gm ia difficulte &lt;facile|normal|veteran|expert|libre&gt;</code></td><td>Toutes les IA, présentes et futures.</td></tr>
+            <tr><td><code>#gm ia tir &lt;libre|riposte|halte&gt; [rayon]</code></td><td>Tir à volonté, riposte seulement, halte au feu. Sans rayon : toutes.</td></tr>
+            <tr><td><code>#gm ia attaque [rayon]</code></td><td>Les groupes attaquent la position de votre caméra.</td></tr>
+            <tr><td><code>#gm ia defense [rayon]</code></td><td>Ils tiennent leur position.</td></tr>
+            <tr><td><code>#gm ia patrouille [rayon] [rayon de patrouille]</code></td><td>Patrouille autonome (150 m par défaut).</td></tr>
+            <tr><td><code>#gm ia deplacement [rayon]</code></td><td>Ils rejoignent votre caméra.</td></tr>
+            <tr><td><code>#gm ia recherche [rayon]</code></td><td>Recherche et destruction autour de votre caméra.</td></tr>
+            <tr><td><code>#gm ia stop [rayon]</code></td><td>Ils attendent sur place.</td></tr>
+            <tr><td><code>#gm ia liste [rayon]</code></td><td>Groupes IA dans le rayon.</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="note astuce">💡 Embuscade : <code>#gm ia tir halte 300</code>, puis au signal <code>#gm ia attaque 300</code>.</div>
+
+        <h2 id="gmtools-effets">Effets</h2>
+        <p><code>#gm effet &lt;type&gt; [délai en s]</code> déclenche l’effet au sol, sous votre caméra.</p>
+        <div class="defilant">
+        <table>
+          <thead><tr><th>Type</th><th>Effet</th></tr></thead>
+          <tbody>
+            <tr><td><code>explosion</code></td><td>Explosion de C4.</td></tr>
+            <tr><td><code>grenade</code> / <code>grenade_est</code></td><td>Grenade (ouest / est).</td></tr>
+            <tr><td><code>obus</code></td><td>Obus de mortier 81.</td></tr>
+            <tr><td><code>fumee</code> / <code>fumee_est</code> / <code>fumee_obus</code></td><td>Fumigène (ouest / est) ou obus fumigène.</td></tr>
+            <tr><td><code>sirene</code></td><td>Sirène.</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="note attention">⚠️ Ce sont les vraies munitions du jeu : les explosions blessent et tuent. Vérifiez ce qu’il y a sous la caméra, et utilisez le délai pour vous éloigner.</div>
+
+        <h2 id="gmtools-admin">Admins seulement</h2>
+        <div class="defilant">
+        <table>
+          <thead><tr><th>Commande</th><th>Effet</th></tr></thead>
+          <tbody>
+            <tr><td><code>#gm ban &lt;joueur&gt;</code></td><td>Bannit un joueur connecté ou récemment parti (par pseudo).</td></tr>
+            <tr><td><code>#gm deban &lt;pseudo&gt;</code></td><td>Retire un ban.</td></tr>
+            <tr><td><code>#gm expulser &lt;joueur&gt;</code></td><td>Expulse sans bannir.</td></tr>
+            <tr><td><code>#gm bannis</code> / <code>#gm partis</code></td><td>Liste des bannis / derniers partis.</td></tr>
+            <tr><td><code>#gm id &lt;joueur&gt;</code></td><td>Identifiant Bohemia, pour les listes admins et staff.</td></tr>
+            <tr><td><code>#gm recharger</code></td><td>Relit le fichier de réglages du serveur.</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p>Plus simple : <strong><kbd>Échap</kbd> › Administration</strong> ouvre la fenêtre Joueurs / Bans, avec les boutons Expulser, Bannir et Débannir.</p>
+
+        <h2 id="gmtools-bon-a-savoir">Bon à savoir</h2>
         <ul>
-          <li>Un popup est intrusif : un message court, clair, et pas plus d’un par problème.</li>
-          <li>Le journal des sessions GM existe pour ça : l’état-major peut voir qui a tenu le GM et combien de temps — jouez le jeu et sortez du mode GM quand vous reprenez votre soldat.</li>
-          <li>La copie du chat vers Discord concerne tous les joueurs : si elle est activée, annoncez-le dans le règlement.</li>
-          <li>Après une mise à jour du jeu, vérifiez sur la fiche du mod qu’une version compatible est sortie avant de relancer le serveur.</li>
+          <li>Tout ce que vous faites est noté dans le journal GM du serveur (et sur Discord si c’est branché).</li>
+          <li>Les votes « devenir GM » et « devenir admin » sont désactivés.</li>
+          <li>Un GM ou un admin ne peut pas être banni tant qu’il est dans les listes.</li>
         </ul>
+
+        <h2 id="gmtools-h0vi">Ne pas confondre : « GM Tools » du Workshop (H0VI)</h2>
+        <p>Un mod du Workshop porte le même nom (<a href="https://reforger.armaplatform.com/workshop/64F10E068D5880A6" target="_blank" rel="noopener">GM Tools, par H0VI</a>). Ses commandes ne fonctionnent que s’il est installé sur le serveur ; elles sont listées ici pour éviter la confusion.</p>
+        <div class="defilant">
+        <table>
+          <thead><tr><th>Commande</th><th>Effet</th></tr></thead>
+          <tbody>
+            <tr><td><code>#warn &lt;joueur&gt; &lt;message&gt;</code>, <code>#warnall</code>, <code>#warnfaction &lt;faction&gt;</code></td><td>Popup d’avertissement à un joueur, à tous, à une faction.</td></tr>
+            <tr><td><code>#tp &lt;joueur&gt;</code></td><td>Amène le joueur (ou son véhicule) près de vous.</td></tr>
+            <tr><td><code>#mc &lt;joueur&gt;</code> / <code>#mc -s &lt;cible&gt;</code></td><td>Caméra GM sur le joueur, en suivi ou fixe.</td></tr>
+            <tr><td><code>#rank &lt;joueur&gt; [grade]</code> / <code>#rank -all &lt;grade&gt;</code></td><td>Affiche ou change le grade d’un joueur, ou de tous.</td></tr>
+            <tr><td><code>#admin &lt;message&gt;</code></td><td>Alerte formatée sur le Discord (webhook).</td></tr>
+            <tr><td><code>#garbagesystem</code> / <code>#deleteplaced</code></td><td>Nettoyage des entités suivies / des sacs de sable et barbelés placés.</td></tr>
+            <tr><td><code>#endsession [-time &lt;secondes&gt;]</code></td><td>Termine la session, tout de suite ou après un compte à rebours.</td></tr>
+            <tr><td><code>#gmtools -status</code> / <code>#gmtools -reload</code></td><td>Fonctions actives / rechargement de la configuration (<code>$profile:/GM_Tools/gm_tools_config.json</code>).</td></tr>
+          </tbody>
+        </table>
+        </div>
       </section>
 
       <!-- ======================= ÉCONOMIE ======================= -->
