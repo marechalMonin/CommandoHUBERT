@@ -44,6 +44,7 @@
           <label>Accès</label>
           <label style="color:var(--text)"><input type="checkbox" id="roleMedecin" style="width:auto"> Page Médecins</label>
           <label style="color:var(--text)"><input type="checkbox" id="roleGca" style="width:auto"> Page GCA</label>
+          <label style="color:var(--text)"><input type="checkbox" id="roleAdmin" style="width:auto"> Page Administration (tutos)</label>
         </div>
 
         <button class="btn btn-primary" type="submit">Générer la ligne</button>
@@ -68,6 +69,7 @@
       const roles = [];
       if (document.getElementById("roleMedecin").checked) roles.push("medecin");
       if (document.getElementById("roleGca").checked) roles.push("gca");
+      if (document.getElementById("roleAdmin").checked) roles.push("admin");
       if (!roles.length) {
         erreur.textContent = "Cochez au moins un accès.";
         erreur.hidden = false;

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="fr" class="verrou">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Administration — Tutos | Commando Hubert</title>
+  <link rel="stylesheet" href="assets/espace.css">
+  <script src="assets/comptes.js"></script>
+  <script src="assets/auth.js"></script>
+  <script>Auth.exiger("admin");</script>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">CH</div>
+        <div class="brand-text">
+          <strong>Commando Hubert</strong>
+          <span>Administration</span>
+        </div>
+      </a>
+      <nav class="nav" id="navEspace"></nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="entete-page">
+      <div>
+        <span class="eyebrow">🛠️ administration — réservé aux Game Masters et à l’état-major</span>
+        <h1>Tutos & procédures</h1>
+        <p>Tout ce qu’il faut savoir pour animer, administrer et faire vivre le serveur. Choisissez un tuto ; son sommaire permet d’aller droit à une section.</p>
+      </div>
+      <!-- Les onglets sont générés à partir des <section class="tuto"> ci-dessous. -->
+      <div class="onglets" role="tablist" id="onglets"></div>
+    </div>
+
+    <div class="tuto-grille">
+      <aside class="panel sommaire" aria-label="Sommaire du tuto">
+        <h2>Sommaire</h2>
+        <ol id="sommaire"></ol>
+        <span class="maj" id="maj"></span>
+        <div class="actions">
+          <button class="btn btn-secondary btn-petit" type="button" id="btnImprimer">🖨️ Imprimer ce tuto</button>
+        </div>
+      </aside>
+
+      <!-- ===================================================================
+           Pour ajouter un tuto : copier une <section class="tuto"> entière,
+           changer son id (tuto-xxx), data-titre, data-ico et data-maj (AAAA-MM-JJ),
+           puis donner un id unique à chaque <h2> (il sert de lien : admin.html#xxx-yyy).
+           Onglets et sommaire se mettent à jour tout seuls.
+           =================================================================== -->
+
+      <!-- ======================= GAME MASTER ======================= -->
+      <section class="tuto panel" id="tuto-gm" data-titre="Game Master" data-ico="🎮" data-maj="2026-11-08">
+
+        <h2 id="gm-role">Le rôle du GM sur Commando Hubert</h2>
+        <p class="intro">Le Game Master (GM) est le metteur en scène de l’opération : il prépare le terrain, anime l’ennemi, fait monter la pression et arbitre. Il n’est ni un joueur ni un adversaire : son but est que les joueurs vivent une OPEX crédible, pas de les battre.</p>
+        <div class="cartes">
+          <div class="carte"><b>Avant l’OPEX</b><span>Lire le brief du commandant d’opération, préparer les positions ennemies, les véhicules, le respawn et vérifier les budgets.</span></div>
+          <div class="carte"><b>Pendant</b><span>Rester invisible, suivre la radio, doser les vagues, réagir aux initiatives des joueurs sans casser leur plan.</span></div>
+          <div class="carte"><b>Après</b><span>Nettoyer les entités, noter les prises et pertes de zones pour le front, participer au débrief.</span></div>
+        </div>
+        <ul>
+          <li><strong>Le RP prime</strong> : une embuscade bien placée vaut mieux que trois escouades spawnées à 50 m des joueurs.</li>
+          <li><strong>Jamais de « deus ex machina »</strong> : pas de foudre, de téléportation ou de soin miracle sans raison RP (sauf bug ou sécurité).</li>
+          <li><strong>Un seul GM pilote</strong> ; un second peut assister (reco, logistique) mais ne spawne pas sans accord.</li>
+          <li><strong>Discrétion</strong> : les commandes et la caméra GM ne doivent pas trahir l’ennemi (pas de lampe GM en vue des joueurs, ne pas « survoler » bruyamment une position).</li>
+        </ul>
+
+        <h2 id="gm-acces">Accéder au Game Master sur le serveur</h2>
+        <ol>
+          <li>Une fois connecté sur le serveur, ouvrir le chat avec <kbd>/</kbd> (ou la touche de chat de vos contrôles).</li>
+          <li>Taper <code>#login motdepasse</code> puis <kbd>Entrée</kbd>. Le mot de passe admin est différent du mot de passe du serveur : demandez-le à l’état-major, ne l’écrivez jamais sur le Discord ni ici.</li>
+          <li>Appuyer sur <kbd>Échap</kbd> : une entrée <strong>Game Master</strong> apparaît dans le menu de pause. La sélectionner ouvre l’interface.</li>
+          <li>Pour revenir à votre soldat : <kbd>Échap</kbd> puis quitter le Game Master. Pour rendre les droits : <code>#logout</code>.</li>
+        </ol>
+        <div class="note astuce">💡 Les commandes qui commencent par <code>#</code> sont traitées par le serveur et ne sont pas diffusées aux autres joueurs. En cas de doute sur vos droits, tapez <code>#roles</code>.</div>
+        <div class="note attention">⚠️ <strong>Ne restez pas connecté en admin « par confort ».</strong> Un GM qui joue en même temps fausse le RP et un <code>#restart</code> ou un <kbd>Suppr</kbd> malheureux peut effacer une opération entière.</div>
+
+        <h2 id="gm-commandes">Commandes d’administration</h2>
+        <p>Toutes se tapent dans le chat. <code>playerId</code> est le numéro affiché par <code>#players</code>.</p>
+        <div class="defilant">
+        <table>
+          <thead><tr><th>Commande</th><th>Effet</th></tr></thead>
+          <tbody>
+            <tr><td><code>#login motdepasse</code></td><td>Devenir administrateur (Game Master, kick, ban…).</td></tr>
+            <tr><td><code>#logout</code></td><td>Rendre les droits d’administration.</td></tr>
+            <tr><td><code>#roles</code></td><td>Afficher vos rôles et droits actuels.</td></tr>
+            <tr><td><code>#id</code></td><td>Afficher votre propre numéro de joueur.</td></tr>
+            <tr><td><code>#players</code></td><td>Lister les joueurs connectés avec leur numéro.</td></tr>
+            <tr><td><code>#kick playerId</code></td><td>Éjecter un joueur (il peut revenir).</td></tr>
+            <tr><td><code>#ban create playerId durée motif</code></td><td>Bannir. <code>durée</code> en secondes, <code>0</code> = définitif ; le motif est facultatif. Un joueur absent se bannit par son <code>identityId</code>.</td></tr>
+            <tr><td><code>#ban remove identityId</code></td><td>Lever un bannissement.</td></tr>
+            <tr><td><code>#ban list</code></td><td>Lister les bannissements (10 par page : <code>#ban list 2</code>).</td></tr>
+            <tr><td><code>#restart</code></td><td>Relancer le scénario, joueurs connectés conservés. <strong>Efface tout ce qui a été placé.</strong></td></tr>
+            <tr><td><code>#shutdown</code></td><td>Arrêter le serveur et déconnecter tout le monde.</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p>Rappel du règlement : avertissement, kick ou ban selon la gravité des faits. Pensez à noter chaque sanction sur le Discord de l’état-major (joueur, motif, durée) pour que tout le monde soit au courant.</p>
+
+        <h2 id="gm-interface">L’interface du Game Master</h2>
+        <h3>Caméra</h3>
+        <ul>
+          <li><kbd>Z</kbd><kbd>Q</kbd><kbd>S</kbd><kbd>D</kbd> : déplacer la caméra ; <strong>clic droit maintenu + souris</strong> : tourner.</li>
+          <li>Monter / descendre : touches dédiées dans <em>Options → Contrôles → Game Master</em> (le wiki Bohemia indique Q et Z sur clavier QWERTY ; vérifiez votre disposition AZERTY).</li>
+          <li><kbd>M</kbd> : carte, pour se repérer et déplacer la caméra ou une sélection à l’autre bout du terrain.</li>
+          <li><kbd>I</kbd> : masquer / afficher l’interface (pratique pour observer ou faire une capture).</li>
+          <li><kbd>L</kbd> : lampe de la caméra, visible du GM seulement, de nuit.</li>
+        </ul>
+        <h3>Les panneaux</h3>
+        <ul>
+          <li><strong>Barre d’outils</strong> (en haut) : visite guidée (icône chapeau d’étudiant), <em>Nettoyer les entités détruites</em> (libère le budget des morts et des épaves), carte, retour en jeu.</li>
+          <li><strong>Navigateur d’entités</strong> <kbd>Tab</kbd> : tout ce qui se place. Filtres par faction, type, rôle, trait et contenu (jeu de base / mods). <kbd>R</kbd> remet les filtres à zéro, <kbd>Échap</kbd> ferme.</li>
+          <li><strong>Propriétés du scénario</strong> (maintenir <kbd>V</kbd>) : factions jouables, points d’apparition, objectifs, heure, météo, respawn (détails plus bas).</li>
+          <li><strong>Propriétés d’une entité</strong> : double-clic (ou clic droit → <em>Modifier les propriétés</em>) : santé, carburant, munitions, faction, comportement…</li>
+        </ul>
+        <h3>Les budgets</h3>
+        <p>En bas à droite du navigateur d’entités, quatre jauges limitent ce que le serveur peut supporter : <strong>Objets</strong> (décors et compositions), <strong>IA</strong> (soldats contrôlés par l’ordinateur), <strong>Véhicules</strong> et <strong>Systèmes</strong> (points de respawn, objectifs, arsenaux…). À 100 % d’une jauge, rien de ce type ne peut plus être placé tant qu’on n’a pas supprimé ou nettoyé. Les autres jauges restent utilisables.</p>
+        <div class="note astuce">💡 Faites <em>Nettoyer les entités détruites</em> après chaque phase : les morts et les épaves continuent de compter dans les budgets et pèsent sur les performances du serveur.</div>
+
+        <h2 id="gm-placer">Placer, déplacer, modifier</h2>
+        <div class="defilant">
+        <table>
+          <thead><tr><th>Action</th><th>Comment</th></tr></thead>
+          <tbody>
+            <tr><td>Placer une entité</td><td><kbd>Tab</kbd>, choisir, puis <strong>clic gauche</strong> sur le terrain. <kbd>Ctrl</kbd> + clic : placer et en enchaîner d’autres.</td></tr>
+            <tr><td>Orienter</td><td>Maintenir <kbd>Maj</kbd> en bougeant la souris, avant ou après le placement.</td></tr>
+            <tr><td>Hauteur</td><td>Maintenir <kbd>Alt</kbd> en bougeant la souris (étages, toits, aéronefs).</td></tr>
+            <tr><td>Annuler un placement</td><td><strong>Clic droit</strong> pendant le placement.</td></tr>
+            <tr><td>Sélectionner</td><td>Clic, ou rectangle de sélection. Cliquer l’icône d’un groupe sélectionne tout le groupe.</td></tr>
+            <tr><td>Déplacer</td><td>Glisser-déposer la sélection. Fonctionne aussi depuis la carte <kbd>M</kbd>.</td></tr>
+            <tr><td>Dupliquer</td><td>Clic droit → <em>Placer à nouveau</em>.</td></tr>
+            <tr><td>Supprimer</td><td><kbd>Suppr</kbd> ou clic droit → <em>Supprimer</em>. <kbd>Fin</kbd> : neutraliser (tuer / détruire) sans supprimer.</td></tr>
+            <tr><td>Placer ou téléporter son soldat</td><td><kbd>Espace</kbd> : s’il n’existe pas, le navigateur propose un fantassin ; s’il est vivant, il est téléporté sous le curseur.</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <h3>Menu contextuel (clic droit sur une entité)</h3>
+        <ul>
+          <li><strong>Soigner</strong> (santé à 100 %), <strong>Réapprovisionner</strong> (chargeurs et munitions), <strong>Refaire le plein</strong> (véhicules).</li>
+          <li><strong>Déclencher un saignement</strong> : le soldat doit se bander — utile pour un exercice médic.</li>
+          <li><strong>Mettre le feu / Éteindre</strong>, <strong>Foudre</strong> (détruit la cible : à réserver aux bugs, jamais sur un joueur).</li>
+          <li><strong>Prendre le contrôle</strong> d’une IA : parler à la radio en tant qu’ennemi, conduire un véhicule, jouer un PNJ (informateur, officier capturé).</li>
+          <li><strong>Modifier les propriétés</strong> : un mort ou une épave ne se « ressuscitent » pas ainsi ; placez une nouvelle entité.</li>
+        </ul>
+
+        <h2 id="gm-ia">Diriger l’IA</h2>
+        <p>Un groupe se compose d’un chef et de ses soldats. Clic droit sur un soldat → <em>Nouveau groupe</em> pour le détacher, ou faites-le glisser sur un autre groupe pour l’y rattacher. Sélectionnez un groupe puis donnez-lui un point de passage (waypoint) :</p>
+        <div class="defilant">
+        <table>
+          <thead><tr><th>Ordre</th><th>Raccourci</th><th>Comportement</th></tr></thead>
+          <tbody>
+            <tr><td>Déplacement</td><td><kbd>Alt</kbd>+<kbd>1</kbd></td><td>Rejoint le point en combattant ce qu’il croise ; terminé quand le chef arrive.</td></tr>
+            <tr><td>Déplacement forcé</td><td><kbd>Alt</kbd>+<kbd>2</kbd></td><td>Ignore les ennemis en chemin : pour une colonne qui doit arriver coûte que coûte.</td></tr>
+            <tr><td>Déplacement détendu</td><td><kbd>Alt</kbd>+<kbd>3</kbd></td><td>Marche, armes baissées : patrouilles de routine, ambiance avant l’assaut.</td></tr>
+            <tr><td>Recherche et destruction</td><td><kbd>Alt</kbd>+<kbd>4</kbd></td><td>Ratisse la zone jusqu’à ce qu’il ne reste plus d’hostiles.</td></tr>
+            <tr><td>Défendre</td><td><kbd>Alt</kbd>+<kbd>5</kbd></td><td>Tient la position, ne se termine jamais tout seul.</td></tr>
+            <tr><td>Monter à bord</td><td><kbd>Alt</kbd>+<kbd>6</kbd></td><td>Embarque dans le véhicule disponible le plus proche.</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <ul>
+          <li>Les points de passage sont des <strong>ordres à l’IA</strong>, pas des objectifs de faction : l’IA ignore les objectifs du scénario.</li>
+          <li>Enchaînez plusieurs points pour un itinéraire ; le dernier <em>Défendre</em> fixe la position finale.</li>
+          <li>Pour une contre-attaque crédible : une colonne en <em>Déplacement forcé</em> jusqu’à 400–600 m, puis <em>Recherche et destruction</em> sur la zone.</li>
+          <li>Spawnez l’ennemi <strong>hors de vue</strong> (derrière une crête, dans un bois, à l’intérieur d’un bâtiment) et en avance : l’IA a besoin de quelques secondes pour se mettre en place.</li>
+        </ul>
+
+        <h2 id="gm-joueurs">Gérer les joueurs</h2>
+        <ul>
+          <li><strong>Téléporter un joueur</strong> : sélectionner le joueur, puis <em>Téléporter le joueur</em> dans son menu (ou glisser-déposer). À réserver aux blocages (joueur coincé, bug de spawn).</li>
+          <li><strong>Soigner / réapprovisionner</strong> un joueur : uniquement pour corriger un bug, jamais pour « sauver » une escouade — c’est le rôle des médics et de la logistique.</li>
+          <li><strong>Neutraliser</strong> un joueur : seulement si l’état-major impose une mort RP ou en cas de triche flagrante.</li>
+          <li><strong>Respawn</strong> : dans les propriétés du scénario (<kbd>V</kbd>), activer la réapparition, le délai et l’option « près des opérateurs radio ». Annoncez les règles de respawn au brief.</li>
+        </ul>
+        <div class="note attention">⚠️ <strong>Retirer une faction jouable tue instantanément tous les joueurs qui lui sont assignés.</strong> Ne touchez pas aux factions pendant une opération.</div>
+
+        <h2 id="gm-scenario">Réglages du scénario (maintenir V)</h2>
+        <div class="cartes">
+          <div class="carte"><b>Factions</b><span>Factions jouables, leurs points d’apparition et leurs objectifs. Les objectifs servent aux joueurs ; l’IA les ignore.</span></div>
+          <div class="carte"><b>Heure et date</b><span>Heures rapides (05:45, 08:52, 12:00, 20:12, 22:06, 00:00) ou curseur par pas de 15 min. Écoulement du temps 0,1× à 12× (1× par défaut).</span></div>
+          <div class="carte"><b>Météo</b><span>Automatique ou forcée : dégagé, nuageux, couvert, pluie, brouillard. Le brouillard change tout pour une infiltration.</span></div>
+          <div class="carte"><b>Vent</b><span>Automatique ou forcé : 0 à 15 m/s, huit directions. À prendre en compte pour l’aéro et les fumigènes.</span></div>
+          <div class="carte"><b>Respawn</b><span>Activation, délai, apparition près des opérateurs radio.</span></div>
+          <div class="carte"><b>Musique</b><span>Musique d’ambiance pour tout le serveur : coupez-la en OPEX sérieuse.</span></div>
+        </div>
+        <p>Changer l’heure ou la météo en pleine opération se voit : faites-le avant le lancement ou pendant une pause RP, et avec parcimonie.</p>
+
+        <h2 id="gm-checklist">Checklist d’une OPEX</h2>
+        <h3>J-1 / avant le lancement</h3>
+        <ol>
+          <li>Lire l’ordre d’opération du commandant : objectif, zone, effectif, moyens, horaire.</li>
+          <li>Vérifier la <a href="#front-principe">situation du front</a> : la zone visée, son état, les zones voisines ennemies (c’est de là que vient la contre-attaque).</li>
+          <li>Préparer les positions ennemies hors de vue, les véhicules, les points de respawn, l’heure et la météo.</li>
+          <li>Garder au moins 30 % de budget IA et véhicules pour réagir en cours d’opération.</li>
+          <li>Tester le respawn et l’arsenal avec un joueur de l’état-major avant d’ouvrir le serveur.</li>
+        </ol>
+        <h3>Pendant</h3>
+        <ol>
+          <li>Suivre la radio de commandement : adaptez l’ennemi au plan des joueurs, ne contrez pas chaque idée.</li>
+          <li>Rythme en trois temps : approche calme → contact → contre-attaque ou extraction sous pression.</li>
+          <li>Une vague à la fois ; nettoyer les entités détruites entre deux vagues.</li>
+          <li>Noter dans le chat GM ou un bloc-notes : heure des prises, pertes, événements marquants (pour le journal du front).</li>
+        </ol>
+        <h3>Après</h3>
+        <ol>
+          <li>Nettoyer tout ce qui reste (IA, véhicules, objets) pour la session suivante.</li>
+          <li>Mettre à jour le <a href="#front-publier">front dynamique</a> si une zone a changé de camp.</li>
+          <li>Débrief avec le commandant : ce qui a marché, ce qui est à corriger côté GM.</li>
+        </ol>
+        <h3>Erreurs classiques</h3>
+        <ul>
+          <li>Spawner en vue des joueurs ou dans leur dos sans logique RP.</li>
+          <li>Sur-spawner : plus de budget, serveur qui rame, joueurs épuisés.</li>
+          <li>Oublier de désactiver la lampe GM ou l’interface avant de reprendre son soldat.</li>
+          <li>Changer l’heure ou la météo brutalement.</li>
+          <li>Faire un <code>#restart</code> en croyant « recharger la mission ».</li>
+        </ul>
+
+        <h2 id="gm-mods">Mods du serveur utiles au GM</h2>
+        <div class="note chantier">🚧 <strong>À compléter</strong> avec la liste des mods installés sur le serveur et ce qu’ils changent pour le GM (menus, entités supplémentaires, raccourcis). Donnez la liste à l’état-major du site pour remplir ce tableau.</div>
+        <div class="defilant">
+        <table>
+          <thead><tr><th>Mod</th><th>Ce qu’il apporte au GM</th><th>Points d’attention</th></tr></thead>
+          <tbody>
+            <tr><td>—</td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p>Rappel : dans le navigateur d’entités, le filtre <em>Contenu</em> permet d’afficher uniquement les entités issues des mods.</p>
+      </section>
+
+      <!-- ======================= ÉCONOMIE ======================= -->
+      <section class="tuto panel" id="tuto-economie" data-titre="Économie" data-ico="💰" data-maj="2026-11-08" hidden>
+
+        <h2 id="eco-principes">Pourquoi une économie</h2>
+        <p class="intro">L’économie donne un prix aux choix tactiques : partir avec un lance-roquettes, demander un blindé ou monter une FOB doit se décider, se préparer et se ravitailler. Elle crée le lien entre les opérations (le <a href="#front-principe">front dynamique</a>), la logistique et le RP.</p>
+        <ul>
+          <li>Les ressources se <strong>gagnent</strong> par les objectifs et le ravitaillement, pas par le temps de connexion.</li>
+          <li>Elles se <strong>dépensent</strong> à l’arsenal, pour les véhicules et pour construire.</li>
+          <li>Le GM et l’état-major <strong>arbitrent</strong> : ils ne distribuent pas, ils encadrent.</li>
+        </ul>
+
+        <h2 id="eco-ravitaillement">Ravitaillement (supplies) du jeu de base</h2>
+        <p>Dans les scénarios de type Conflict, la ressource s’appelle <strong>ravitaillement</strong> (<em>supplies</em>). Elle se stocke dans les bases et les dépôts, et tout ce qui s’y prend ou s’y construit en consomme.</p>
+        <ul>
+          <li><strong>Arsenal</strong> : chaque équipement a un coût ; prendre un équipement lourd vide le stock de la base.</li>
+          <li><strong>Construction</strong> : services d’une base (armurerie, hôpital de campagne, garage, antenne radio…) et fortifications coûtent du ravitaillement.</li>
+          <li><strong>Transport</strong> : les camions de ravitaillement chargent dans une base ou un dépôt et déchargent dans une autre — c’est le cœur de la logistique.</li>
+          <li><strong>Côté GM</strong> : la quantité de ravitaillement d’une base, d’un dépôt ou d’un camion se règle dans ses <em>propriétés</em> (double-clic sur l’entité). Un arsenal placé par le GM peut aussi être limité ou illimité selon ses propriétés.</li>
+        </ul>
+        <div class="note astuce">💡 Pour une OPEX, préférez un stock de départ serré et une FOB à ravitailler plutôt qu’un arsenal illimité : la logistique devient une mission à part entière.</div>
+
+        <h2 id="eco-ch">Économie Commando Hubert</h2>
+        <div class="note chantier">🚧 <strong>À compléter avec les règles propres au serveur.</strong> Cette section doit répondre à : quelle monnaie ou ressource ? comment on la gagne (solde, primes de mission, objectifs du front, logistique) ? ce qu’elle achète (arsenal, véhicules, FOB, services) ? qui valide une dépense (chef de groupe, état-major) ? où sont les barèmes (tableau, Discord) ?</div>
+        <div class="cartes">
+          <div class="carte"><b>Gagner</b><span>Objectifs de mission, zones prises et tenues, convois de ravitaillement arrivés à bon port.</span></div>
+          <div class="carte"><b>Dépenser</b><span>Arsenal, véhicules, FOB et constructions, services de base.</span></div>
+          <div class="carte"><b>Valider</b><span>Les grosses dépenses se demandent à la radio au commandant d’opération ; l’état-major tranche en cas de litige.</span></div>
+        </div>
+        <div class="defilant">
+        <table>
+          <thead><tr><th>Action</th><th>Gain / coût</th><th>Qui valide</th></tr></thead>
+          <tbody>
+            <tr><td>—</td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h2 id="eco-gm">Rôle du GM et de l’état-major</h2>
+        <ul>
+          <li>Le GM <strong>ne remplit pas</strong> un stock vide en pleine opération : il laisse la logistique faire son travail, ou prévoit un convoi ennemi à capturer.</li>
+          <li>Toute correction manuelle (bug, perte injustifiée) se note : qui, quand, combien, pourquoi.</li>
+          <li><strong>Abus</strong> (duplication, exploitation d’un bug, farming hors RP) : avertissement puis sanction selon le règlement ; le gain indu est retiré.</li>
+          <li>Les barèmes changent rarement et toujours par annonce sur le Discord, jamais en cours de session.</li>
+        </ul>
+      </section>
+
+      <!-- ======================= FRONT DYNAMIQUE ======================= -->
+      <section class="tuto panel" id="tuto-front" data-titre="Front dynamique" data-ico="🗺️" data-maj="2026-11-08" hidden>
+
+        <h2 id="front-principe">Le principe</h2>
+        <p class="intro">Le front dynamique est la campagne persistante du serveur : la carte est découpée en <strong>zones</strong> (villes, villages, bases, aérodromes, ports, points clés), chacune tenue par un camp — le Commando, l’ennemi ou personne — avec un niveau de contrôle de 0 à 100 %. Ce que les joueurs prennent ou perdent en OPEX reste acquis d’une session à l’autre, et la page d’accueil du site l’affiche en direct.</p>
+        <div class="cartes">
+          <div class="carte"><b>Zones</b><span>Reliées entre elles par des liaisons. Une liaison entre deux camps opposés forme la ligne de front.</span></div>
+          <div class="carte"><b>Opérations</b><span>Assaut des joueurs, contre-attaque de l’IA ou attaque annoncée, avec chronos, vagues et progression.</span></div>
+          <div class="carte"><b>FOB</b><span>Une zone avec FOB sert de point de départ et de ravitaillement ; elle se voit sur la carte du site.</span></div>
+          <div class="carte"><b>Journal</b><span>Les événements marquants (prise, perte, annonce, vague, mission, FOB, défense) ; le site affiche les 6 derniers.</span></div>
+        </div>
+
+        <h2 id="front-cycle">Le cycle de vie d’une zone</h2>
+        <ul class="etat-liste">
+          <li><span class="pastille">calme</span><span>Rien ne se passe. L’IA tient ses zones à 100 % ; une zone neutre est à 0 %.</span></li>
+          <li><span class="pastille jaune">menacée</span><span>Une attaque ennemie est annoncée : le journal prévient, les chronos tournent. Le GM prépare la colonne.</span></li>
+          <li><span class="pastille rouge">assaut</span><span>Les joueurs attaquent une zone ennemie ; la progression de la capture monte de 0 à 100.</span></li>
+          <li><span class="pastille jaune">fragile</span><span>Prise récente : la zone est à nous mais le contrôle est bas et une contre-attaque est probable.</span></li>
+          <li><span class="pastille rouge">contre-attaque</span><span>L’IA revient par vagues (ex. 2/3). Tenir jusqu’à la dernière vague fait passer la zone en sécurisée.</span></li>
+          <li><span class="pastille vert">sécurisée</span><span>Zone stabilisée, contrôle élevé. C’est typiquement là que s’installe une FOB.</span></li>
+        </ul>
+        <p>Une zone prise mais abandonnée (aucun défenseur) peut repasser à l’ennemi : c’est l’événement <em>perte</em> du journal. Les contre-attaques partent des zones ennemies voisines : regardez les liaisons avant de choisir un objectif.</p>
+
+        <h2 id="front-bandeau">Le bandeau « Situation du front » du site</h2>
+        <p>En haut de <code>index.html</code>, le bandeau lit un document JSON publié par le serveur de jeu et se met à jour tout seul (toutes les 2 minutes, ou en continu quand la source est une base Firebase). Il affiche le rapport de force, la carte schématique, les opérations en cours, le journal et le tableau de toutes les zones.</p>
+        <div class="defilant">
+        <table>
+          <thead><tr><th>Statut affiché</th><th>Signification</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pastille vert">En direct</span></td><td>Le document change régulièrement : le serveur publie normalement.</td></tr>
+            <tr><td><span class="pastille jaune">Sans nouvelles</span></td><td>Aucun changement depuis 2,5 fois la période annoncée (5 min pour un envoi toutes les 2 min). Le site garde la dernière situation connue.</td></tr>
+            <tr><td><span class="pastille rouge">Serveur arrêté</span></td><td>Le serveur a publié <code>serveur.enLigne = false</code> avant de s’arrêter.</td></tr>
+            <tr><td><span class="pastille">Démonstration</span></td><td>Le document porte <code>"demo": true</code> (données fictives, horaires rejoués au présent).</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p>Les réglages sont sur la balise <code>&lt;section id="front"&gt;</code> de <code>index.html</code> :</p>
+        <ul>
+          <li><code>data-source</code> : adresse du flux. En production : <code>https://front-dynamique-default-rtdb.europe-west1.firebasedatabase.app/front.json</code>. Pour revenir à la démonstration : <code>data/front.json</code>.</li>
+          <li><code>data-mode</code> : <code>auto</code> (défaut), <code>flux</code> (écoute continue) ou <code>lecture</code> (relecture périodique).</li>
+          <li><code>data-intervalle</code> : secondes entre deux relectures (120 par défaut).</li>
+        </ul>
+
+        <h2 id="front-publier">Publier la situation</h2>
+        <h3>Automatiquement, par le mod</h3>
+        <ul>
+          <li>Seul le <strong>serveur</strong> publie (<code>Replication.IsServer()</code>) : toutes les 2 minutes et à chaque événement (prise, perte, annonce de contre-attaque), jamais plus d’une fois toutes les 10 s.</li>
+          <li>L’adresse de la base et le secret d’écriture sont lus dans un fichier de configuration du serveur (ex. <code>$profile:FrontDynamique/flux.json</code>) : <strong>jamais dans le mod publié sur le Workshop</strong>.</li>
+          <li>Le document pèse quelques Ko (20 zones ≈ 8 Ko). Les envois partiels (<code>front/operations.json</code>, <code>front/journal.json</code>) ne remplacent que ce morceau.</li>
+          <li>Pas de pseudo de joueur dans le journal public sans son accord.</li>
+        </ul>
+        <h3>À la main (correction, test, fin de campagne)</h3>
+        <ol>
+          <li>Récupérer la situation actuelle : ouvrir l’adresse <code>…/front.json</code> dans un navigateur et enregistrer le fichier.</li>
+          <li>Modifier ce qu’il faut (camp d’une zone, état, contrôle, journal). Garder <code>"demo": false</code> et mettre <code>"maj"</code> à l’heure actuelle (secondes Unix UTC).</li>
+          <li>Renvoyer le document depuis un terminal, avec le secret d’écriture :
+            <pre><code>curl -X PUT -d @front.json \
+  "https://front-dynamique-default-rtdb.europe-west1.firebasedatabase.app/front.json?auth=&lt;SECRET&gt;"</code></pre></li>
+          <li>Recharger la page d’accueil : la nouvelle situation apparaît en quelques secondes.</li>
+        </ol>
+        <div class="note attention">⚠️ Le secret d’écriture donne la main sur toute la base : il reste chez l’état-major, en message privé, jamais dans un fichier du dépôt GitHub ni sur le Discord.</div>
+
+        <h2 id="front-firebase">La base Firebase</h2>
+        <ul>
+          <li>Projet <strong>front-dynamique</strong>, Realtime Database en Europe (<code>europe-west1</code>), créée en mode verrouillé.</li>
+          <li>Règles : lecture publique du seul nœud <code>front</code>, aucune écriture publique.
+            <pre><code>{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "front": { ".read": true }
+  }
+}</code></pre></li>
+          <li>Secret d’écriture : <em>Paramètres du projet → Comptes de service → Database secrets</em>. Bohemia et Google conseillent à terme un compte de service dédié.</li>
+          <li>Offre gratuite largement suffisante : quelques Ko toutes les 2 minutes.</li>
+        </ul>
+
+        <h2 id="front-format">Format du document (résumé)</h2>
+        <p>Le détail complet est dans <code>docs/flux-front.md</code> du dépôt et l’exemple dans <code>data/front.json</code>. Horodatages en secondes Unix UTC (ISO 8601 accepté).</p>
+        <div class="defilant">
+        <table>
+          <thead><tr><th>Champ</th><th>Rôle</th></tr></thead>
+          <tbody>
+            <tr><td><code>version</code>, <code>demo</code>, <code>maj</code>, <code>intervalle</code></td><td>Version du format (1), mode démonstration, heure de publication, période prévue en secondes.</td></tr>
+            <tr><td><code>serveur.enLigne</code>, <code>serveur.joueurs</code>, <code>serveur.joueursMax</code></td><td>État du serveur et joueurs connectés.</td></tr>
+            <tr><td><code>campagne.map</code>, <code>campagne.saison</code>, <code>campagne.jour</code></td><td>Ligne de contexte sous le titre du bandeau.</td></tr>
+            <tr><td><code>carte.largeur</code>, <code>carte.hauteur</code></td><td>Taille du monde en mètres (sinon déduite des zones).</td></tr>
+            <tr><td><code>camps.joueurs.nom</code>, <code>camps.ia.nom</code></td><td>Noms affichés au-dessus du rapport de force.</td></tr>
+            <tr><td><code>zones[]</code></td><td><code>id</code>, <code>nom</code>, <code>type</code> (ville, village, base, aerodrome, port, point), <code>x</code>/<code>z</code> en mètres, <code>camp</code> (joueurs, ia, neutre), <code>etat</code>, <code>controle</code> 0–100, <code>fob</code>, <code>voisins[]</code>.</td></tr>
+            <tr><td><code>operations[]</code></td><td><code>type</code> (assaut, contre-attaque, attaque), <code>zone</code>, <code>attaquant</code>, <code>etat</code> (annoncee, en-cours), <code>debut</code>/<code>fin</code>, <code>vague</code>/<code>vagues</code>, <code>progression</code>. Les opérations terminées passent au journal.</td></tr>
+            <tr><td><code>journal[]</code></td><td><code>t</code>, <code>type</code> (prise, perte, annonce, vague, mission, fob, defense…), <code>camp</code>, <code>zone</code>, <code>texte</code> en français.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h2 id="front-depannage">Dépannage</h2>
+        <div class="defilant">
+        <table>
+          <thead><tr><th>Symptôme</th><th>Causes probables</th><th>Que faire</th></tr></thead>
+          <tbody>
+            <tr><td>« Sans nouvelles » alors que le serveur tourne</td><td>Le mod ne publie plus (secret refusé, adresse changée, erreur dans les logs), ou l’horloge <code>maj</code> ne change pas.</td><td>Ouvrir <code>…/front.json</code> dans un navigateur et regarder <code>maj</code> ; chercher <code>[Front]</code> dans les logs du serveur.</td></tr>
+            <tr><td>« Serveur arrêté » alors qu’il est en ligne</td><td>Le dernier document envoyé contenait <code>enLigne: false</code> (arrêt brutal puis redémarrage sans nouvelle publication).</td><td>Attendre la prochaine publication ou renvoyer le document à la main.</td></tr>
+            <tr><td>Bandeau vide ou « Chargement » sans fin</td><td>JSON invalide, adresse fausse dans <code>data-source</code>, règles Firebase qui bloquent la lecture.</td><td>Ouvrir l’adresse du flux dans le navigateur : elle doit afficher le JSON. Vérifier la règle <code>"front": { ".read": true }</code>.</td></tr>
+            <tr><td>Badge « Démonstration » en production</td><td><code>"demo": true</code> dans le document, ou <code>data-source</code> encore sur <code>data/front.json</code>.</td><td>Corriger le document ou l’attribut.</td></tr>
+            <tr><td>Une zone est au mauvais camp</td><td>Événement non détecté par le mod.</td><td>Corriger à la main (<a href="#front-publier">publier</a>) et signaler le cas au développement du mod.</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ======================= SITE & ACCÈS ======================= -->
+      <section class="tuto panel" id="tuto-site" data-titre="Site & accès" data-ico="🔐" data-maj="2026-11-08" hidden>
+
+        <h2 id="site-structure">Comment le site est construit</h2>
+        <p class="intro">Le site est un ensemble de pages statiques hébergées par <strong>GitHub Pages</strong> depuis le dépôt <code>marechalMonin/CommandoHUBERT</code>. Chaque modification validée sur la branche <code>main</code> est en ligne au bout d’une à deux minutes. Il n’y a ni serveur ni base de données côté site : tout se passe dans le navigateur du visiteur.</p>
+        <div class="defilant">
+        <table>
+          <thead><tr><th>Fichier</th><th>Rôle</th></tr></thead>
+          <tbody>
+            <tr><td><code>index.html</code></td><td>Page publique : bandeau du front, présentation, règlement, grades, formations, recrutement.</td></tr>
+            <tr><td><code>connexion.html</code></td><td>Connexion à l’espace membres et choix de l’espace.</td></tr>
+            <tr><td><code>medecin.html</code>, <code>gca.html</code>, <code>admin.html</code></td><td>Les espaces protégés : dossiers médicaux RP, désamorçage IED, tutos d’administration (cette page).</td></tr>
+            <tr><td><code>outil-identifiants.html</code></td><td>Outil de l’état-major pour créer un compte ou changer un mot de passe.</td></tr>
+            <tr><td><code>assets/auth.js</code>, <code>assets/comptes.js</code></td><td>Mécanique de connexion et liste des comptes (empreintes seulement).</td></tr>
+            <tr><td><code>assets/espace.css</code></td><td>Style commun des pages de l’espace membres.</td></tr>
+            <tr><td><code>assets/front.js</code>, <code>assets/front.css</code>, <code>data/front.json</code>, <code>docs/flux-front.md</code></td><td>Bandeau du front dynamique, données de démonstration et documentation du flux.</td></tr>
+            <tr><td><code>assets/ied-regles.js</code>, <code>assets/medecin.js</code></td><td>Règles IED du GCA et logique des dossiers médicaux.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h2 id="site-comptes">Gérer les comptes de l’espace membres</h2>
+        <p>Les mots de passe ne sont jamais écrits sur le site : seule une <strong>empreinte</strong> (PBKDF2-SHA256, 150 000 itérations, sel aléatoire) figure dans <code>assets/comptes.js</code>. La vérification se fait dans le navigateur.</p>
+        <h3>Ajouter un compte ou changer un mot de passe</h3>
+        <ol>
+          <li>Ouvrir <a href="outil-identifiants.html">outil-identifiants.html</a>, saisir l’identifiant, le mot de passe (12 caractères minimum conseillés) et cocher les accès.</li>
+          <li>Cliquer <em>Générer la ligne</em> puis <em>Copier</em>. Rien n’est envoyé : le calcul est local.</li>
+          <li>Sur GitHub, ouvrir <code>assets/comptes.js</code>, cliquer le crayon (modifier), coller la ligne dans la liste <code>window.COMPTES</code> (ou remplacer l’ancienne ligne du même identifiant).</li>
+          <li><em>Commit changes</em>. Le nouveau compte fonctionne une à deux minutes plus tard.</li>
+        </ol>
+        <h3>Ce qu’il faut savoir</h3>
+        <ul>
+          <li>L’identifiant est insensible à la casse (<code>Admin</code> = <code>admin</code>) ; le mot de passe, lui, est exact.</li>
+          <li>Rôles possibles : <code>medecin</code>, <code>gca</code>, <code>admin</code>. Un compte peut en cumuler plusieurs (ex. <code>etat-major</code>).</li>
+          <li>Pour supprimer un compte : effacer sa ligne.</li>
+          <li>La session dure 8 h et se termine à la fermeture du navigateur. Après 5 échecs, 30 s d’attente.</li>
+          <li><strong>Limite importante</strong> : c’est une barrière d’accès RP, pas une protection forte. Un visiteur déterminé peut lire le code des pages protégées. N’y mettez rien de réellement confidentiel (mot de passe admin du serveur, secret Firebase, données personnelles).</li>
+        </ul>
+
+        <h2 id="site-roles">Ajouter un nouvel espace</h2>
+        <ol>
+          <li>Dans <code>assets/auth.js</code>, ajouter une entrée dans <code>ESPACES</code> : <code>nouveau: { page: "nouveau.html", nom: "…", ico: "…", desc: "…" }</code>.</li>
+          <li>Créer <code>nouveau.html</code> sur le modèle de <code>gca.html</code> : classe <code>verrou</code> sur <code>&lt;html&gt;</code>, les scripts <code>comptes.js</code> et <code>auth.js</code> puis <code>Auth.exiger("nouveau")</code> dans le <code>&lt;head&gt;</code>, et <code>Auth.barre("nouveau")</code> en bas.</li>
+          <li>Dans <code>outil-identifiants.html</code>, ajouter la case à cocher du nouveau rôle (deux lignes : la case et le <code>roles.push</code>).</li>
+          <li>Donner le rôle aux comptes concernés via l’outil.</li>
+        </ol>
+
+        <h2 id="site-tutos">Ajouter ou modifier un tuto de cette page</h2>
+        <p>Chaque tuto est une <code>&lt;section class="tuto panel"&gt;</code> dans <code>admin.html</code>. Les onglets et le sommaire sont générés automatiquement : il n’y a rien d’autre à toucher.</p>
+        <ol>
+          <li>Copier une section entière et changer : <code>id="tuto-xxx"</code>, <code>data-titre</code> (nom de l’onglet), <code>data-ico</code> (émoji) et <code>data-maj</code> (date au format AAAA-MM-JJ).</li>
+          <li>Écrire le contenu avec des <code>&lt;h2 id="xxx-yyy"&gt;</code> : chaque <code>h2</code> devient une entrée du sommaire et un lien partageable (<code>admin.html#xxx-yyy</code>).</li>
+          <li>Éléments disponibles : <code>&lt;h3&gt;</code>, listes, tableaux (dans un <code>&lt;div class="defilant"&gt;</code>), <code>&lt;kbd&gt;</code> pour une touche, <code>&lt;code&gt;</code> pour une commande, <code>&lt;pre&gt;&lt;code&gt;</code> pour un bloc, encadrés <code>note astuce</code> / <code>note attention</code> / <code>note chantier</code>, et <code>cartes</code> pour des blocs côte à côte.</li>
+          <li>Pour un lien direct vers un onglet : <code>admin.html#xxx</code> (sans le préfixe <code>tuto-</code>).</li>
+        </ol>
+        <div class="note astuce">💡 Pour partager un tuto sur le Discord, copiez l’adresse de la page une fois l’onglet ouvert : elle contient déjà l’onglet (et la section si vous avez cliqué dans le sommaire). Le lecteur devra se connecter avec un compte ayant l’accès Administration.</div>
+
+        <h2 id="site-modifier">Modifier le site sur GitHub</h2>
+        <ol>
+          <li>Se connecter sur GitHub avec un compte ayant accès au dépôt <code>marechalMonin/CommandoHUBERT</code>.</li>
+          <li>Ouvrir le fichier à modifier, cliquer le crayon <em>Edit</em>, faire la modification, puis <em>Commit changes</em> avec un message clair (ex. « Ajoute le tuto convois »).</li>
+          <li>Attendre une à deux minutes, puis recharger la page (<kbd>Ctrl</kbd>+<kbd>F5</kbd> pour forcer le cache).</li>
+          <li>En cas d’erreur, l’onglet <em>History</em> d’un fichier permet de revenir à une version précédente.</li>
+        </ol>
+        <p>Pour une modification plus lourde (nouvelle page, changement de style), passez par une branche et une <em>pull request</em> : c’est ainsi qu’ont été ajoutés l’espace membres et le bandeau du front.</p>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    Auth.barre("admin");
+
+    const $ = id => document.getElementById(id);
+
+    // Construit un élément avec du texte (jamais de HTML injecté).
+    function el(balise, classe, texte) {
+      const e = document.createElement(balise);
+      if (classe) e.className = classe;
+      if (texte != null) e.textContent = texte;
+      return e;
+    }
+
+    const tutos = [...document.querySelectorAll("section.tuto")];
+    const onglets = $("onglets");
+    const sommaire = $("sommaire");
+    const idDe = sec => sec.id.replace(/^tuto-/, "");
+    const dateFr = iso => {
+      const d = new Date(iso + "T12:00:00");
+      return isNaN(d) ? iso : new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" }).format(d);
+    };
+
+    /* ---------- Onglets, générés depuis les sections ---------- */
+    for (const sec of tutos) {
+      const b = el("button", "", sec.dataset.ico + " " + sec.dataset.titre);
+      b.type = "button";
+      b.setAttribute("role", "tab");
+      b.dataset.onglet = idDe(sec);
+      b.addEventListener("click", () => {
+        ouvrir(idDe(sec));
+        history.replaceState(null, "", "#" + idDe(sec));
+      });
+      onglets.append(b);
+    }
+
+    let observateur = null;
+
+    function ouvrir(id) {
+      const actif = tutos.find(s => idDe(s) === id) || tutos[0];
+      for (const s of tutos) s.hidden = s !== actif;
+      onglets.querySelectorAll("button").forEach(b => {
+        const on = b.dataset.onglet === idDe(actif);
+        b.classList.toggle("actif", on);
+        b.setAttribute("aria-selected", on);
+      });
+
+      sommaire.textContent = "";
+      const titres = [...actif.querySelectorAll("h2")];
+      for (const h of titres) {
+        const li = el("li");
+        const a = el("a", "", h.textContent);
+        a.href = "#" + h.id;
+        li.append(a);
+        sommaire.append(li);
+      }
+      $("maj").textContent = actif.dataset.maj ? "Mis à jour le " + dateFr(actif.dataset.maj) : "";
+      document.title = actif.dataset.titre + " — Administration | Commando Hubert";
+      surveiller(titres);
+      return actif;
+    }
+
+    /* Surligne dans le sommaire la section visible à l'écran. */
+    function surveiller(titres) {
+      if (observateur) observateur.disconnect();
+      if (!("IntersectionObserver" in window)) return;
+      const visibles = new Set();
+      observateur = new IntersectionObserver(entrees => {
+        for (const e of entrees) e.isIntersecting ? visibles.add(e.target) : visibles.delete(e.target);
+        const courant = titres.find(h => visibles.has(h)) || titres.filter(h => h.getBoundingClientRect().top < 120).pop();
+        sommaire.querySelectorAll("a").forEach(a => a.classList.toggle("actif", !!courant && a.getAttribute("href") === "#" + courant.id));
+      }, { rootMargin: "-90px 0px -60% 0px" });
+      titres.forEach(h => observateur.observe(h));
+    }
+
+    /* admin.html#gm ouvre l'onglet ; admin.html#gm-acces ouvre l'onglet puis descend à la section. */
+    function depuisHash() {
+      const h = decodeURIComponent(location.hash.slice(1));
+      if (h && tutos.some(s => idDe(s) === h)) return ouvrir(h);
+      const cible = h && document.getElementById(h);
+      const sec = cible && cible.closest("section.tuto");
+      if (!sec) return ouvrir(idDe(tutos[0]));
+      ouvrir(idDe(sec));
+      cible.scrollIntoView({ block: "start" });
+    }
+
+    window.addEventListener("hashchange", depuisHash);
+    $("btnImprimer").addEventListener("click", () => window.print());
+    depuisHash();
+  </script>
+</body>
+</html>
