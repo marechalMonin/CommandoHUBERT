@@ -70,7 +70,14 @@ sont générés automatiquement.
 ## Agenda des GM
 
 L'onglet Agenda de `admin.html` lit et écrit dans la Realtime Database du projet Firebase
-`front-dynamique`, nœud `agenda` (`agenda/AAAA-MM-JJ/pseudo = "present" | "absent" | "peut-etre"`).
+`front-dynamique`, nœud `agenda`. Pour chaque jour et chaque GM, `agenda/AAAA-MM-JJ/pseudo` vaut :
+
+- `"present"`, `"absent"` ou `"peut-etre"` pour toute la journée ;
+- ou un objet créneau → valeur, ex. `{"soiree": "present", "nuit": "peut-etre"}`.
+
+Les créneaux (identifiant, nom, horaires) sont définis dans la liste `CRENEAUX` en tête de
+`assets/agenda.js` ; les règles de la base acceptent tout identifiant en minuscules (`[a-z-]`,
+20 caractères maximum), donc en ajouter ou en renommer un ne demande pas de republier les règles.
 Les règles à publier sur la base sont affichées dans l'onglet (section « Configuration de la
 base ») ; l'adresse se change via l'attribut `data-agenda` du bloc `<div id="agenda">`.
 

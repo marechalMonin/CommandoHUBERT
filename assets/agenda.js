@@ -1,13 +1,25 @@
 /* Agenda des Game Masters (admin.html, onglet Agenda).
-   Chaque GM indique, jour par jour, s'il est présent, absent ou peut-être.
+   Chaque GM indique, jour par jour et créneau par créneau, s'il est présent, absent ou peut-être.
    Les réponses sont partagées par la base Firebase du front, nœud "agenda"
    (lecture publique, écriture limitée aux valeurs attendues : règles dans l'onglet Agenda).
-   Données : agenda/AAAA-MM-JJ/pseudo = "present" | "absent" | "peut-etre". */
+
+   Données : agenda/AAAA-MM-JJ/pseudo =
+     - "present" | "absent" | "peut-etre"            → toute la journée
+     - { soiree: "present", nuit: "peut-etre", … }   → créneau par créneau (clé = id du créneau ci-dessous) */
 (() => {
   "use strict";
 
   const racine = document.getElementById("agenda");
   if (!racine) return;
+
+  /* Les créneaux horaires. Pour les changer : modifier cette liste (id en minuscules, sans accent,
+     tiret autorisé). Les règles de la base acceptent n'importe quel id de cette forme. */
+  const CRENEAUX = [
+    { id: "matin", nom: "Matin", heures: "9h – 12h" },
+    { id: "apres-midi", nom: "Après-midi", heures: "14h – 18h" },
+    { id: "soiree", nom: "Soirée", heures: "20h – 23h" },
+    { id: "nuit", nom: "Nuit", heures: "23h – 2h" }
+  ];
 
   const ETATS = {
     present: { nom: "Présent", classe: "vert", ico: "✔" },
@@ -56,6 +68,35 @@
   const fmtCourt = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short" });
   const fmtMois = new Intl.DateTimeFormat("fr-FR", { month: "short" });
 
+  /* ---------- Réponses : "present" (journée) ou { creneau: etat } ---------- */
+
+  // Statut de chaque créneau pour une valeur brute de la base ; null quand non renseigné.
+  function statutsDe(valeur) {
+    const s = {};
+    for (const c of CRENEAUX) {
+      if (typeof valeur === "string") s[c.id] = ETATS[valeur] ? valeur : null;
+      else s[c.id] = valeur && typeof valeur === "object" && ETATS[valeur[c.id]] ? valeur[c.id] : null;
+    }
+    return s;
+  }
+
+  // Le statut commun à tous les créneaux, ou null si la réponse varie (ou est incomplète).
+  function uniforme(statuts) {
+    const valeurs = CRENEAUX.map(c => statuts[c.id]);
+    return valeurs[0] && valeurs.every(v => v === valeurs[0]) ? valeurs[0] : null;
+  }
+
+  // Forme compacte à enregistrer : chaîne si toute la journée, objet sinon, null si vide.
+  function compacter(statuts) {
+    const u = uniforme(statuts);
+    if (u) return u;
+    const o = {};
+    for (const c of CRENEAUX) if (statuts[c.id]) o[c.id] = statuts[c.id];
+    return Object.keys(o).length ? o : null;
+  }
+
+  const estValide = v => typeof v === "string" ? !!ETATS[v] : !!v && typeof v === "object" && Object.values(v).some(x => ETATS[x]);
+
   /* ---------- Pseudo ---------- */
 
   // Clé Firebase sûre : lettres, chiffres, tiret, souligné ; accents retirés ; 24 caractères max.
@@ -96,6 +137,11 @@
     }[statut] || statut;
     $("agendaMessage").textContent = etat.message;
     $("agendaMessage").hidden = !etat.message;
+  }
+
+  function afficherMessage(texte) {
+    $("agendaMessage").textContent = texte;
+    $("agendaMessage").hidden = !texte;
   }
 
   async function lire() {
@@ -167,6 +213,7 @@
 
   /* ---------- Écriture ---------- */
 
+  // Enregistre la réponse complète du GM pour un jour : chaîne, objet par créneau, ou null pour effacer.
   async function ecrire(jour, valeur) {
     if (!etat.pseudo) return;
     const url = CONFIG.base + "/" + jour + "/" + encodeURIComponent(etat.pseudo) + ".json?print=silent";
@@ -178,24 +225,67 @@
       const rep = await fetch(url, valeur == null
         ? { method: "DELETE" }
         : { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(valeur) });
-      if (!rep.ok) throw new Error(rep.status === 401 || rep.status === 403 ? "écriture refusée par la base (règles à mettre à jour)" : "réponse " + rep.status);
-      $("agendaMessage").hidden = true;
+      if (!rep.ok) {
+        if (rep.status === 401 || rep.status === 403) {
+          throw new Error(typeof valeur === "object" && valeur
+            ? "écriture par créneau refusée par la base : les règles doivent être mises à jour (voir « Configuration de la base »)"
+            : "écriture refusée par la base (règles à mettre à jour)");
+        }
+        throw new Error("réponse " + rep.status);
+      }
+      afficherMessage("");
     } catch (e) {
       appliquer("put", "/" + jour + "/" + etat.pseudo, avant);
       rendre();
-      $("agendaMessage").textContent = "Réponse non enregistrée : " + e.message + ".";
-      $("agendaMessage").hidden = false;
+      afficherMessage("Réponse non enregistrée : " + e.message + ".");
     }
+  }
+
+  // Modifie un seul créneau de la réponse du GM (null = effacer ce créneau).
+  function ecrireCreneau(jour, idCreneau, valeur) {
+    const actuel = etat.donnees[jour] ? etat.donnees[jour][etat.pseudo] : undefined;
+    const statuts = statutsDe(actuel);
+    statuts[idCreneau] = valeur;
+    return ecrire(jour, compacter(statuts));
   }
 
   /* ---------- Affichage ---------- */
 
+  // Réponses d'un jour : [[pseudo, statuts, uniforme], …] triées (présents d'abord).
   function reponses(jour) {
     const d = etat.donnees[jour];
     if (!d || typeof d !== "object") return [];
     return Object.entries(d)
-      .filter(([, v]) => ETATS[v])
-      .sort((a, b) => ORDRE.indexOf(a[1]) - ORDRE.indexOf(b[1]) || a[0].localeCompare(b[0], "fr"));
+      .filter(([, v]) => estValide(v))
+      .map(([p, v]) => { const s = statutsDe(v); return [p, s, uniforme(s)]; })
+      .sort((a, b) => rang(a) - rang(b) || a[0].localeCompare(b[0], "fr"));
+  }
+
+  // Rang de tri : meilleur statut atteint sur la journée.
+  function rang([, statuts]) {
+    const r = Object.values(statuts).filter(Boolean).map(v => ORDRE.indexOf(v));
+    return r.length ? Math.min(...r) : ORDRE.length;
+  }
+
+  function chip(pseudo, valeur) {
+    const li = el("li", "pastille " + ETATS[valeur].classe + (pseudo === etat.pseudo ? " moi" : ""), ETATS[valeur].ico + " " + pseudo);
+    li.title = pseudo + " : " + ETATS[valeur].nom;
+    return li;
+  }
+
+  // Lignes d'une case : « Journée » pour les réponses uniformes, puis un créneau par ligne.
+  function lignesJour(rep) {
+    const lignes = [];
+    const journee = rep.filter(([, , u]) => u);
+    if (journee.length) lignes.push({ nom: "Journée", chips: journee.map(([p, , u]) => chip(p, u)) });
+    for (const c of CRENEAUX) {
+      const ici = rep.filter(([, s, u]) => !u && s[c.id]);
+      if (ici.length) {
+        ici.sort((a, b) => ORDRE.indexOf(a[1][c.id]) - ORDRE.indexOf(b[1][c.id]) || a[0].localeCompare(b[0], "fr"));
+        lignes.push({ nom: c.nom, chips: ici.map(([p, s]) => chip(p, s[c.id])) });
+      }
+    }
+    return lignes;
   }
 
   function rendre() {
@@ -225,14 +315,17 @@
 
       const rep = reponses(k);
       if (rep.length) {
-        const ul = el("ul", "rep");
-        for (const [p, v] of rep) {
-          const li = el("li", "pastille " + ETATS[v].classe + (p === etat.pseudo ? " moi" : ""), ETATS[v].ico + " " + p);
-          li.title = p + " : " + ETATS[v].nom;
-          ul.append(li);
+        const corps = el("div", "corps");
+        for (const l of lignesJour(rep)) {
+          const ligne = el("div", "cren");
+          ligne.append(el("span", "cren-nom", l.nom));
+          const ul = el("ul", "rep");
+          ul.append(...l.chips);
+          ligne.append(ul);
+          corps.append(ligne);
         }
-        b.append(ul);
-        const n = rep.filter(([, v]) => v === "present").length;
+        b.append(corps);
+        const n = rep.filter(([, s]) => Object.values(s).includes("present")).length;
         if (n) b.append(el("span", "compte", n + " présent" + (n > 1 ? "s" : "")));
       } else if (!passe) {
         b.append(el("span", "vide", "—"));
@@ -249,10 +342,11 @@
     if (etat.jourOuvert) remplirDialogue();
   }
 
+  /* ---------- Fenêtre d'un jour ---------- */
+
   function ouvrirJour(k) {
     if (!etat.pseudo) {
-      $("agendaMessage").textContent = "Indiquez d’abord votre pseudo GM pour répondre.";
-      $("agendaMessage").hidden = false;
+      afficherMessage("Indiquez d’abord votre pseudo GM pour répondre.");
       $("agendaPseudo").focus();
       return;
     }
@@ -262,23 +356,71 @@
     if (!dlg.open) dlg.showModal();
   }
 
+  // Construit une fois la grille des créneaux de la fenêtre.
+  function construireCreneaux() {
+    const zone = $("creneauxJour");
+    zone.textContent = "";
+    for (const c of CRENEAUX) {
+      const ligne = el("div", "cren-ligne");
+      const nom = el("div", "cren-titre");
+      nom.append(el("strong", "", c.nom), el("small", "", c.heures));
+      ligne.append(nom);
+      const boutons = el("div", "cren-boutons");
+      for (const v of ORDRE) {
+        const b = el("button", "", ETATS[v].ico);
+        b.type = "button";
+        b.dataset.creneau = c.id;
+        b.dataset.etat = v;
+        b.title = ETATS[v].nom;
+        b.setAttribute("aria-label", c.nom + " : " + ETATS[v].nom);
+        b.addEventListener("click", () => {
+          const actuel = etat.donnees[etat.jourOuvert] ? etat.donnees[etat.jourOuvert][etat.pseudo] : undefined;
+          const deja = statutsDe(actuel)[c.id] === v;
+          ecrireCreneau(etat.jourOuvert, c.id, deja ? null : v); // recliquer = effacer ce créneau
+        });
+        boutons.append(b);
+      }
+      ligne.append(boutons);
+      zone.append(ligne);
+    }
+  }
+
   function remplirDialogue() {
     const k = etat.jourOuvert;
     const [a, m, j] = k.split("-").map(Number);
     const d = new Date(a, m - 1, j);
     const titre = fmtLong.format(d);
     $("titreJour").textContent = titre.charAt(0).toUpperCase() + titre.slice(1);
-    const mien = etat.donnees[k] ? etat.donnees[k][etat.pseudo] : null;
-    $("dlgJour").querySelectorAll("[data-etat]").forEach(b => b.classList.toggle("actif", b.dataset.etat === mien));
-    $("btnEffacer").hidden = !mien;
+
+    const brut = etat.donnees[k] ? etat.donnees[k][etat.pseudo] : undefined;
+    const miens = statutsDe(brut);
+    const u = uniforme(miens);
+    const dlg = $("dlgJour");
+    dlg.querySelectorAll(".choix-etat [data-etat]").forEach(b => {
+      b.classList.toggle("actif", b.dataset.etat === u);
+      b.setAttribute("aria-pressed", b.dataset.etat === u);
+    });
+    dlg.querySelectorAll("#creneauxJour [data-creneau]").forEach(b => {
+      const on = miens[b.dataset.creneau] === b.dataset.etat;
+      b.classList.toggle("actif", on);
+      b.setAttribute("aria-pressed", on);
+    });
+    $("btnEffacer").hidden = !estValide(brut);
 
     const zone = $("reponsesJour");
     zone.textContent = "";
     const rep = reponses(k);
     if (!rep.length) zone.append(el("p", "muted", "Personne n’a encore répondu pour ce jour."));
-    for (const [p, v] of rep) {
+    for (const [p, s, uni] of rep) {
       const ligne = el("div", "rep-ligne");
-      ligne.append(el("span", "pastille " + ETATS[v].classe, ETATS[v].ico + " " + ETATS[v].nom), el("span", "", p + (p === etat.pseudo ? " (vous)" : "")));
+      ligne.append(el("span", "rep-qui", p + (p === etat.pseudo ? " (vous)" : "")));
+      const detail = el("span", "rep-detail");
+      if (uni) {
+        detail.append(el("span", "pastille " + ETATS[uni].classe, ETATS[uni].ico + " " + ETATS[uni].nom + " toute la journée"));
+      } else {
+        for (const c of CRENEAUX) if (s[c.id]) detail.append(el("span", "pastille " + ETATS[s[c.id]].classe, ETATS[s[c.id]].ico + " " + c.nom));
+      }
+      ligne.append(detail);
       zone.append(ligne);
     }
   }
@@ -293,7 +435,9 @@
   champ.addEventListener("change", () => { majPseudo(champ.value, true); champ.value = etat.pseudo; });
 
   const dlg = $("dlgJour");
-  dlg.querySelectorAll("[data-etat]").forEach(b => b.addEventListener("click", () => { ecrire(etat.jourOuvert, b.dataset.etat); dlg.close(); }));
+  construireCreneaux();
+  // Toute la journée : une réponse, et la fenêtre se ferme.
+  dlg.querySelectorAll(".choix-etat [data-etat]").forEach(b => b.addEventListener("click", () => { ecrire(etat.jourOuvert, b.dataset.etat); dlg.close(); }));
   $("btnEffacer").addEventListener("click", () => { ecrire(etat.jourOuvert, null); dlg.close(); });
   dlg.querySelectorAll("[data-fermer]").forEach(b => b.addEventListener("click", () => dlg.close()));
   dlg.addEventListener("close", () => { etat.jourOuvert = null; });

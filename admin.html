@@ -530,10 +530,10 @@
       </section>
 
       <!-- ======================= AGENDA ======================= -->
-      <section class="tuto panel" id="tuto-agenda" data-titre="Agenda" data-ico="📅" data-maj="2026-11-08" hidden>
+      <section class="tuto panel" id="tuto-agenda" data-titre="Agenda" data-ico="📅" data-maj="2026-11-17" hidden>
 
         <h2 id="agenda-dispos">Disponibilités des GM</h2>
-        <p class="intro">Cliquez sur un jour pour dire si vous pouvez tenir le Game Master : présent, absent ou peut-être. Les réponses de tous les GM s’affichent dans la case du jour et se mettent à jour en direct.</p>
+        <p class="intro">Cliquez sur un jour pour dire si vous pouvez tenir le Game Master : présent, absent ou peut-être, pour toute la journée ou créneau par créneau (matin, après-midi, soirée, nuit). Les réponses de tous les GM s’affichent dans la case du jour et se mettent à jour en direct.</p>
 
         <!-- Adresse de la base partagée (nœud "agenda" de la base du front). Règles à poser : voir « Configuration de la base ». -->
         <div id="agenda" data-agenda="https://front-dynamique-default-rtdb.europe-west1.firebasedatabase.app/agenda" data-intervalle="60">
@@ -566,7 +566,7 @@
             <span class="pastille vert">✔ Présent</span>
             <span class="pastille jaune">? Peut-être</span>
             <span class="pastille rouge">✘ Absent</span>
-            <span>Les jours passés ne se modifient plus.</span>
+            <span>« Journée » = toute la journée ; sinon la réponse est donnée par créneau. Les jours passés ne se modifient plus.</span>
           </div>
         </div>
 
@@ -574,9 +574,11 @@
         <ul>
           <li>Le calendrier s’ouvre toujours sur la semaine en cours, le jour actuel en surbrillance, et avance tout seul chaque jour. Les boutons permettent de regarder les semaines suivantes.</li>
           <li>Votre pseudo est mémorisé dans ce navigateur (lettres, chiffres, tiret et souligné, sans accent, 24 caractères maximum). Chaque GM répond sous son propre pseudo : le compte de connexion du site, lui, est commun.</li>
+          <li><strong>Toute la journée</strong> : un clic sur Présent, Peut-être ou Absent, et c’est enregistré. <strong>Par créneau</strong> : dans la grille, une réponse par créneau (matin 9h–12h, après-midi 14h–18h, soirée 20h–23h, nuit 23h–2h) ; chaque clic est enregistré aussitôt, recliquer sur le même bouton efface ce créneau. On peut combiner : « Présent » puis « Nuit : absent » donne présent partout sauf la nuit.</li>
+          <li>Dans les cases, la ligne « Journée » regroupe ceux qui ont répondu pour toute la journée ; les autres apparaissent sur la ligne de chaque créneau renseigné. Le compteur indique le nombre de GM présents sur au moins un créneau.</li>
           <li>Les réponses sont enregistrées dans la base Firebase du front (nœud <code>agenda</code>) : tout le monde voit les mêmes, depuis n’importe quel appareil.</li>
-          <li>Pour corriger : recliquez sur le jour et choisissez une autre réponse, ou « Effacer ma réponse ».</li>
-          <li>Les cases affichent le nombre de GM présents : pratique pour caler une OPEX.</li>
+          <li>Pour corriger : recliquez sur le jour et changez la réponse, ou « Effacer ma réponse » pour tout retirer.</li>
+          <li>Pour changer les créneaux (noms, horaires, nombre) : la liste <code>CRENEAUX</code> en haut de <code>assets/agenda.js</code>. Les règles de la base acceptent tout identifiant de créneau en minuscules.</li>
         </ul>
 
         <h2 id="agenda-config">Configuration de la base (état-major)</h2>
@@ -592,15 +594,19 @@
         ".validate": "$jour.matches(/^20[0-9][0-9]-[01][0-9]-[0-3][0-9]$/)",
         "$gm": {
           ".write": true,
-          ".validate": "$gm.matches(/^[A-Za-z0-9_-]+$/) && $gm.length <= 24 && newData.isString() && (newData.val() == 'present' || newData.val() == 'absent' || newData.val() == 'peut-etre')"
+          ".validate": "$gm.matches(/^[A-Za-z0-9_-]+$/) && $gm.length <= 24 && ((newData.isString() && (newData.val() == 'present' || newData.val() == 'absent' || newData.val() == 'peut-etre')) || newData.hasChildren())",
+          "$creneau": {
+            ".validate": "$creneau.matches(/^[a-z-]{1,20}$/) && newData.isString() && (newData.val() == 'present' || newData.val() == 'absent' || newData.val() == 'peut-etre')"
+          }
         }
       }
     }
   }
 }</code></pre>
+        <div class="note attention">⚠️ <strong>Règles déjà publiées avant les créneaux (version de novembre 2026) ?</strong> Il faut les remplacer par celles-ci : les anciennes n’acceptent que les réponses « toute la journée », et une réponse par créneau est refusée (message « écriture par créneau refusée par la base »). Les réponses déjà enregistrées restent valables.</div>
         <ul>
           <li>Le front ne change pas : lecture publique, écriture réservée au mod (avec le secret).</li>
-          <li>Pour l’agenda : lecture publique ; écriture sans mot de passe, mais uniquement une date au format AAAA-MM-JJ, un pseudo simple et l’une des trois valeurs <code>present</code>, <code>absent</code>, <code>peut-etre</code>. Rien d’autre ne peut être écrit.</li>
+          <li>Pour l’agenda : lecture publique ; écriture sans mot de passe, mais uniquement une date au format AAAA-MM-JJ, un pseudo simple et, soit l’une des trois valeurs <code>present</code>, <code>absent</code>, <code>peut-etre</code> (toute la journée), soit une liste créneau → valeur (identifiant de créneau en minuscules, 20 caractères maximum). Rien d’autre ne peut être écrit.</li>
           <li>C’est le même niveau de protection que l’espace membres : suffisant pour un agenda de disponibilités, pas pour des données sensibles. En cas d’abus, retirer le bloc <code>agenda</code> des règles suffit à tout bloquer.</li>
           <li>Tant que les règles ne sont pas publiées, le statut affiche « Base non configurée pour l’agenda » et les réponses ne s’enregistrent pas.</li>
           <li>Pour utiliser une autre base : changer l’attribut <code>data-agenda</code> du bloc <code>&lt;div id="agenda"&gt;</code> dans <code>admin.html</code>.</li>
@@ -611,12 +617,16 @@
 
   <dialog id="dlgJour">
     <h2 id="titreJour"></h2>
-    <p class="muted" style="margin-top:0">Votre réponse pour ce jour :</p>
+    <p class="muted" style="margin-top:0">Toute la journée :</p>
     <div class="choix-etat">
       <button type="button" data-etat="present">✔ Présent</button>
       <button type="button" data-etat="peut-etre">? Peut-être</button>
       <button type="button" data-etat="absent">✘ Absent</button>
     </div>
+    <p class="muted">Ou créneau par créneau (recliquer pour effacer un créneau) :</p>
+    <!-- Les lignes sont générées par agenda.js à partir de la liste CRENEAUX. -->
+    <div class="creneaux" id="creneauxJour"></div>
+    <h3 class="rep-titre">Réponses pour ce jour</h3>
     <div id="reponsesJour"></div>
     <div class="actions">
       <button class="btn btn-danger btn-petit" type="button" id="btnEffacer" hidden>Effacer ma réponse</button>

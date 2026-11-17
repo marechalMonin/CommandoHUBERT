@@ -340,11 +340,14 @@ pre code{background:none;padding:0;color:#e6f2cf}
   margin-left:auto;font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700;
   color:#10150f;background:linear-gradient(135deg,var(--accent),var(--accent-2));padding:2px 7px;border-radius:999px;
 }
+.jour .corps{display:grid;gap:5px}
+.jour .cren{display:grid;gap:3px}
+.jour .cren-nom{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700}
 .jour .rep{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px}
 .jour .rep .pastille{font-size:.72rem;padding:3px 8px;white-space:normal;overflow-wrap:anywhere}
 .jour .rep .moi{outline:2px solid rgba(255,255,255,.35);outline-offset:1px}
 .jour .compte{margin-top:auto;font-size:.78rem;color:var(--accent);font-weight:700}
-.jour .vide{margin-top:auto;color:rgba(255,255,255,.18)}
+.jour .vide{margin-top:auto;padding:0;text-align:left;color:rgba(255,255,255,.18)}
 .agenda-legende{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0 0;font-size:.88rem;color:var(--muted)}
 .choix-etat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
 .choix-etat button{
@@ -355,8 +358,28 @@ pre code{background:none;padding:0;color:#e6f2cf}
 .choix-etat button[data-etat="present"].actif{color:#d6f0ae;border-color:rgba(199,229,154,.6);background:rgba(199,229,154,.18)}
 .choix-etat button[data-etat="peut-etre"].actif{color:#f1dc9d;border-color:rgba(227,194,107,.6);background:rgba(227,194,107,.18)}
 .choix-etat button[data-etat="absent"].actif{color:#f3c4c4;border-color:rgba(217,123,123,.6);background:rgba(217,123,123,.18)}
-.rep-ligne{display:flex;gap:10px;align-items:center;padding:8px 0;border-top:1px solid rgba(255,255,255,.06);color:var(--text)}
-.rep-ligne .pastille{min-width:110px;text-align:center}
+.creneaux{display:grid;gap:8px;margin:10px 0 18px}
+.cren-ligne{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 12px;border-radius:14px;
+  background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);
+}
+.cren-titre{display:grid;line-height:1.3}
+.cren-titre strong{color:var(--text)}
+.cren-titre small{color:var(--muted);font-size:.8rem}
+.cren-boutons{display:flex;gap:6px;flex-shrink:0}
+.cren-boutons button{
+  font:inherit;font-weight:800;cursor:pointer;color:var(--muted);width:46px;height:38px;border-radius:11px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);transition:.15s;
+}
+.cren-boutons button:hover{border-color:var(--line-strong);color:var(--text)}
+.cren-boutons button[data-etat="present"].actif{color:#d6f0ae;border-color:rgba(199,229,154,.6);background:rgba(199,229,154,.18)}
+.cren-boutons button[data-etat="peut-etre"].actif{color:#f1dc9d;border-color:rgba(227,194,107,.6);background:rgba(227,194,107,.18)}
+.cren-boutons button[data-etat="absent"].actif{color:#f3c4c4;border-color:rgba(217,123,123,.6);background:rgba(217,123,123,.18)}
+.rep-titre{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 4px}
+.rep-ligne{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 0;border-top:1px solid rgba(255,255,255,.06);color:var(--text)}
+.rep-qui{min-width:130px;font-weight:700}
+.rep-detail{display:flex;gap:6px;flex-wrap:wrap}
+.rep-detail .pastille{font-size:.76rem}
 
 @media (max-width:980px){
   .tuto-grille{grid-template-columns:1fr}
@@ -372,11 +395,15 @@ pre code{background:none;padding:0;color:#e6f2cf}
   .jour{min-height:0;flex-direction:row;align-items:center;flex-wrap:wrap;padding:10px 12px}
   .jour .jsem{display:inline}
   .jour.passe{display:none}
-  .jour .tete{min-width:118px}
+  .jour .tete{min-width:118px;flex:1}
   .jour .badge{margin-left:0}
-  .jour .rep{flex:1}
   .jour .compte,.jour .vide{margin-top:0;margin-left:auto}
-  .choix-etat{grid-template-columns:1fr}
+  /* Les réponses passent sous la ligne date / compteur, sur toute la largeur. */
+  .jour .corps{flex-basis:100%;order:3;min-width:0;margin-top:2px}
+  .choix-etat{gap:6px}
+  .choix-etat button{padding:12px 6px;font-size:.92rem}
+  .cren-boutons button{width:42px}
+  .rep-qui{min-width:0;width:100%}
 }
 @media print{
   .sommaire,.onglets,.entete-page .actions{display:none !important}
